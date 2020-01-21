@@ -4,7 +4,9 @@ import mysql.connector
 from werkzeug import secure_filename
 import base64
 import uuid
-
+import requests
+import urllib
+from cryptography.fernet import Fernet
 def generateOTP() :
 	digits = "0123456789"
 	OTP = ""
@@ -65,7 +67,23 @@ def ClaimNo():
 	return Result
 	
 	
+def SMS_Integration(msg,contactno):
+	uname ='krititech'
+	pwd = 'kriti@2705'
+	senderid='ARMEDI'
 	
+	msg = urllib.parse.quote(msg)
 	
+	smsurl='http://cloud.smsindiahub.in/vendorsms/pushsms.aspx?user='+str(uname)+'&password='+str(pwd)+'&msisdn='+str(contactno)+'&sid='+str(senderid)+'&msg='+str(msg)+'&fl=0&gwid=2'
+	r = requests.post(url = smsurl)
+	x=r.json()
 
+
+def Password_encoded(MobileNo):
+	print('asdxakxkx')
+	key = Fernet.generate_key() 
+	cipher_suite = Fernet(key)
+	MobileNo = 	MobileNo.encode('utf-8')
+	encoded_text = cipher_suite.encrypt(MobileNo)
+	return encoded_text
 	
