@@ -6,7 +6,8 @@ import base64
 import uuid
 import requests
 import urllib
-from cryptography.fernet import Fernet
+import hashlib
+import re 
 def generateOTP() :
 	digits = "0123456789"
 	OTP = ""
@@ -14,16 +15,13 @@ def generateOTP() :
 		OTP += digits[math.floor(random.random() * 10)]
 	return str(OTP)
 	
+
+def RegisterNo(totalval):
+	totalval += 1
+	Result = 'SEC'+ str(totalval)
+	return str(Result)
 	
 	
-	
-def RegisterNo():
-	digits = "0123456789"
-	OTP = "" 
-	for i in range(4) : 
-		OTP += digits[math.floor(random.random() * 10)]
-		Result = 'SEC' + OTP
-	return Result
 	
 def allowed_file(filename):
     return '.' in filename and \
@@ -44,33 +42,22 @@ def save(Photo):
 		f.write(imgdata)
 		return (filename.replace('video/',''))
 		
-	
-def request_form(Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,District,State):
-	if Name != "" and MobileNo !="" and VehicleCategory != "" and DateOfPurchase != "" and 	PoliceStation != "" and District != "" and State != "":
-		return True
-	
 
-def EmpId():
-	digits = "0123456789"
-	OTP = "" 
-	for i in range(4) : 
-		OTP += digits[math.floor(random.random() * 10)]
-		Result = 'EMP'+ OTP
-	return Result
+def EmpId(totalval):
+	totalval += 1
+	Result = 'EMP'+ str(totalval)
+	return str(Result)
 	
-def ClaimNo():
-	digits = "0123456789"
-	OTP = "" 
-	for i in range(4) : 
-		OTP += digits[math.floor(random.random() * 10)]
-		Result = 'Cl'+ OTP
-	return Result
+def ClaimNo(totalval):
+	totalval += 1
+	Result = 'CLAIM'+ str(totalval)
+	return str(Result)
 	
 	
 def SMS_Integration(msg,contactno):
 	uname ='krititech'
 	pwd = 'kriti@2705'
-	senderid='ARMEDI'
+	senderid='SCREXP'
 	
 	msg = urllib.parse.quote(msg)
 	
@@ -80,10 +67,47 @@ def SMS_Integration(msg,contactno):
 
 
 def Password_encoded(MobileNo):
-	print('asdxakxkx')
-	key = Fernet.generate_key() 
-	cipher_suite = Fernet(key)
-	MobileNo = 	MobileNo.encode('utf-8')
-	encoded_text = cipher_suite.encrypt(MobileNo)
-	return encoded_text
+	result = hashlib.sha256(MobileNo.encode())
+	result=(result.hexdigest()) 
+	return result
+
+#--------------------------------validation--------------------------------------------------	
 	
+def request_form(Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,District,State):
+	if Name != "" and MobileNo !="" and VehicleCategory != "" and DateOfPurchase != "" and 	PoliceStation != "" and District != "" and State != "":
+		return True
+		
+		
+def validNumber(phone_number):
+	if len(phone_number) == 10:
+		return True
+
+		
+def check(email):
+	regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+	if(re.search(regex,email)):  
+		return True
+		
+def accountNo(accountno):
+	if len(accountno) >= 14 and len(accountno) <= 16:
+		return True
+	
+def vehicleNo(vehicleno):
+	if len(vehicleno) >= 8 and len(vehicleno) <= 10:
+		return True
+	
+def adharNo(adharNo):
+	if len(adharNo) == 12: 
+		return True
+		
+def GSTINo(GSTINo):
+	if len(adharNo) == 15: 
+		return True
+		
+def ChassiNo(ChassiNo):
+	if len(adharNo) == 18: 
+		return True
+		
+		
+	
+

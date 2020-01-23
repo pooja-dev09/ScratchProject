@@ -29,7 +29,7 @@ class Request(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
 		parser.add_argument('Name',required=True,type=str,help='UserName cannot be found')
-		parser.add_argument('MobileNo',required=True,type=str,help='MobileNo cannot be found')
+		parser.add_argument('MobileNo',required=True,type=int,help='MobileNo cannot be found')
 		parser.add_argument('VehicleCategory', required=True,type=str,help='VehicleCategory cannot be found')
 		parser.add_argument('DateOfPurchase',required=True,type=str,help='DateOfPurchase cannot be found')
 		parser.add_argument('PoliceStation',required=True,type=str, help='PoliceStation cannot be found')
@@ -37,7 +37,7 @@ class Request(Resource):
 		parser.add_argument('State',required=True,type=str, help='State cannot be found')
 		args = parser.parse_args()
 		Name = args['Name']
-		MobileNo = args['MobileNo']
+		MobileNo = str(args['MobileNo'])
 		VehicleCategory = args['VehicleCategory']
 		DateOfPurchase = args['DateOfPurchase']
 		PoliceStation = args['PoliceStation']
@@ -67,28 +67,31 @@ class Request(Resource):
 		
 api.add_resource(Request, "/newCustomerRequest")	
 
+
 class Login(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
 		parser.add_argument('RoleID',required=True,type=int, help='RoleID cannot be found')
-		parser.add_argument('UserName' ,required=True,type=str, help='VehicleNo cannot be found')
-		parser.add_argument('Password',required=True,type=int, help='Password cannot be found')
+		parser.add_argument('UserName' ,required=True,type=str, help='UserName cannot be found')
+		parser.add_argument('Password',required=True,type=str, help='Password cannot be found')
 		args = parser.parse_args()
 		RoleID = args['RoleID']
 		UserName = args['UserName']
-		Password = args['Password']
-		
+		UserPassword = args['Password']
+		UserPassword=Password_encoded(UserPassword)
+		print('UserPassword:',UserPassword)
 		if RoleID == 2:
-			mycursor.execute("SELECT UserID,RoleID from user WHERE VehicleNo = '%s' AND Password = '%s'" % (UserName, Password))
+			mycursor.execute("SELECT UserID,RoleID,Mobile from user WHERE VehicleNo = '%s' AND Password = '%s'" % (UserName, UserPassword))
 			rowcursor=mycursor.fetchall()
-			
+			print(rowcursor)
 			if len(rowcursor) > 0:
 				for i in rowcursor:
 					UserID = i[0]
 					RoleID = i[1]
+					Mobile = i[2]
 					OTP=generateOTP()
 					msg='Dear Customer, Your One Time Password for Account Login is : '+str(OTP)
-					#SMS_Integration(msg,Password)
+					#SMS_Integration(msg,Mobile)
 					mycursor.execute("UPDATE user SET OTP = '"+str(OTP)+"' WHERE UserID = '"+str(UserID)+"'")
 					mydb.commit()
 					return jsonify ({'Message':'OTP Send Successfully',
@@ -102,13 +105,15 @@ class Login(Resource):
 								})
 						
 		elif RoleID == 3 or RoleID == 4 or RoleID == 5:
-			mycursor.execute("SELECT UserID from user WHERE EmployeeId = '%s' AND Mobile = '%s'" % (UserName, Password))
+			mycursor.execute("SELECT UserID,Mobile from user WHERE EmployeeId = '%s' AND Password = '%s'" % (UserName, UserPassword))
 			rowcursor=mycursor.fetchall()
 			length =len(rowcursor)
 			if length > 0:
 				for i in rowcursor:
 					UserID = i[0]
 					OTP=generateOTP()
+					msg='Dear Customer, Your One Time Password for Account Login is : '+str(OTP)
+					#SMS_Integration(msg,Mobile)
 					mycursor.execute("UPDATE user SET OTP = '"+str(OTP)+"' WHERE UserID = '"+str(UserID)+"'")
 					mydb.commit()
 					return jsonify ({'Message':'OTP Send Successfully',
@@ -121,12 +126,11 @@ class Login(Resource):
 				return jsonify ({'Message':'Please Check Your UserId or Password May be wrong',
 								'Status':"0"
 								})
-			
-		
+
 		
 api.add_resource(Login, "/login")
-	
-	
+
+
 class Otpverification(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
@@ -159,13 +163,16 @@ class Resend(Resource):
 		parser.add_argument('UserID' ,required=True,type=int, help='UserID cannot be found')
 		args = parser.parse_args()
 		UserID = args['UserID']
-		mycursor.execute("SELECT OTP ,UserID from user WHERE UserID = '"+str(UserID)+"'")
+		mycursor.execute("SELECT OTP ,UserID, Mobile from user WHERE UserID = '"+str(UserID)+"'")
 		rowcursor=mycursor.fetchall()
 		if len(rowcursor) > 0:
 			for i in rowcursor:
 				OTP = i[0]
 				UserID = i[1]
+				Mobile = i[2]
 				OTP=generateOTP()
+				msg='Dear Customer, Your One Time Password for Account Login is : '+str(OTP)
+				#SMS_Integration(msg,Mobile)
 				mycursor.execute("UPDATE user SET OTP = '"+str(OTP)+"' WHERE UserID = '"+str(UserID)+"'")
 				mydb.commit()
 				return jsonify ({'Message':'OTP Resend Sent','Status':"1"})
@@ -183,18 +190,18 @@ class RegisterProfile(Resource):
 		UserID = args['UserID']
 		RoleID = args['RoleID']
 		if RoleID == 2:
-			sql = mycursor.execute("SELECT RegdNo,Name,VehicleNo,Mobile,DateOfRegd,DateOfExp from user WHERE UserID = '"+str(UserID)+"'")
+			sql = mycursor.execute("SELECT EmployeeId,Name,VehicleNo,Mobile,DateOfRegd,DateOfExp from user WHERE UserID = '"+str(UserID)+"'")
 			rowcursor=mycursor.fetchall()
 			if len(rowcursor) > 0:
 				for i in rowcursor:
-					RegdNo = i[0]
+					EmployeeId = i[0]
 					Name = i[1]
 					VehicleNo=i[2]
 					Mobile = i[3]
 					DateOfRegd = i[4]
 					DateOfExp = i[5]
 					return jsonify ({'Message':'Result View Successfully',
-									'RegdNo':RegdNo,
+									'RegdNo':EmployeeId,
 									'RoleID':RoleID,
 									'Name':Name,
 									'VehicleNo':VehicleNo,
@@ -238,10 +245,11 @@ class ProfileUpdate(Resource):
 		args = parser.parse_args()
 		UserID = args['UserID']
 		MobileNo = args['MobileNo']
+		password = Password_encoded(MobileNo)
 		if MobileNo != "":
 			mycursor.execute("SELECT Mobile from user WHERE UserID = '"+str(UserID)+"'")
 			rowcursor=mycursor.fetchall()
-			mycursor.execute("UPDATE user SET Mobile = '"+str(MobileNo)+"',Password = '"+str(MobileNo)+"'WHERE UserID = '"+str(UserID)+"'")
+			mycursor.execute("UPDATE user SET Mobile = '"+str(MobileNo)+"',Password = '"+str(password)+"'WHERE UserID = '"+str(UserID)+"'")
 			mydb.commit()
 			return jsonify ({'Message':'Mobile Number Successfully Update',
 						'Mobile':MobileNo,
@@ -274,16 +282,25 @@ class Newclaim(Resource):
 		Dist = args['District']
 		State = args['State']
 		file = args['Video']
-		ClaimNos = ClaimNo()
-		print(ClaimNos)
+		mycursor.execute("SELECT count(*) as totalval from claim")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			totalval = i[0]
+		ClaimNos = ClaimNo(totalval)
+		mycursor.execute("SELECT VcID,Mobile from vehiclecontract WHERE UserID = '"+str(UserID)+"'")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			VcID = i[0]
+			Mobile = i[1] 
 		if not file is None:
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
-			sql = "INSERT INTO claim (ClaimNo,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,VehiclesaffectedAreaVideo,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val = (ClaimNos,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,Dist,State,filename,CurrentTime)
+			sql = "INSERT INTO claim (ClaimNo,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,VehiclesaffectedAreaVideo,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+			val = (ClaimNos,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,Dist,State,filename,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
-			
+			#msg = 'You submit your claim successfully'+str(ClaimNos)
+			#SMS_Integration(msg,Mobile)
 			return jsonify ({
 			'Message':"You submit your claim successfully.",
 			'DateOfIncident':DateOfIncident,
@@ -294,38 +311,22 @@ class Newclaim(Resource):
 			'State':State,
 			'Status':"1",
 			'video':filename})
-		else:
-			CurrentTime = datetime.datetime.now()
-			sql = "INSERT INTO claim (ClaimNo,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val = (ClaimNos,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,Dist,State,CurrentTime)
-			result = mycursor.execute(sql,val)
-			mydb.commit()
-			
-			return jsonify ({
-			'Message':"You submit your claim successfully.",
-			'DateOfIncident':DateOfIncident,
-			'DateOfClaim':DateOfClaim,
-			'AreaName':AreaName,
-			'Police Station':Ps,
-			'District':Dist,
-			'State':State,
-			'Status':"1",
-			'video':'Video filed is blank'})
 	
 api.add_resource(Newclaim, "/NewCustomerClaim")
 
 class claimAmount(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
-		parser.add_argument('UserID',required=True,type=str, help='UserID Id cannot be found')
-		parser.add_argument('BankName',required=True,type=str, help='Content Id cannot be found')
-		parser.add_argument('BankAccountNo',required=True,type=str, help='Content Id cannot be found')
-		parser.add_argument('IFSC',required=True,type=str, help='DateOfIncident Id cannot be found')
-		parser.add_argument('UPI',required=True,type=str, help='DateofClaim cannot be found')
-		parser.add_argument('WalletName',required=True,type=str, help='AreaName cannot be found')
-		parser.add_argument('Video',type=werkzeug.datastructures.FileStorage,required=False, help='Video/Photo cannot be found',location='files')
+		parser.add_argument('UserID',required=False,type=str, help='UserID Id cannot be found')
+		parser.add_argument('BankName',required=False,type=str, help='BankName Id cannot be found')
+		parser.add_argument('BankAccountNo',required=False,type=int, help='BankAccountNo Id cannot be found')
+		parser.add_argument('IFSC',required=False,type=str, help='IFSC Id cannot be found')
+		parser.add_argument('UPI',required=False,type=str, help='UPI cannot be found')
+		parser.add_argument('WalletName',required=False,type=str, help='WalletName cannot be found')
+		parser.add_argument('Video',type=werkzeug.datastructures.FileStorage,required=True, help='Video/Photo cannot be found',location='files')
 		args = parser.parse_args()
 		UserID = args['UserID']
+		BankName = args['BankName']
 		BankAccountNo = args['BankAccountNo']
 		IFSC = args['IFSC']
 		UPI = args['UPI']
@@ -334,7 +335,7 @@ class claimAmount(Resource):
 		if not file is None:
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
-			mycursor.execute("UPDATE claim SET AccountNumber = '"+str(BankAccountNo)+"',IFSC ='"+str(IFSC)+"',UPI='"+str(UPI)+"',WalletName = '"+str(WalletName)+"',MoneyReceiptPhoto = '"+str(filename)+"',BankName = '"+str(BankName)+"'OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"'")
+			mycursor.execute("UPDATE claim SET AccountNumber = '"+str(BankAccountNo)+"',IFSC ='"+str(IFSC)+"',UPI='"+str(UPI)+"', WalletName = '"+str(WalletName)+"',MoneyReceiptPhoto = '"+str(filename)+"',BankName = '"+str(BankName)+"' , OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"' ")
 			mydb.commit()
 			return jsonify ({
 			'Message':"You submit your claim successfully;we send your claim amount within one working day",
@@ -353,22 +354,24 @@ class claimStatus(Resource):
 		parser.add_argument('UserID',required=True,type=int, help='UserID Id cannot be found')
 		args = parser.parse_args()
 		UserID = args['UserID']
-		mycursor.execute("SELECT claim.UserID, claiminspection.ClaimDate,claiminspection.RegdNo,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimNo=claiminspection.ClaimNo where claim.ClaimNo=claiminspection.ClaimNo AND claim.UserID = "+str(UserID))
-		
+		mycursor.execute("SELECT claim.DateOfClaim,claim.VcID,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = "+str(UserID))
 		rowcursor=mycursor.fetchall()
 		if len(rowcursor) > 0:
 			for i in rowcursor:
-				print(rowcursor)
-				UserID = i[0]
-				ClaimDate = i[1]
-				RegdNo = i[2]
-				ClaimStatus = i[3]
-				return jsonify ({'Message':" Successfully claim recorded.",
-				'UserID':UserID,
-				'ClaimDate':ClaimDate,
-				'RegistrationNo':RegdNo,
-				'ClaimStatus':ClaimStatus,
-				'Status':'1'})
+				ClaimDate = i[0]
+				VcID = i[1]
+				ClaimStatus = i[2]
+				if ClaimStatus is None:
+					ClaimStatus = 0
+				mycursor.execute("SELECT VehicleNo from vehiclecontract where VcID = "+str(VcID))
+				rowcursor=mycursor.fetchall()
+				for i in rowcursor:
+					VehicleNo = i[0]
+					return jsonify ({'Message':" Successfully claim recorded.",
+					'ClaimDate':ClaimDate,
+					'VehicleNo':VehicleNo,
+					'ClaimStatus':ClaimStatus,
+					'Status':'1'})
 			
 		else:
 			return jsonify ({'Message':"You have no claim in your status.",'Status':"0"})
@@ -400,39 +403,49 @@ class SalesReport(Resource):
 				
 api.add_resource(SalesReport, "/getSalesReport")
 ###### sales manager check claim
-class ClaimActionSM(Resource):
+class ClaimAction(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
-		parser.add_argument('ClaimInspectionID' ,required=True,type=int, help='ClaimInspectionId cannot be found')
+		parser.add_argument('ClaimID' ,required=True,type=int, help='ClaimID cannot be found')
 		args = parser.parse_args()
-		mycursor.execute("UPDATE claiminspection set ClaimStatus = 1 WHERE ClaimInspectionID='"+str(ClaimInspectionID)+"'")
+		Amount = args['ClaimID']
+		mycursor.execute("SELECT claim.ClaimNo,vehiclecontract.VehicleNo,vehiclecontract.ChassisNo FROM claim LEFT JOIN vehiclecontract ON claim.VcID=vehiclecontract.VcID where claim.VcID=vehiclecontract.VcID")
 		rowcursor=mycursor.fetchall()
-		new.append(data)
-		return jsonify ({'Status':"1",'new':new})
+		for i in rowcursor:
+			ClaimNo = i[0]
+			VehicleNo = i[1]
+			ChassisNo = i[2]
+		return jsonify ({'Status':"1",'ClaimNo':ClaimNo,'VehicleNo':VehicleNo,'ChassisNo':ChassisNo})
 		
-api.add_resource(ClaimActionSM, "/ClaimActionSM")
+api.add_resource(ClaimAction, "/ClaimAction")
 
 
 class ClaimViewSM(Resource):
 	def get(self):
 		new = []
-		mycursor.execute("SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claiminspection.ClaimInspectionID,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimNo=claiminspection.ClaimNo where claim.ClaimNo=claiminspection.ClaimNo")
+		arraynew=[]
+		mycursor.execute("SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claim.ClaimID,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID ")
 		rowcursor=mycursor.fetchall()
-		for i in rowcursor:
-			DateOfClaim = i[0]
-			ClaimNo = i[1]
-			UserID = i[2]
-			ClaimInspectionID = i[3]
-			ClaimStatus = i[4]
-			mycursor.execute("SELECT Name from user WHERE UserID = '"+str(UserID)+"'")
-			rowcursor=mycursor.fetchall()
+		if len(rowcursor) > 0:
 			for i in rowcursor:
-				Name = i[0]
-				data = ({'Name':Name,'DateOfClaim':DateOfClaim,'ClaimNo':ClaimNo,'ClaimInspectionID':ClaimInspectionID,'ClaimStatus':ClaimStatus})
+				DateOfClaim = i[0]
+				ClaimNo = i[1]
+				UserID = i[2]
+				ClaimID = i[3]
+				ClaimStatus = i[4]
+				if ClaimStatus is None:
+					ClaimStatus = 0
+				mycursor.execute("SELECT Name from user WHERE UserID = '"+str(UserID)+"'")
+				rowcursor=mycursor.fetchall()
+				for i in rowcursor:
+					name=i[0]
+				data = {'DateOfClaim':DateOfClaim,'ClaimNo':ClaimNo,'name':name,'ClaimID':ClaimID,'ClaimStatus':ClaimStatus}
 				new.append(data)
-		return jsonify({'Status':1,'new':new})
+					
+			return jsonify({'Status':1,'new':new})
 		
 api.add_resource(ClaimViewSM, "/ClaimViewSM")
+
 
 class VehicleContract(Resource):
 	def post(self):
@@ -479,7 +492,11 @@ class VehicleContract(Resource):
 		State = args['State']
 		file = args['Video']
 		AddedBy = args['UserID']
-		EmployeeId = RegisterNo()
+		mycursor.execute("SELECT count(*) as totalval from user")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			totalval = i[0]
+		EmployeeId = RegisterNo(totalval)
 		password = Password_encoded(MobileNo)
 		print(password)
 		RoleID = 2
@@ -487,8 +504,10 @@ class VehicleContract(Resource):
 		if not file is None:
 			Video=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
-			sql = "INSERT INTO user (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,Name,Mobile,Email,CenterLocation,Po,Ps,District,State,VehiclePhoto,Password,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val = (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,OwnerName,MobileNo,Email,Location,PostOffice,PoliceStation,District,State,Video,password,CurrentTime)
+			endDate= CurrentTime+datetime.timedelta(days=1*365)
+			endDate = endDate.strftime("%m-%d-%Y")
+			sql = "INSERT INTO user (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,Name,Mobile,Email,CenterLocation,Po,Ps,District,State,VehiclePhoto,Password,OnDate,DateOfExp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+			val = (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,OwnerName,MobileNo,Email,Location,PostOffice,PoliceStation,District,State,Video,password,CurrentTime,endDate)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
 			UserID = mycursor.lastrowid
@@ -500,6 +519,10 @@ class VehicleContract(Resource):
 			val = (UserID,PaymentMode,Amount,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
+			
+			#msg = 'Payment Confirmed we will send certificate within 48 Hours.'+str(EmployeeId)
+			#SMS_Integration(msg,Mobile)
+			
 			return jsonify ({'Message':'Payment Confirmed we will send certificate within 48 Hours.'+EmployeeId,"RoleID":RoleID,"Status":1,"UserID":UserID})
 		else:
 			return jsonify ({'Message':'error',"Status":1})
@@ -567,7 +590,11 @@ class ServiceCenterAuthorization(Resource):
 		file = args['Video']
 		Photo= args['imageData']
 		CurrentTime = datetime.datetime.now()
-		EmployeeId = EmpId()
+		mycursor.execute("SELECT count(*) as totalval from user")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			totalval = i[0]
+		EmployeeId = EmpId(totalval)
 		RoleID = 5
 		if not Photo is None and file is None :
 			Photo=save(Photo)
@@ -594,46 +621,32 @@ class ServiceCenterAuthorization(Resource):
 			mydb.commit()
 			
 			return jsonify ({'Message':"Service Center Authorized Successfully","RoleID":RoleID,"Status":1,"UserID":UserID})
-
-		
-									
+						
 api.add_resource(ServiceCenterAuthorization, "/getServiceCenterAuthorization")
 
 
 class ClaimInspection(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
-		parser.add_argument('UserID' ,required=True,type=str, help='UserID Id cannot be found')
-		parser.add_argument('ClaimNo' ,required=True,type=str, help='ClaimNo Id cannot be found')
-		parser.add_argument('VehicleNo' ,required=True,type=str, help='VehicleNo Id cannot be found')
-		parser.add_argument('ChassisNo' ,required=True,type=str, help='ChassisNo Id cannot be found')
-		parser.add_argument('Video',type=werkzeug.datastructures.FileStorage,required=False, help='photo cannot be found',location='files')
-		parser.add_argument('imageData',type=str,required=False,help='Photo From Camera')
+		parser.add_argument('ClaimID',required=True,type=str, help='UserID Id cannot be found')
+		parser.add_argument('imageData',type=werkzeug.datastructures.FileStorage,required=True, help='photo cannot be found',location='files')
 		args = parser.parse_args()
-		UserID = args['UserID']
-		ClaimNo = args['ClaimNo']
-		VehicleNo = args['VehicleNo']
-		ChassisNo = args['ChassisNo']
-		file = args['Video']
+		ClaimID= args['ClaimID']
 		Photo= args['imageData']
-		CurrentTime = datetime.datetime.now()		
-		if not file is None and Photo is None :
-			filename=Upload_fun(file)
-			sql = "INSERT INTO claiminspection (InspectBy,OnDate,ClaimNo,ChassisNo,VehicleNo,photo) VALUES (%s,%s,%s,%s,%s,%s)"
-			val=(UserID,CurrentTime,ClaimNo,ChassisNo,VehicleNo,filename)
+		CurrentTime = datetime.datetime.now()
+		if not Photo is None:
+			filename=Upload_fun(Photo)
+			sql = "INSERT INTO claiminspection (ClaimID,photo,OnDate) VALUES (%s,%s,%s)"
+			val=(ClaimID,filename,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
-			return jsonify ({'Message':" claim inspection successfully","Status":1})
-		elif not Photo is None and file is None :
-			Photo=save(Photo)
-			sql = "INSERT INTO claiminspection (InspectBy,OnDate,ClaimNo,ChassisNo,VehicleNo,photo) VALUES (%s,%s,%s,%s,%s,%s)"
-			val=(UserID,CurrentTime,ClaimNo,ChassisNo,VehicleNo,Photo)
-			result = mycursor.execute(sql,val)
+			mycursor.execute("UPDATE claiminspection SET ClaimStatus = 1 WHERE ClaimID = '"+str(ClaimID)+"'")
 			mydb.commit()
 			return jsonify ({'Message':" claim inspection successfully","Status":1})
-				
+		else:
 	
-api.add_resource(ClaimInspection, "/claimInspectionSM")
+			return jsonify ({'Message':"something wrong","Status":0})
+api.add_resource(ClaimInspection, "/claimInspection")
 ###------------------------------sales manager part over-----------------------------------------
 ###------------------------------Area manager part start-----------------------------------------
 class AdminAddSM(Resource):
@@ -669,7 +682,7 @@ class AdminAddSM(Resource):
 		Name = args['Name']
 		DOB = args['DOB']
 		Qualification = args['Qualification']
-		AdharNo = args['AdharNo']
+		AdharNo = str(args['AdharNo'])
 		MobileNo = args['MobileNo']
 		EmailId = args['EmailId']
 		BankAccountNo = args['BankAccountNo']
@@ -687,7 +700,11 @@ class AdminAddSM(Resource):
 		State = args['State']
 		CenterContactNo = args['CenterContactNo']
 		CurrentTime = datetime.datetime.now()
-		EmployeeId = EmpId()
+		mycursor.execute("SELECT count(*) as totalval from user")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			totalval = i[0]
+		EmployeeId = EmpId(totalval)
 		file = args['IdProofPhoto']
 		Photo= args['imageData']
 		RoleID = 3
@@ -730,7 +747,6 @@ class SMTeam(Resource):
 		new = []
 		mycursor.execute("SELECT Name,NameCenter,CenterLocation,District,Sale_ScFor,MobileNo FROM salesmanager")
 		row=mycursor.fetchall()
-		print(typeof(row))
 		for i in row:
 			Name = i[0]
 			NameCenter = i[1]
