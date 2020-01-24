@@ -41,18 +41,20 @@ def createareamanager():
 		PoliceStation=str(request.form.get('PoliceStation'))
 		District=str(request.form.get('District'))
 		State=str(request.form.get('State'))
-		print(State)
 		CenterContactNo=str(request.form.get('CenterContactNo'))
 		file = request.files['inputfile']
-		print(file)
 		filename=Upload_fun(file)
-		print(filename)
 		CurrentTime = datetime.datetime.now()
 		RoleID = 4
-		EmployeeId=EmpId()
+		UserPassword=Password_encoded(MobileNo)
+		mycursor.execute("SELECT count(*) as totalval from user")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			totalval = i[0]
+		EmployeeId=EmpId(totalval)
 		if DateOfJoining != "" and Name != "" and DOB != "" and Qualification != " " and AdharNo != "" and EmailId != "" and MobileNo != "" and BankAccountNo != "" and IFSC != "" and BankName != "" and PresentlyWorking != "" and AppointCenter != "" and NameCenter != "" and CenterBrand != "" and CenterFor != "" and CenterLocation != "" and PostOffice != "" and PoliceStation != "" and District != "" and State != "" and CenterContactNo != " " and filename != "":
 			sql = "INSERT INTO user (Password,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,Mobile,Email,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val=(MobileNo,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
+			val=(UserPassword,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
 			UserID = mycursor.lastrowid

@@ -44,8 +44,7 @@ class Request(Resource):
 		District = args['District']
 		State = args['State']
 		CurrentTime = datetime.datetime.now()
-		required = request_form(Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,District,State)
-		if required == True:
+		if validNumber(MobileNo)== True :
 			sql = "INSERT INTO customerrequest (Name,Mobile,VehicleCategory,DateOfPurchase,PoliceStation,District,State,DateOfRegistration) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 			val = (Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,District,State,CurrentTime)
 			result = mycursor.execute(sql,val)
@@ -244,9 +243,9 @@ class ProfileUpdate(Resource):
 		parser.add_argument('MobileNo' ,required=True,type=int, help='Mobile cannot be found')
 		args = parser.parse_args()
 		UserID = args['UserID']
-		MobileNo = args['MobileNo']
-		password = Password_encoded(MobileNo)
+		MobileNo = str(args['MobileNo'])
 		if MobileNo != "":
+			password = Password_encoded(MobileNo)
 			mycursor.execute("SELECT Mobile from user WHERE UserID = '"+str(UserID)+"'")
 			rowcursor=mycursor.fetchall()
 			mycursor.execute("UPDATE user SET Mobile = '"+str(MobileNo)+"',Password = '"+str(password)+"'WHERE UserID = '"+str(UserID)+"'")
@@ -332,6 +331,7 @@ class claimAmount(Resource):
 		UPI = args['UPI']
 		WalletName = args['WalletName']
 		file = args['Video']
+		print(file)
 		if not file is None:
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
@@ -342,7 +342,10 @@ class claimAmount(Resource):
 
 			'Status':"1",
 			})
-	
+		else:
+			return jsonify ({
+			'Message':"something went wrong",
+			'Status':"0",
 api.add_resource(claimAmount,"/claimAmount")
 
 
@@ -462,7 +465,7 @@ class VehicleContract(Resource):
 		parser.add_argument('DateofRegd',required=True,type=str,help='DateofRegd  cannot be found')
 		parser.add_argument('Package',required=True,type=str,help='Package  cannot be found')
 		parser.add_argument('OwnerName',required=True,type=str,help='OwnerName  cannot be found')
-		parser.add_argument('Mobile',required=True,type=str,help='MobileNo cannot be found')
+		parser.add_argument('Mobile',required=True,type=int,help='MobileNo cannot be found')
 		parser.add_argument('Email',required=True,type=str,help='Email Id cannot be found')
 		parser.add_argument('Location',required=True,type=str,help='Location cannot be found')
 		parser.add_argument('PostOffice',required=True,type=str,help='PostOfficcannot be found')
@@ -482,8 +485,7 @@ class VehicleContract(Resource):
 		Color = args['Color']
 		DateofRegd = args['DateofRegd']
 		OwnerName = args['OwnerName']
-		MobileNo = args['Mobile']
-		print(type(MobileNo))
+		MobileNo = str(args['Mobile'])
 		Email = args['Email']
 		Location = args['Location']
 		PostOffice = args['PostOffice']
@@ -498,7 +500,6 @@ class VehicleContract(Resource):
 			totalval = i[0]
 		EmployeeId = RegisterNo(totalval)
 		password = Password_encoded(MobileNo)
-		print(password)
 		RoleID = 2
 		
 		if not file is None:
@@ -558,7 +559,7 @@ class ServiceCenterAuthorization(Resource):
 		parser.add_argument('DateOfAuthorisation',required=True,type=str, help='DateOfAuthorisation Id cannot be found')
 		parser.add_argument('CenterName',required=True,type=str, help='CenterName Id cannot be found')
 		parser.add_argument('OwnerName',required=True,type=str, help='OwnerName Id cannot be found')
-		parser.add_argument('MobileNo',required=True,type=str, help='MobileNo Id cannot be found')
+		parser.add_argument('MobileNo',required=True,type=str,help='MobileNo Id cannot be found')
 		parser.add_argument('GSTINNumber',required=True,type=str, help='GSTINNumber Id cannot be found')
 		parser.add_argument('CenterLocation',required=True,type=str, help='CenterLocation Id cannot be found')
 		parser.add_argument('Town',required=True,type=str, help='Town Id cannot be found')
@@ -576,7 +577,7 @@ class ServiceCenterAuthorization(Resource):
 		DateOfAuthorisation = args['DateOfAuthorisation']
 		CenterName = args['CenterName']
 		OwnerName = args['OwnerName']
-		MobileNo = args['MobileNo']
+		MobileNo = str(args['MobileNo'])
 		GSTINNumber = args['GSTINNumber']
 		CenterLocation = args['CenterLocation']
 		Town = args['Town']
@@ -596,10 +597,11 @@ class ServiceCenterAuthorization(Resource):
 			totalval = i[0]
 		EmployeeId = EmpId(totalval)
 		RoleID = 5
+		UserPassword=Password_encoded(MobileNo)
 		if not Photo is None and file is None :
 			Photo=save(Photo)
 			sql = "INSERT INTO user (Password,EmployeeId,RoleID,DateOfAuthorize,NameCenter,Name,Mobile,GSTINno,CenterLocation,Town,Po,Ps,District,State,DentingPainting,Mechanical,WorkingFor,ShineBoardPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val = (MobileNo,EmployeeId,RoleID,DateOfAuthorisation,CenterName,OwnerName,MobileNo,GSTINNumber,CenterLocation,Town,PostOffice,PoliceStation,District,State,DentingPainting,Mechanical,Working,Photo,CurrentTime)
+			val = (UserPassword,EmployeeId,RoleID,DateOfAuthorisation,CenterName,OwnerName,MobileNo,GSTINNumber,CenterLocation,Town,PostOffice,PoliceStation,District,State,DentingPainting,Mechanical,Working,Photo,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
 			UserID = mycursor.lastrowid
@@ -611,7 +613,7 @@ class ServiceCenterAuthorization(Resource):
 		elif not file is None and Photo is None :
 			video=Upload_fun(file)
 			sql = "INSERT INTO user (Password,EmployeeId,RoleID,DateOfAuthorize,NameCenter,Name,Mobile,GSTINno,CenterLocation,Town,Po,Ps,District,State,DentingPainting,Mechanical,WorkingFor,ShineBoardPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val = (MobileNo,EmployeeId,RoleID,DateOfAuthorisation,CenterName,OwnerName,MobileNo,GSTINNumber,CenterLocation,Town,PostOffice,PoliceStation,District,State,DentingPainting,Mechanical,Working,video,CurrentTime)
+			val = (UserPassword,EmployeeId,RoleID,DateOfAuthorisation,CenterName,OwnerName,MobileNo,GSTINNumber,CenterLocation,Town,PostOffice,PoliceStation,District,State,DentingPainting,Mechanical,Working,video,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
 			UserID = mycursor.lastrowid
@@ -683,7 +685,8 @@ class AdminAddSM(Resource):
 		DOB = args['DOB']
 		Qualification = args['Qualification']
 		AdharNo = str(args['AdharNo'])
-		MobileNo = args['MobileNo']
+		MobileNo = str(args['MobileNo'])
+		print('jk',MobileNo)
 		EmailId = args['EmailId']
 		BankAccountNo = args['BankAccountNo']
 		IFSC = args['IFSC']
@@ -708,12 +711,13 @@ class AdminAddSM(Resource):
 		file = args['IdProofPhoto']
 		Photo= args['imageData']
 		RoleID = 3
+		UserPassword=Password_encoded(MobileNo)
 		if not file is None and Photo is None :
 			
 			filename=Upload_fun(file)
 			print(filename)
 			sql = "INSERT INTO user (Password,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,Mobile,Email,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val=(MobileNo,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
+			val=(UserPassword,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
 			UserID = mycursor.lastrowid
@@ -728,7 +732,7 @@ class AdminAddSM(Resource):
 		if not Photo is None and file is None :
 			Photo=save(Photo)
 			sql = "INSERT INTO user (Password,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,Mobile,Email,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val=(MobileNo,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,Photo,CurrentTime)
+			val=(UserPassword,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,Photo,CurrentTime)
 			result = mycursor.execute(sql,val)
 			mydb.commit()
 			UserID = mycursor.lastrowid
@@ -803,4 +807,3 @@ api.add_resource(MyTeamSalesRpt, "/MyTeamSalesRpt")
 	
 if __name__ == '__main__':
 	app.run(port='5000',host='0.0.0.0',debug=False)
-  

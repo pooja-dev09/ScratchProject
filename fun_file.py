@@ -68,7 +68,7 @@ def SMS_Integration(msg,contactno):
 
 def Password_encoded(MobileNo):
 	result = hashlib.sha256(MobileNo.encode())
-	result=(result.hexdigest()) 
+	result=(result.hexdigest())	
 	return result
 
 #--------------------------------validation--------------------------------------------------	
@@ -80,6 +80,7 @@ def request_form(Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,Dist
 		
 def validNumber(phone_number):
 	if len(phone_number) == 10:
+		print(phone_number)
 		return True
 
 		
@@ -104,10 +105,12 @@ def GSTINo(GSTINo):
 	if len(adharNo) == 15: 
 		return True
 		
-def ChassiNo(ChassiNo):
+def ChassisNo(ChassisNo):
 	if len(adharNo) == 18: 
 		return True
 		
 		
-	
+def IFSC(IFSC):
+	if len(IFSC) == 11: 
+		return True
 
