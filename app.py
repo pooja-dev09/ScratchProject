@@ -75,6 +75,7 @@ class Login(Resource):
 		parser.add_argument('Password',required=True,type=str, help='Password cannot be found')
 		args = parser.parse_args()
 		RoleID = args['RoleID']
+		print('bdijbvdf',RoleID)
 		UserName = args['UserName']
 		UserPassword = args['Password']
 		UserPassword=Password_encoded(UserPassword)
@@ -106,6 +107,7 @@ class Login(Resource):
 		elif RoleID == 3 or RoleID == 4 or RoleID == 5:
 			mycursor.execute("SELECT UserID,Mobile from user WHERE EmployeeId = '%s' AND Password = '%s'" % (UserName, UserPassword))
 			rowcursor=mycursor.fetchall()
+			print('dkjcjvd',rowcursor)
 			length =len(rowcursor)
 			if length > 0:
 				for i in rowcursor:
@@ -316,36 +318,50 @@ api.add_resource(Newclaim, "/NewCustomerClaim")
 class claimAmount(Resource):
 	def post(self):
 		parser = reqparse.RequestParser()
-		parser.add_argument('UserID',required=False,type=str, help='UserID Id cannot be found')
-		parser.add_argument('BankName',required=False,type=str, help='BankName Id cannot be found')
-		parser.add_argument('BankAccountNo',required=False,type=int, help='BankAccountNo Id cannot be found')
-		parser.add_argument('IFSC',required=False,type=str, help='IFSC Id cannot be found')
-		parser.add_argument('UPI',required=False,type=str, help='UPI cannot be found')
-		parser.add_argument('WalletName',required=False,type=str, help='WalletName cannot be found')
+		parser.add_argument('UserID',required=True,type=str, help='UserID Id cannot be found')
+		parser.add_argument('PaymentMode',required=True,type=str, help='Paymenttype cannot be found')
 		parser.add_argument('Video',type=werkzeug.datastructures.FileStorage,required=True, help='Video/Photo cannot be found',location='files')
 		args = parser.parse_args()
 		UserID = args['UserID']
-		BankName = args['BankName']
-		BankAccountNo = args['BankAccountNo']
-		IFSC = args['IFSC']
-		UPI = args['UPI']
-		WalletName = args['WalletName']
+		print('sdkjbccbdis')
+		Paymenttype = str(args['PaymentMode'])
+		print(Paymenttype)
+		print('skjdcjdh')
 		file = args['Video']
-		print(file)
-		if not file is None:
+		if Paymenttype == 'online':
+			parser.add_argument('BankName',required=True,type=str, help='BankName Id cannot be found')
+			parser.add_argument('BankAccountNo',required=True,type=int, help='BankAccountNo Id cannot be found')
+			parser.add_argument('IFSC',required=True,type=str, help='IFSC Id cannot be found')
+			args = parser.parse_args()
+			BankAccountNo = args['BankAccountNo']
+			BankName = args['BankName']
+			IFSC = args['IFSC']
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
-			mycursor.execute("UPDATE claim SET AccountNumber = '"+str(BankAccountNo)+"',IFSC ='"+str(IFSC)+"',UPI='"+str(UPI)+"', WalletName = '"+str(WalletName)+"',MoneyReceiptPhoto = '"+str(filename)+"',BankName = '"+str(BankName)+"' , OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"' ")
+			mycursor.execute("UPDATE claim SET AccountNumber = '"+str(BankAccountNo)+"',IFSC ='"+str(IFSC)+"', MoneyReceiptPhoto = '"+str(filename)+"',BankName = '"+str(BankName)+"' , OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"' ")
 			mydb.commit()
 			return jsonify ({
 			'Message':"You submit your claim successfully;we send your claim amount within one working day",
-
 			'Status':"1",
 			})
+			
 		else:
+			
+			parser.add_argument('UPI',required=True,type=str, help='UPI cannot be found')
+			parser.add_argument('WalletName',required=True,type=str, help='WalletName cannot be found')
+			args = parser.parse_args()
+			UPI = args['UPI']
+			print('UPI',UPI)
+			WalletName = args['WalletName']
+			print('WalletName',WalletName)
+			filename=Upload_fun(file)
+			CurrentTime = datetime.datetime.now()
+			mycursor.execute("UPDATE claim SET UPI = '"+str(UPI)+"', MoneyReceiptPhoto = '"+str(filename)+"',WalletName = '"+str(WalletName)+"' , OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"' ")
+			mydb.commit()
 			return jsonify ({
-			'Message':"something went wrong",
-			'Status':"0",
+			'Message':"You submit your claim successfully;we send your claim amount within one working day",
+			'Status':"1",
+			})
 api.add_resource(claimAmount,"/claimAmount")
 
 

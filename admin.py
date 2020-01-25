@@ -72,34 +72,17 @@ def createareamanager():
 @app.route('/seadmin/viewam')	
 def viewam():
 	new = []
-	mycursor.execute("SELECT * FROM areamanager")
+	count = 0
+	mycursor.execute("SELECT areamanager.EmployeeId,areamanager.DateOfJoining,areamanager.Name,areamanager.MobileNo,salesmanager.Name FROM areamanager LEFT JOIN salesmanager ON areamanager.UserID=salesmanager.AddedBy")
 	row=mycursor.fetchall()
 	for i in row:
-		Id = i[0]
-		EmployeeId = i[2]
-		DateOfJoining = i[3]
-		Name = i[4]
-		DOB = i[5]
-		Qualification = i[6]	
-		AdharNo = i[7]
-		MobileNo = i[8]
-		EmailId = i[9]
-		BankAccountNo = i[10]
-		IFSC = i[11]
-		BankName = i[12]
-		PresentlyWorking = i[13]
-		AppointCenter = i[14]
-		NameCenter = i[15]
-		CenterBrand = i[16]
-		CenterFor = i[17]
-		CenterLocation = i[18]
-		Po = i[19]
-		Ps = i[20]
-		District = i[21]
-		State = i[22]
-		CenterContctNo = i[23]
-		IdproofPhoto= i[24]
-		data = {'Id':Id,'EmployeeId':EmployeeId,'DateOfJoining':DateOfJoining,'Name':Name,'DOB':DOB,'Qualification':Qualification,'AdharNo':AdharNo,'MobileNo':MobileNo,'EmailId':EmailId,'BankAccountNo':BankAccountNo,'IFSC':IFSC,'BankName':BankName,'PresentlyWorking':PresentlyWorking,'AppointCenter':AppointCenter,'NameCenter':NameCenter,'CenterBrand':CenterBrand,'CenterFor':CenterFor,'CenterLocation':CenterLocation,'Po':Po,'Ps':Ps,'District':District,'State':State,'CenterContctNo':CenterContctNo,'IdproofPhoto':IdproofPhoto}
+		EmployeeId = i[0]
+		DateOfJoining = i[1]
+		AreaManagerName = i[2]
+		MobilNo = i[3]
+		SalesManagerName = i[4]
+		count = count + 1
+		data = {'Id':count,'EmployeeId':EmployeeId,'DateOfJoining':DateOfJoining,'AreaManagerName':AreaManagerName,'MobilNo':MobilNo,'SalesManagerName':SalesManagerName}
 		new.append(data)
 		
 	return render_template('viewam.php', result = new)	
@@ -108,13 +91,14 @@ def viewam():
 @app.route('/seadmin/vc',methods = ['GET','POST'])
 def vc():
 	new = []
-	
+	count = 0
 	if (request.method == 'POST'):
 		
 		if request.form['submit_button'] == 'Submit':
 			start_dates = str(request.form.get('start'))
 			start_ends = str(request.form.get('End'))
-			sql="SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy where user.UserID=vehiclecontract.AddedBy"
+			sql="SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy"
+			
 			
 			if start_dates!='' and start_dates is not None:
 				sql=sql+" AND user.OnDate >= '"+str(start_dates)+"'"
@@ -136,18 +120,19 @@ def vc():
 					OwnerName = i[3]
 					VehicleCategory = i[4]
 					OnDate = i[5]
-					
 					mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
 					rowcursor=mycursor.fetchall()
 					for i in rowcursor:
+						count +=  1
 						designation = i[0]
-						data = {'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
+						data = {'slno':count,'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
 						new.append(data)
 		return render_template('vc.php',result = new)
 	else:
-	
-		mycursor.execute("SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy where user.UserID=vehiclecontract.AddedBy ORDER BY vehiclecontract.AddedBy desc limit 10")
+		
+		mycursor.execute("SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy ORDER BY vehiclecontract.AddedBy desc limit 10")
 		row=mycursor.fetchall()
+		print(row)
 		for i in row:
 			Name = i[0]
 			RoleID = i[1]
@@ -155,14 +140,13 @@ def vc():
 			OwnerName = i[3]
 			VehicleCategory = i[4]
 			OnDate = i[5]
-			
 			mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
 			rowcursor=mycursor.fetchall()
 			for i in rowcursor:
+				count += 1
 				designation = i[0]
-				data = {'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
+				data = {'slno':count,'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
 				new.append(data)
-			
 	return render_template('vc.php',result = new)
 	
 @app.route('/seadmin/viewsc',methods = ['GET','POST'])

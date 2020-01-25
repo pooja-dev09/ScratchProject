@@ -61,29 +61,12 @@
                                         <thead>
 
                                             <tr>
-                                                <th>Id</th>
+                                                <th>Slno</th>
 												<th>EmployeeId</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
+											    <th>DateOfJoining</th>
+											    <th>Area Manager</th>
                                                 <th>Mobile</th>
-                                                <th>DateOfJoining</th>
-												<th>DOB</th>
-												<th>Qualification</th>
-												<th>AdharNo</th>
-												<th>BankAccountNo</th>
-												<th>IFSC</th>
-												<th>PresentlyWorking</th>
-												<th>AppointCenter</th>
-												<th>NameCenter</th>
-												<th>CenterBrand</th>
-												<th>Sales /Service Center</th>
-												<th>CenterLocation</th>
-												<th>CenterContctNo</th>
-                                                <th>Police Station</th>
-												<th>Post Office</th>
-												<th>District</th>
-												<th>State</th>
-												<th>IdproofPhoto</th>
+                                                <th>Sales Manager</th>
 												
                                             </tr>
                                         </thead>
@@ -92,63 +75,24 @@
                                             <tr>
                                                 <td>{{r["Id"]}}</td>
                                                 <td>{{r["EmployeeId"]}}</td>
-                                                <td>{{r["Name"]}}</td>
-                                                <td>{{r["EmailId"]}}</td>
-                                                <td>{{r["MobileNo"]}}</td>	
 												<td>{{r["DateOfJoining"]}}</td>
-												<td>{{r["DOB"]}}</td>
-												<td>{{r["Qualification"]}}</td>
-												<td>{{r["AdharNo"]}}</td>
-												<td>{{r["BankAccountNo"]}}</td>
-												<td>{{r["IFSC"]}}</td>
-												<td>{{r["PresentlyWorking"]}}</td>
-												<td>{{r["AppointCenter"]}}</td>
-												<td>{{r["NameCenter"]}}</td>
-												<td>{{r["CenterBrand"]}}</td>
-												<td>{{r["CenterFor"]}}</td>
-												<td>{{r["CenterLocation"]}}</td>
-												<td>{{r["CenterContctNo"]}}</td>
-												<td>{{r["Ps"]}}</td>
-												<td>{{r["Po"]}}</td>
-												<td>{{r["District"]}}</td>
-												<td>{{r["State"]}}</td>
-												<td><img src=" video/{{ r["IdproofPhoto"]}} " width="100" height="100"></img></td>
+                                                <td>{{r["AreaManagerName"]}}</td>
+                                                <td>{{r["MobilNo"]}}</td>
+                                                <td>{{r["SalesManagerName"]}}</td>	
 												
                                             </tr>
 											{% endfor %}
-                                           
-                                            
-                                          
-                                           
-                                            
-                                            
-                                            
+
                                         </tbody>
                                         <tfoot>
-                                            <tr>
-												<th>Id</th>
+                                            tr>
+                                                <th>Slno</th>
 												<th>EmployeeId</th>
-                                                <th>Name</th>
-                                                <th>Email</th>
+											    <th>DateOfJoining</th>
+											    <th>Area Manager</th>
                                                 <th>Mobile</th>
-                                                <th>DateOfJoining</th>
-												<th>DOB</th>
-												<th>Qualification</th>
-												<th>AdharNo</th>
-												<th>BankAccountNo</th>
-												<th>IFSC</th>
-												<th>PresentlyWorking</th>
-												<th>AppointCenter</th>
-												<th>NameCenter</th>
-												<th>CenterBrand</th>
-												<th>Sales /Service Center</th>
-												<th>CenterLocation</th>
-												<th>CenterContctNo</th>
-                                                <th>Police Station</th>
-												<th>Post Office</th>
-												<th>District</th>
-												<th>State</th>
-												<th>IdproofPhoto</th>
+                                                <th>Sales Manager</th>
+												
 												
                                             </tr>
                                         </tfoot>

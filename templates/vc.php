@@ -69,21 +69,25 @@
                                         <thead>
 
                                             <tr>
-                                               <th>Date</th>
-											   <th>Name</th>
+											
+											   <th>Slno</th>    
+											   <th>User Name</th>
 											   <th>VehicleNo</th>
 												<th>VehicleCategory</th>
                                                 <th>Added By</th>
 												<th>Designation</th>
 											
 											</tr>
+										
                                         </thead>
+										
                                         <tbody>
                                             {% for r in result %}
+												
 											<tr>
 												
-                                                <td>{{r["OnDate"]}}</td>
-												<td>{{r["UserName"]}}</td>
+                                                <td>{{r["slno"]}}</td>
+												<td>{{r["OwnerName"]}}</td>
                                                 <td>{{r["VehicleNo"]}}</td>
                                                 <td>{{r["VehicleCategory"]}}</td>
 												<td>{{r["Name"]}}</td>
@@ -93,18 +97,15 @@
                                             </tr>
 											{% endfor %}
                                             
-											
-                                           
-                                            
-                                            
+
                                         </tbody>
                                         <tfoot>
                                             <tr>
-												<th>Date</th>
-												<th>Name</th>
-												<th>VehicleNo</th>
+												<th>Slno</th>    
+											   <th>User Name</th>
+											   <th>VehicleNo</th>
 												<th>VehicleCategory</th>
-												<th>Added By</th>
+                                                <th>Added By</th>
 												<th>Designation</th>
                                             </tr>
                                         </tfoot>
