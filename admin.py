@@ -2,6 +2,7 @@ from flask import Flask,url_for, redirect, flash,session, jsonify,request,render
 from flask_cors import CORS, cross_origin
 from fun_file import *
 import datetime
+import mysql.connector
 app = Flask(__name__)
 cors = CORS(app)
 CORS(app, support_credentials=True)
@@ -73,7 +74,7 @@ def createareamanager():
 def viewam():
 	new = []
 	count = 0
-	mycursor.execute("SELECT areamanager.EmployeeId,areamanager.DateOfJoining,areamanager.Name,areamanager.MobileNo,salesmanager.Name FROM areamanager LEFT JOIN salesmanager ON areamanager.UserID=salesmanager.AddedBy")
+	mycursor.execute("SELECT areamanager.EmployeeId,areamanager.DateOfJoining,areamanager.Name,areamanager.MobileNo,salesmanager.Name FROM areamanager LEFT JOIN salesmanager ON areamanager.UserID=salesmanager.AddedBy where areamanager.UserID=salesmanager.AddedBy")
 	row=mycursor.fetchall()
 	for i in row:
 		EmployeeId = i[0]
@@ -85,8 +86,26 @@ def viewam():
 		data = {'Id':count,'EmployeeId':EmployeeId,'DateOfJoining':DateOfJoining,'AreaManagerName':AreaManagerName,'MobilNo':MobilNo,'SalesManagerName':SalesManagerName}
 		new.append(data)
 		
-	return render_template('viewam.php', result = new)	
-	
+	return render_template('viewam.php', result = new)
+
+@app.route('/seadmin/viewsm')	
+def viewsm():
+	new = []
+	count = 0
+	mycursor.execute("SELECT salesmanager.EmployeeId,salesmanager.DateOfJoining,salesmanager.Name,salesmanager.MobileNo,vehiclecontract.OwnerName,vehiclecontract.AddedBy,salesmanager.UserID FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID")
+	row=mycursor.fetchall()
+	for i in row:
+		EmployeeId = i[0]
+		DateOfJoining = i[1]
+		salesmanagername = i[2]
+		MobileNo = i[3]
+		CustomerName = i[4]
+		count = count + 1
+		data = {'Id':count,'EmployeeId':EmployeeId,'DateOfJoining':DateOfJoining,'salesmanagername':salesmanagername,'MobileNo':MobileNo,'CustomerName':CustomerName}
+		new.append(data)
+		
+	return render_template('viewsm.php', result = new)	
+
 	
 @app.route('/seadmin/vc',methods = ['GET','POST'])
 def vc():
@@ -98,7 +117,6 @@ def vc():
 			start_dates = str(request.form.get('start'))
 			start_ends = str(request.form.get('End'))
 			sql="SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy"
-			
 			
 			if start_dates!='' and start_dates is not None:
 				sql=sql+" AND user.OnDate >= '"+str(start_dates)+"'"
@@ -216,42 +234,115 @@ def viewsc():
 				new.append(data)
 
 	return render_template('viewsc.php',result = new)
-	
-	
 
-
-	
 	
 @app.route('/seadmin/claim')
 def claim():
 	new = []
-	mycursor.execute("SELECT claim.UserID,claiminspection.VehicleNo,claiminspection.ClaimNo,claiminspection.ClaimDate,claiminspection.InspectBy FROM claim LEFT JOIN claiminspection ON claim.ClaimNo=claiminspection.ClaimNo where claim.ClaimNo=claiminspection.ClaimNo ")
-	row=mycursor.fetchall()
-	for i in row:
-		UserID = i[0]
-		VehicleNo = i[1]
-		ClaimNo = i[2]
-		ClaimDate = i[3]
-		InspectBy = i[4]
-		mycursor.execute("SELECT Name,RoleID from user WHERE UserID = '%s' or RoleID = '%s' " % (UserID,InspectBy))
-		rowcursor=mycursor.fetchall()
+	mycursor.execute("SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claiminspection.ClaimStatus,claim.MoneyReceiptPhoto FROM claim LEFT JOIN claiminspection ON claiminspection.ClaimID=claim.ClaimID ")
+	rowcursor=mycursor.fetchall()
+	if len(rowcursor) > 0:
 		for i in rowcursor:
-			Name = i[0]
-			Role = i[1] 
-			mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s'" % (Role))
+			DateOfClaim = i[0]
+			ClaimNo = i[1]
+			UserID = i[2]
+			ClaimStatus = i[3]
+			MoneyReceiptPhoto = i[4]
+			if ClaimStatus is None :
+				ClaimStatus = 'Pending'
+			elif ClaimStatus == 1 :
+				ClaimStatus = 'Approved'
+			mycursor.execute("SELECT Name from user WHERE UserID = '"+str(UserID)+"'")
 			rowcursor=mycursor.fetchall()
 			for i in rowcursor:
-				rolename = i[0]
-			data = {'Name':Name,'VehicleNo':VehicleNo,'rolename':rolename,'ClaimNo':ClaimNo,'ClaimDate':ClaimDate}
+				name=i[0]
+			data = {'DateOfClaim':DateOfClaim,'ClaimNo':ClaimNo,'name':name,'ClaimStatus':ClaimStatus,'MoneyReceiptPhoto':MoneyReceiptPhoto}
 			new.append(data)
-				
+
 	return render_template('claim.php',result = new)
 	
+@app.route('/seadmin/Requestcustomer')
+def Requestcustomer():
+	new = []
+	count = 0
+	mycursor.execute("SELECT DateOfRegistration,Name ,Mobile ,VehicleCategory,DateOfPurchase,UserID FROM `customerrequest` order by DateOfRegistration desc")
+	rowcursor=mycursor.fetchall()
+	if len(rowcursor) > 0:
+		for i in rowcursor:
+			DateOfRegistration = i[0]
+			Name = i[1]
+			Mobile = i[2]
+			VehicleCategory = i[3]
+			DateOfPurchase = i[4]
+			UserID = i[5]
+			count = count + 1
+			DateOfRegistration = DateOfRegistration.strftime("%m-%d-%Y")
+			data = {'Slno':count,'DateOfRegistration':DateOfRegistration,'Name':Name,'Mobile':Mobile,'VehicleCategory':VehicleCategory,'DateOfPurchase':DateOfPurchase,'UserID':UserID}
+			new.append(data)
+							
+	return render_template('viewcustomer.php',result = new)	
+	
+@app.route('/Requestcustomer_update/<string:id>')
+def Requestcustomer_update(id):
+	row = []
+	mycursor.execute("SELECT UserID FROM customerrequest WHERE UserID= %s",[id])
+	new = mycursor.fetchall()
+	for j in new:
+		id = j[0]
+		
+		data = {'id':id}
+		row.append(data)
+	return render_template('viewcustomer.php', row = row)
+
+
+@app.route('/seadmin/Registercustomer')
+def Registercustomer():
+	row = []
+	count = 0
+	mycursor.execute("SELECT vehiclecontract.DateOfContract,vehiclecontract.VehicleNo,vehiclecontract.Mobile,vehiclecontract.OwnerName,vehiclecontract.Po,vehiclecontract.Ps,user.Name,user.RoleID,user.EmployeeId,vehiclecontract.VehicleCategory FROM user LEFT JOIN vehiclecontract ON user.UserID = vehiclecontract.AddedBy")
+	new = mycursor.fetchall()
+	for i in new:
+		DateOfContract = i[0]
+		VehicleNo = i[1]
+		Mobile = i[2]
+		OwnerName = i[3]
+		Po = i[4]
+		Ps = i[5]
+		Name = i[6]
+		RoleID = i[7]
+		EmployeeId = i[8]
+		VehicleCategory = i[9]
+		count = count + 1
+		mycursor.execute("SELECT RoleName from role WHERE RoleID = '"+str(RoleID)+"'")
+		rowcursor=mycursor.fetchall()
+		for i in rowcursor:
+			Role=i[0]
+			data = {'count':count,'DateOfContract':DateOfContract,'VehicleNo':VehicleNo,'Mobile':Mobile,'OwnerName':OwnerName,'Po':Po,'Ps':Ps,'Name':Name,'Role':Role,'EmployeeId':EmployeeId,'VehicleCategory':VehicleCategory}
+			row.append(data)
+	return render_template('registercustomer.php', result = row)
+
+
+@app.route('/seadmin/Vehiclereport')
+def Vehiclereport():
+	arraynew = []
+	new = []
+	count = 0
+	mycursor.execute("SELECT SUM( CASE WHEN VehicleCategory = 'car' THEN 1 ELSE 0 END ) AS carcount, SUM( CASE WHEN VehicleCategory = 'motorcycle' THEN 1 ELSE 0 END ) AS motorcyclecount,date(OnDate) FROM `vehiclecontract` GROUP BY DATE(`OnDate`)  DESC ")
+	row=mycursor.fetchall()
+	for i in row:
+		new.append(list(map(str,list(i))))
+		for i in new:
+			count = count + 1
+			car=i[0]
+			motorcycle=i[1]
+			date = i[2]
+			data={'count':count,'car':car,'motorcycle':motorcycle,'date':date}
+			arraynew.append(data)
+	return render_template('viewvehiclerpt.php', result = arraynew)	
+
 @app.route('/seadmin/index')
 def index():
 	return render_template('index.php')
-		
-	
-	
+
 if __name__ == '__main__':
-	app.run(port='8000',host='0.0.0.0',debug=False)
+	app.run(port='7000',host='0.0.0.0',debug=False)

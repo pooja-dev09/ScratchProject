@@ -61,11 +61,12 @@
                                         <thead>
 
                                             <tr>
-                                                <th>Date</th>
-                                                <th>Vehicle No</th>
-                                                <th>Claim No</th>
+                                                <th>Date0fClaim</th>
+                                                <th>ClaimNo</th>
                                                 <th>User Name</th>
-                                                <th>Sales Manager</th>
+												<th>Status</th>
+												<th>Receipt</th>
+                                                
 												
 											
 											</tr>
@@ -74,11 +75,12 @@
                                           {% for r in result %}
                                             <tr>
                                                
-                                                <td>{{r["ClaimDate"]}}</td>
-												<td>{{r["VehicleNo"]}}</td>
+                                                <td>{{r["DateOfClaim"]}}</td>
                                                 <td>{{r["ClaimNo"]}}</td>
-                                                <td>{{r["Name"]}}</td>
-                                              	<td>{{r["rolename"]}}</td>
+                                                <td>{{r["name"]}}</td>
+												<td>{{r["ClaimStatus"]}}</td>
+												<td><img src="video/Screenshot_2.png" width="100" height="85"></img></td>
+                                              	
 												
 												
                                             </tr>
@@ -89,8 +91,9 @@
                                                 <th>Date</th>
                                                 <th>Vehicle No</th>
                                                 <th>Claim No</th>
-                                                <th>User Name</th>
-                                                <th>Sales Manager</th>
+												<th>Status</th>
+                                                <th>Receipt</th>
+                                                
 												
                                             </tr>
                                         </tfoot>

@@ -44,6 +44,7 @@ class Request(Resource):
 		District = args['District']
 		State = args['State']
 		CurrentTime = datetime.datetime.now()
+		CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 		if validNumber(MobileNo)== True :
 			sql = "INSERT INTO customerrequest (Name,Mobile,VehicleCategory,DateOfPurchase,PoliceStation,District,State,DateOfRegistration) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
 			val = (Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,District,State,CurrentTime)
@@ -296,6 +297,7 @@ class Newclaim(Resource):
 		if not file is None:
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
+			CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 			sql = "INSERT INTO claim (ClaimNo,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,VehiclesaffectedAreaVideo,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 			val = (ClaimNos,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,Dist,State,filename,CurrentTime)
 			result = mycursor.execute(sql,val)
@@ -338,6 +340,7 @@ class claimAmount(Resource):
 			IFSC = args['IFSC']
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
+			CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 			mycursor.execute("UPDATE claim SET AccountNumber = '"+str(BankAccountNo)+"',IFSC ='"+str(IFSC)+"', MoneyReceiptPhoto = '"+str(filename)+"',BankName = '"+str(BankName)+"' , OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"' ")
 			mydb.commit()
 			return jsonify ({
@@ -356,6 +359,7 @@ class claimAmount(Resource):
 			print('WalletName',WalletName)
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
+			CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 			mycursor.execute("UPDATE claim SET UPI = '"+str(UPI)+"', MoneyReceiptPhoto = '"+str(filename)+"',WalletName = '"+str(WalletName)+"' , OnDate = '"+str(CurrentTime)+"' WHERE UserID = '"+str(UserID)+"' ")
 			mydb.commit()
 			return jsonify ({
@@ -607,6 +611,7 @@ class ServiceCenterAuthorization(Resource):
 		file = args['Video']
 		Photo= args['imageData']
 		CurrentTime = datetime.datetime.now()
+		CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 		mycursor.execute("SELECT count(*) as totalval from user")
 		rowcursor=mycursor.fetchall()
 		for i in rowcursor:
@@ -652,6 +657,7 @@ class ClaimInspection(Resource):
 		ClaimID= args['ClaimID']
 		Photo= args['imageData']
 		CurrentTime = datetime.datetime.now()
+		CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 		if not Photo is None:
 			filename=Upload_fun(Photo)
 			sql = "INSERT INTO claiminspection (ClaimID,photo,OnDate) VALUES (%s,%s,%s)"
@@ -719,6 +725,7 @@ class AdminAddSM(Resource):
 		State = args['State']
 		CenterContactNo = args['CenterContactNo']
 		CurrentTime = datetime.datetime.now()
+		CurrentTime = CurrentTime.strftime("%m-%d-%Y")
 		mycursor.execute("SELECT count(*) as totalval from user")
 		rowcursor=mycursor.fetchall()
 		for i in rowcursor:
