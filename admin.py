@@ -9,13 +9,14 @@ CORS(app, support_credentials=True)
 
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
 
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  passwd="colourfade",
-  database="Scratch"
-)
-mycursor = mydb.cursor()
+def mycus():
+	mydb = mysql.connector.connect(
+	  host="localhost",
+	  user="root",
+	  passwd="colourfade",
+	  database="Scratch"
+	)
+	return mydb
 
 
 
@@ -48,24 +49,44 @@ def createareamanager():
 		CurrentTime = datetime.datetime.now()
 		RoleID = 4
 		UserPassword=Password_encoded(MobileNo)
+		mydb=mycus()
+		mycursor = mydb.cursor()
 		mycursor.execute("SELECT count(*) as totalval from user")
 		rowcursor=mycursor.fetchall()
 		for i in rowcursor:
 			totalval = i[0]
 		EmployeeId=EmpId(totalval)
-		if DateOfJoining != "" and Name != "" and DOB != "" and Qualification != " " and AdharNo != "" and EmailId != "" and MobileNo != "" and BankAccountNo != "" and IFSC != "" and BankName != "" and PresentlyWorking != "" and AppointCenter != "" and NameCenter != "" and CenterBrand != "" and CenterFor != "" and CenterLocation != "" and PostOffice != "" and PoliceStation != "" and District != "" and State != "" and CenterContactNo != " " and filename != "":
-			sql = "INSERT INTO user (Password,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,Mobile,Email,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val=(UserPassword,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
-			result = mycursor.execute(sql,val)
-			mydb.commit()
-			UserID = mycursor.lastrowid
-			sql = "INSERT INTO areamanager (UserID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation	,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-			val=(UserID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
-			result = mycursor.execute(sql,val)
-			mydb.commit()
-			flash('You were Successfully Added')
+		if accountNo(BankAccountNo) == True:
+			flash('BankAccountNo is compulsary')
+			if adharNo(AdharNo) == True:
+				flash('adharNo is compulsary')
+				if check (EmailId) == True:
+					flash('Email is compulsary')
+					if IFSC(IFSC) == True:
+						flash('IFSC is compulsary')
+						if accountNo(BankAccountNo)== True and adharNo(AdharNo) == True and check (EmailId) == True and IFSC(IFSC) == True:
+							sql = "INSERT INTO user (Password,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,Mobile,Email,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+							val=(UserPassword,RoleID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
+							result = mycursor.execute(sql,val)
+							mydb.commit()
+							UserID = mycursor.lastrowid
+							sql = "INSERT INTO areamanager (UserID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation	,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+							val=(UserID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,CenterFor,CenterLocation,PostOffice,PoliceStation,District,State,CenterContactNo,filename,CurrentTime)
+							result = mycursor.execute(sql,val)
+							mydb.commit()
+							mydb.close()
+							flash('Data is Inserted Successfully')
+						else:
+							flash('Something went wrong')
+					else:
+						flash('IFSC should be 11 digit')
+				else:
+					flash('Email is invalid format')
+			else:
+				flash('AdharNo should be 12 digit')
 		else:
-			flash('Please check your filled ')
+			flash('AccountNo should be 14 to 16 digit')
+		
 		
 	return render_template('createareamanager.php')
 	
@@ -74,8 +95,11 @@ def createareamanager():
 def viewam():
 	new = []
 	count = 0
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	mycursor.execute("SELECT areamanager.EmployeeId,areamanager.DateOfJoining,areamanager.Name,areamanager.MobileNo,salesmanager.Name FROM areamanager LEFT JOIN salesmanager ON areamanager.UserID=salesmanager.AddedBy where areamanager.UserID=salesmanager.AddedBy")
 	row=mycursor.fetchall()
+	mydb.close()
 	for i in row:
 		EmployeeId = i[0]
 		DateOfJoining = i[1]
@@ -92,8 +116,11 @@ def viewam():
 def viewsm():
 	new = []
 	count = 0
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	mycursor.execute("SELECT salesmanager.EmployeeId,salesmanager.DateOfJoining,salesmanager.Name,salesmanager.MobileNo,vehiclecontract.OwnerName,vehiclecontract.AddedBy,salesmanager.UserID FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID")
 	row=mycursor.fetchall()
+	mydb.close()
 	for i in row:
 		EmployeeId = i[0]
 		DateOfJoining = i[1]
@@ -109,6 +136,8 @@ def viewsm():
 	
 @app.route('/seadmin/vc',methods = ['GET','POST'])
 def vc():
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	new = []
 	count = 0
 	if (request.method == 'POST'):
@@ -116,6 +145,7 @@ def vc():
 		if request.form['submit_button'] == 'Submit':
 			start_dates = str(request.form.get('start'))
 			start_ends = str(request.form.get('End'))
+			
 			sql="SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy"
 			
 			if start_dates!='' and start_dates is not None:
@@ -140,6 +170,7 @@ def vc():
 					OnDate = i[5]
 					mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
 					rowcursor=mycursor.fetchall()
+					
 					for i in rowcursor:
 						count +=  1
 						designation = i[0]
@@ -150,7 +181,6 @@ def vc():
 		
 		mycursor.execute("SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy ORDER BY vehiclecontract.AddedBy desc limit 10")
 		row=mycursor.fetchall()
-		print(row)
 		for i in row:
 			Name = i[0]
 			RoleID = i[1]
@@ -160,21 +190,25 @@ def vc():
 			OnDate = i[5]
 			mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
 			rowcursor=mycursor.fetchall()
+			
 			for i in rowcursor:
 				count += 1
 				designation = i[0]
 				data = {'slno':count,'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
 				new.append(data)
+	mydb.close()
 	return render_template('vc.php',result = new)
 	
 @app.route('/seadmin/viewsc',methods = ['GET','POST'])
 def viewsc():
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	new = []
-	
 	if (request.method == 'POST'):
 		if request.form['submit_button'] == 'Submit':
 			start_dates = str(request.form.get('start'))
 			start_ends = str(request.form.get('End'))
+			
 			sql="SELECT user.Name,user.RoleID,servicecenterauthorize.OwnerName,servicecenterauthorize.CenterName,servicecenterauthorize.CenterLocation,servicecenterauthorize.Po,servicecenterauthorize.Ps,servicecenterauthorize.District,servicecenterauthorize.OnDate FROM user LEFT JOIN servicecenterauthorize ON user.UserID=servicecenterauthorize.AddedBy where user.UserID=servicecenterauthorize.AddedBy"
 	
 			if start_dates!='' and start_dates is not None:
@@ -201,19 +235,13 @@ def viewsc():
 					OnDate = i[8]
 					mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
 					rowcursor=mycursor.fetchall()
-					
 					for i in rowcursor:
 						designation = i[0]
-						
 						data = {'Name':Name,'OwnerName':OwnerName,'CenterName':CenterName,'CenterLocation':CenterLocation,'Po':Po,'Ps':Ps,'District':District,'OnDate':OnDate,'designation':designation}
 						new.append(data)
-					
-					
-		
 			return render_template('viewsc.php',result = new)
 	else:
 		mycursor.execute("SELECT user.Name,user.RoleID,servicecenterauthorize.OwnerName,servicecenterauthorize.	CenterName,servicecenterauthorize.CenterLocation,servicecenterauthorize.Po,servicecenterauthorize.Ps,servicecenterauthorize.District,servicecenterauthorize.OnDate FROM user LEFT JOIN servicecenterauthorize ON user.UserID=servicecenterauthorize.AddedBy where user.UserID=servicecenterauthorize.AddedBy ORDER BY servicecenterauthorize.AddedBy desc limit 10")
-		 
 		row=mycursor.fetchall()
 		for i in row:
 			Name = i[0]
@@ -227,22 +255,25 @@ def viewsc():
 			OnDate = i[8]
 			mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
 			rowcursor=mycursor.fetchall()
-			
 			for i in rowcursor:
 				designation = i[0]
 				data = {'Name':Name,'OwnerName':OwnerName,'CenterName':CenterName,'CenterLocation':CenterLocation,'Po':Po,'Ps':Ps,'District':District,'OnDate':OnDate,'designation':designation}
 				new.append(data)
-
+	mydb.close()
 	return render_template('viewsc.php',result = new)
 
 	
 @app.route('/seadmin/claim')
 def claim():
 	new = []
-	mycursor.execute("SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claiminspection.ClaimStatus,claim.MoneyReceiptPhoto FROM claim LEFT JOIN claiminspection ON claiminspection.ClaimID=claim.ClaimID ")
+	count = 0
+	mydb=mycus()
+	mycursor = mydb.cursor()
+	mycursor.execute("SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claiminspection.ClaimStatus,claim.MoneyReceiptPhoto FROM claim LEFT JOIN claiminspection ON claiminspection.ClaimID=claim.ClaimID order by claim.DateOfClaim desc ")
 	rowcursor=mycursor.fetchall()
 	if len(rowcursor) > 0:
 		for i in rowcursor:
+			count = count + 1
 			DateOfClaim = i[0]
 			ClaimNo = i[1]
 			UserID = i[2]
@@ -254,19 +285,23 @@ def claim():
 				ClaimStatus = 'Approved'
 			mycursor.execute("SELECT Name from user WHERE UserID = '"+str(UserID)+"'")
 			rowcursor=mycursor.fetchall()
+			
 			for i in rowcursor:
 				name=i[0]
-			data = {'DateOfClaim':DateOfClaim,'ClaimNo':ClaimNo,'name':name,'ClaimStatus':ClaimStatus,'MoneyReceiptPhoto':MoneyReceiptPhoto}
+			data = {'count':count,'DateOfClaim':DateOfClaim,'ClaimNo':ClaimNo,'name':name,'ClaimStatus':ClaimStatus,'MoneyReceiptPhoto':MoneyReceiptPhoto}
 			new.append(data)
-
+	mydb.close()
 	return render_template('claim.php',result = new)
 	
 @app.route('/seadmin/Requestcustomer')
 def Requestcustomer():
 	new = []
 	count = 0
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	mycursor.execute("SELECT DateOfRegistration,Name ,Mobile ,VehicleCategory,DateOfPurchase,UserID FROM `customerrequest` order by DateOfRegistration desc")
 	rowcursor=mycursor.fetchall()
+	mydb.close()
 	if len(rowcursor) > 0:
 		for i in rowcursor:
 			DateOfRegistration = i[0]
@@ -285,11 +320,12 @@ def Requestcustomer():
 @app.route('/Requestcustomer_update/<string:id>')
 def Requestcustomer_update(id):
 	row = []
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	mycursor.execute("SELECT UserID FROM customerrequest WHERE UserID= %s",[id])
 	new = mycursor.fetchall()
 	for j in new:
 		id = j[0]
-		
 		data = {'id':id}
 		row.append(data)
 	return render_template('viewcustomer.php', row = row)
@@ -297,6 +333,8 @@ def Requestcustomer_update(id):
 
 @app.route('/seadmin/Registercustomer')
 def Registercustomer():
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	row = []
 	count = 0
 	mycursor.execute("SELECT vehiclecontract.DateOfContract,vehiclecontract.VehicleNo,vehiclecontract.Mobile,vehiclecontract.OwnerName,vehiclecontract.Po,vehiclecontract.Ps,user.Name,user.RoleID,user.EmployeeId,vehiclecontract.VehicleCategory FROM user LEFT JOIN vehiclecontract ON user.UserID = vehiclecontract.AddedBy")
@@ -319,6 +357,7 @@ def Registercustomer():
 			Role=i[0]
 			data = {'count':count,'DateOfContract':DateOfContract,'VehicleNo':VehicleNo,'Mobile':Mobile,'OwnerName':OwnerName,'Po':Po,'Ps':Ps,'Name':Name,'Role':Role,'EmployeeId':EmployeeId,'VehicleCategory':VehicleCategory}
 			row.append(data)
+	mydb.close()
 	return render_template('registercustomer.php', result = row)
 
 
@@ -327,8 +366,11 @@ def Vehiclereport():
 	arraynew = []
 	new = []
 	count = 0
+	mydb=mycus()
+	mycursor = mydb.cursor()
 	mycursor.execute("SELECT SUM( CASE WHEN VehicleCategory = 'car' THEN 1 ELSE 0 END ) AS carcount, SUM( CASE WHEN VehicleCategory = 'motorcycle' THEN 1 ELSE 0 END ) AS motorcyclecount,date(OnDate) FROM `vehiclecontract` GROUP BY DATE(`OnDate`)  DESC ")
 	row=mycursor.fetchall()
+	mydb.close()
 	for i in row:
 		new.append(list(map(str,list(i))))
 		for i in new:

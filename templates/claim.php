@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">View All Area Manager</h2>
+                            <h2 class="pageheader-title">View All Claim </h2>
                             
                            
                         </div>
@@ -54,13 +54,14 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">List Of Area Manager Details</h5>
+                            <h5 class="card-header">View All Claim</h5>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
                                         <thead>
 
                                             <tr>
+												<th>Slno</th>
                                                 <th>Date0fClaim</th>
                                                 <th>ClaimNo</th>
                                                 <th>User Name</th>
@@ -74,12 +75,14 @@
                                         <tbody>
                                           {% for r in result %}
                                             <tr>
-                                               
+                                               <td>{{r["count"]}}</td>
                                                 <td>{{r["DateOfClaim"]}}</td>
                                                 <td>{{r["ClaimNo"]}}</td>
                                                 <td>{{r["name"]}}</td>
 												<td>{{r["ClaimStatus"]}}</td>
-												<td><img src="video/Screenshot_2.png" width="100" height="85"></img></td>
+												<td>{{r["MoneyReceiptPhoto"]}}</td>
+										<td><img src="video/{{ r['MoneyReceiptPhoto']}}" width="100" height="100"></img></td>
+												
                                               	
 												
 												
@@ -88,6 +91,7 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
+												<th>Slno</th>
                                                 <th>Date</th>
                                                 <th>Vehicle No</th>
                                                 <th>Claim No</th>

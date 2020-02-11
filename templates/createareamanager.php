@@ -83,28 +83,28 @@
                                         <form method="post" action="/seadmin/createareamanager" enctype=multipart/form-data>
                                              <div class="form-group">
 												<label for="date">Date Of Joining</label>
-												<input type="date" name="DateOfJoining" class="form-control"  />
+												<input type="date" name="DateOfJoining" class="form-control" required />
 											</div>
 										  <div class="form-group">
 												<label for="date"> Name </label>
-												<input type="text" name="Name" class="form-control"  />
+												<input type="text" name="Name" class="form-control" required />
 										  </div>
 										  <div class="form-group">
 												<label for="date">DOB </label>
-												<input type="date" name="DOB" class="form-control"  />
+												<input type="date" name="DOB" class="form-control" required  />
 										  </div>
 										  <div class="form-group">
 												<label for="date"> Qualification  </label>
-												<input type="text" name="Qualification" class="form-control"  />
+												<input type="text" name="Qualification" class="form-control" required />
 										  </div>
 										 <h4 style="font-size:14px; color:#FF9900; text-align:left;">ID Proof Address</h4>
 										  <div class="form-group">
 												<label for="centerid"> AdharNo </label>
-												<input type="text"  class="form-control" name="AdharNo" />
+												<input type="text"  class="form-control" name="AdharNo" required />
 										   </div>
 										  <div class="form-group">
 												<label for="centerid"> Mobile No </label>
-												<input type="text" class="form-control" name="Mobile" />
+												<input type="text" class="form-control" name="Mobile" required />
 										   </div>
 										   <div class="form-group">
 												<label for="centerid"> Email Id </label>
@@ -114,25 +114,25 @@
 										   <h4 style="font-size:14px; color:#FF9900; text-align:left;">Bank Details</h4>
 										   <div class="form-group">
 												<label for="centerid"> Bank Account No </label>
-												<input type="text" class="form-control" name="BankAccountNo" />
+												<input type="text" class="form-control" name="BankAccountNo" required />
 										   </div>
 										   <div class="form-group">
 												<label for="centerid"> IFSC Code </label>
-												<input type="text" class="form-control" name="IFSC" />
+												<input type="text" class="form-control" name="IFSC" required />
 										   </div>
 										   <div class="form-group">
 												<label for="centerid"> Bank Name </label>
-												<input type="text" class="form-control" name="BankName" />
+												<input type="text" class="form-control" name="BankName" required />
 											</div>
 											<h4 style="font-size:14px; color:#FF9900; text-align:left;">Work Experience Details</h4>
 										   <div class="form-group">
 												<label for="centerid"> Presently  working as </label>
-												<input type="text" class="form-control" name="PresentlyWorking" />
+												<input type="text" class="form-control" name="PresentlyWorking" required />
 										   </div>
 										  
 										  <div class="form-group">
 											<label for="branchid">Appoint For </label>
-											<select class="form-control" name="AppointCenter">
+											<select class="form-control" name="AppointCenter" required >
 												<option value="SalesCenter">Sales Center</option>
 												<option value="ServiceCenter">Service Center</option>
 												<option value="SalesandService">Sales & Service Center</option>
@@ -140,15 +140,15 @@
 										  </div>
 										  <div class="form-group">
 											<label for="centerid"> Name of Sales /Service Center </label>
-											<input type="text" class="form-control" name="NameCenter" />
+											<input type="text" class="form-control" name="NameCenter" required />
 										   </div>
 										  <div class="form-group">
 											<label for="centerid"> Center Brand </label>
-											<input type="text" class="form-control" name="CenterBrand" />
+											<input type="text" class="form-control" name="CenterBrand" required />
 										   </div>
 											<div class="form-group">
 											<label for="branchid">Sales /Service Center For </label>
-											<select class="form-control" name="CenterFor">
+											<select class="form-control" name="CenterFor" required >
 												<option value="motorcycle">Two Wheeler</option>
 												<option value="car">Four Wheeler</option>
 												
@@ -156,29 +156,29 @@
 										  </div>
 											<div class="form-group">
 											<label for="centerid"> Center Location </label>
-											<input type="text" class="form-control" name="CenterLocation" />
+											<input type="text" class="form-control" name="CenterLocation" required />
 										   </div>
 										 <div class="form-group">
 											<label for="centerid"> PO </label>
-											<input type="text" class="form-control" name="PostOffice" />
+											<input type="text" class="form-control" name="PostOffice" required />
 											
 										   </div>
 										  <div class="form-group">
 											<label for="villageid"> PS  </label>
-											<input type="text" class="form-control" name="PoliceStation" />
+											<input type="text" class="form-control" name="PoliceStation" required />
 											
 										  </div> 
 										   <div class="form-group">
 											<label for="centerid"> Dist </label>
-											<input type="text" class="form-control" name="District" />
+											<input type="text" class="form-control" name="District" required  />
 										   </div>
 										   <div class="form-group">
 											<label for="centerid"> State </label>
-											<input type="text" class="form-control" name="State" />
+											<input type="text" class="form-control" name="State" required />
 										   </div>
 										   <div class="form-group">
 											<label for="centerid"> Sales/Service Center Contact No</label>
-											<input type="text" class="form-control" name="CenterContactNo" />
+											<input type="text" class="form-control" name="CenterContactNo" required />
 										   </div>
 											 
 										   <div class="form-group">
@@ -188,7 +188,7 @@
 												<div class="input-group-btn">
 												<span class="fileUpload btn btn-success">
 												  <span class="upl" id="upload">Upload from gallery</span>
-												  <input type="file" class="upload up" id="inputfile" name="inputfile" />
+												  <input type="file" class="upload up" id="inputfile" name="inputfile"  required />
 												</span>
 											   </div>
 										  
