@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">View All Area Manager</h2>
+                            <center><u><h2 class="pageheader-title">View Area Manager</h2></u></center>
                             
                            
                         </div>
@@ -54,7 +54,7 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">List Of Area Manager Details</h5>
+                           
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
@@ -62,11 +62,12 @@
 
                                             <tr>
                                                 <th>Slno</th>
-												<th>EmployeeId</th>
-											    <th>DateOfJoining</th>
-											    <th>Area Manager</th>
-                                                <th>Mobile</th>
-                                                <th>Sales Manager</th>
+												<th>Emp.ID</th>
+											    <th>District</th>
+											    <th>View AM Profile</th>
+                                                <th>View SM Profile</th>
+                                                <th>View Business</th>
+												<th>Send Notification To All</th>
 												
                                             </tr>
                                         </thead>
@@ -74,29 +75,34 @@
 										{% for r in result %}
                                             <tr>
                                                 <td>{{r["Id"]}}</td>
-                                                <td>{{r["EmployeeId"]}}</td>
-												<td>{{r["DateOfJoining"]}}</td>
-                                                <td>{{r["AreaManagerName"]}}</td>
-                                                <td>{{r["MobilNo"]}}</td>
-                                                <td>{{r["SalesManagerName"]}}</td>	
+                                               <td>{{r["EmployeeId"]}}</td>
+												<td>{{r["District"]}}</td>
+                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/viewamdetails/{{r.UserID}}">View</a></td>
+                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsm/{{r.UserID}}">View</a></td>
+                                                <td><a style="color:#ff001a;text-decoration: underline;"href="/viewsmdetails/{{r.UserID}}">View</a></td>	
+												<td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
 												
                                             </tr>
 											{% endfor %}
 
                                         </tbody>
                                         <tfoot>
-                                            tr>
+                                            <tr>
                                                 <th>Slno</th>
-												<th>EmployeeId</th>
-											    <th>DateOfJoining</th>
-											    <th>Area Manager</th>
-                                                <th>Mobile</th>
-                                                <th>Sales Manager</th>
+												<th>Emp.ID</th>
+											    <th>District</th>
+											    <th>View AM Profile</th>
+                                                <th>View SM Profile</th>
+                                                <th>View Business</th>
+												<th>Send Notification To All</th>
 												
 												
                                             </tr>
+											
                                         </tfoot>
+										
                                     </table>
+									<button style="float:right;"type="button" onclick="alert('Hello world!')">Click Me!</button>
                                 </div>
                             </div>
                         </div>

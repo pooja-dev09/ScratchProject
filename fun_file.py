@@ -37,10 +37,10 @@ def Upload_fun(file):
 
 def save(Photo):
 	imgdata = base64.b64decode(Photo)
-	filename = 'video/'+str(uuid.uuid4())+'.jpg'  # I assume you have a way of picking unique filenames
+	filename = 'static/video/'+str(uuid.uuid4())+'.jpg'  # I assume you have a way of picking unique filenames
 	with open(filename, 'wb') as f:
 		f.write(imgdata)
-		return (filename.replace('video/',''))
+		return (filename.replace('static/video/',''))
 		
 
 def EmpId(totalval):
@@ -55,6 +55,7 @@ def ClaimNo(totalval):
 	
 	
 def SMS_Integration(msg,contactno):
+	print('sms',contactno)
 	uname ='krititech'
 	pwd = 'kriti@2705'
 	senderid='SCREXP'
@@ -64,6 +65,7 @@ def SMS_Integration(msg,contactno):
 	smsurl='http://cloud.smsindiahub.in/vendorsms/pushsms.aspx?user='+str(uname)+'&password='+str(pwd)+'&msisdn='+str(contactno)+'&sid='+str(senderid)+'&msg='+str(msg)+'&fl=0&gwid=2'
 	r = requests.post(url = smsurl)
 	x=r.json()
+	print(x)
 
 
 def Password_encoded(MobileNo):
@@ -102,15 +104,16 @@ def adharNo(adharNo):
 		return True
 		
 def GSTINo(GSTINo):
-	if len(adharNo) == 15: 
+	if len(GSTINo) == 15: 
 		return True
 		
 def ChassisNo(ChassisNo):
-	if len(adharNo) == 18: 
+	if len(adharNo) == 17: 
 		return True
 		
 		
-def IFSC(IFSC):
-	if len(IFSC) == 11: 
+		
+def fun_ifsc(IFSC):
+	if re.match("^[A-Z]{4}\d{7}$", IFSC):
 		return True
 

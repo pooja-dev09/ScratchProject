@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">View All Sales Manager</h2>
+                            <u><center><h2 class="pageheader-title">Area Managers Team</h2></center></u>
                             
                            
                         </div>
@@ -54,49 +54,61 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">List Of Sales Manager Details</h5>
+                            
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
+										
+									
+										
+										
                                         <thead>
-
                                             <tr>
                                                 <th>Slno</th>
-												<th>EmployeeId</th>
-											    <th>DateOfJoining</th>
-											    <th>Sales Manager</th>
-                                                <th>Mobile</th>
-                                                <th>User</th>
+												<th>Employee ID</th>
+											    <th>Police Station</th>
+											    <th>Center Brand</th>
+                                                <th>View Profile</th>
+                                                <th>View Business</th>
+												<th>Send Notification To All</th>
 												
                                             </tr>
                                         </thead>
                                         <tbody>
 										{% for r in result %}
+										<h5 style = "position:absolute;top:0">Area Manager ID- {{r['Area_EmployeeId']}}</h5>
+										<center><h5 style = "position:absolute;top:20;">District- {{r['Area_District']}}</h5></center>
                                             <tr>
                                                 <td>{{r["Id"]}}</td>
-                                                <td>{{r["EmployeeId"]}}</td>
-												<td>{{r["DateOfJoining"]}}</td>
-                                                <td>{{r["salesmanagername"]}}</td>
-                                                <td>{{r["MobileNo"]}}</td>
-                                                <td>{{r["CustomerName"]}}</td>	
+												<td>{{r["Sales_EmployeeId"]}}</td>
+												<td>{{r["Sales_Ps"]}}</td>
+												<td>{{r["Sales_CenterBrand"]}}</td>
+                                                
+                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsmdetails/{{r.Sales_UserId}}">View</a></td>
+                                                <td><a style="color:#ff001a;text-decoration: underline;"href="#">View</a></td>	
+												<td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
 												
                                             </tr>
 											{% endfor %}
 
                                         </tbody>
                                         <tfoot>
-                                            tr>
+                                            <tr>
                                                 <th>Slno</th>
-												<th>EmployeeId</th>
-											    <th>DateOfJoining</th>
-											    <th>Sales Manager</th>
-                                                <th>Mobile</th>
-                                                <th>User</th>
+												<th>Employee ID</th>
+											    <th>Police Station</th>
+											    <th>Center Brand</th>
+                                                <th>View Profile</th>
+                                                <th>View Business</th>
+												<th>Send Notification To All</th>
 												
 												
                                             </tr>
+											
                                         </tfoot>
+										
                                     </table>
+									<button style="float:right;"type="button" onclick="alert('Hello world!')">Click Me!</button>
                                 </div>
                             </div>
                         </div>

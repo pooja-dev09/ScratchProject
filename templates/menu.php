@@ -18,28 +18,42 @@
                             </li>
 							
                             <li class="nav-item">
-                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>Area Manager</a>
+                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-2" aria-controls="submenu-2"><i class="fa fa-fw fa-rocket"></i>Appointment</a>
                                 <div id="submenu-2" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
 									
 										<li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/createareamanager"><i class="fa fa-fw fa-user"></i>Create Area Manager</a>                                        
+                                            <a class="nav-link" href="/seadmin/createareamanager"><i class="fa fa-fw fa-user"></i>Area Manager</a>                                        
 										</li>
-										
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/viewam">View Area Manager </a>                                        
-										</li>
-										<li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/viewsm">View Sales Manager </a>                                        
-										</li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/vc">Vehicle Contract</a>                                       
-										</li>
-                                        
                                         
                                     </ul>
                                 </div>
                             </li>
+							
+							<li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>Employee</a>
+                                <div id="submenu-3" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/seadmin/viewam">Area Manager</a>
+											
+											<a class="nav-link" href="/seadmin/viewsc">Sales Manager</a>
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+							<li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>Contract Record</a>
+                                <div id="submenu-3" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                            
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+							
+							
                             <li class="nav-item">
                                 <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>Service Center</a>
                                 <div id="submenu-3" class="collapse submenu" style="">
@@ -50,26 +64,18 @@
                                     </ul>
                                 </div>
                             </li>
-							
-									
-							 <li class="nav-item">
-                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-4" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Customer</a>
-                                <div id="submenu-4" class="collapse submenu" style="">
+							<li class="nav-item">
+                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>New Customer</a>
+                                <div id="submenu-3" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/Requestcustomer">Request Customer</a>                                        
-										</li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/Registercustomer">Customer View</a>                                       
-										</li>
-										 <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/Vehiclereport">Vehicle Report</a>                                       
-										</li>
-                                        
+                                            
                                         
                                     </ul>
                                 </div>
                             </li>
+									
+							
 
 
 							 <li class="nav-item">
@@ -77,7 +83,9 @@
                                 <div id="submenu-5" class="collapse submenu" style="">
                                     <ul class="nav flex-column">
                                         <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/claim">Claim View</a>                                        
+                                            <a class="nav-link" href="/claim">View Claim</a>
+											<a class="nav-link" href="/claim">Inspection Report</a>
+											<a class="nav-link" href="/claim">Claim Settle</a>
 										</li>
                                         
                                         
@@ -85,6 +93,44 @@
                                 </div>
                             </li>		
 							
+							<li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Commission</a>
+                                <div id="submenu-5" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                                                                    
+										</li>
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </li>	
+								
+							<li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Money Receipt</a>
+                                <div id="submenu-5" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                                                                    
+										</li>
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </li>
+								
+							<li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Notifications</a>
+                                <div id="submenu-5" class="collapse submenu" style="">
+                                    <ul class="nav flex-column">
+                                        <li class="nav-item">
+                                                                                    
+										</li>
+                                        
+                                        
+                                    </ul>
+                                </div>
+                            </li>				
 									
                         </ul>
                     </div>

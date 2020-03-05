@@ -78,98 +78,78 @@
                                     
                                 </div>
                                 <div class="card">
-                                    <h5 class="card-header">Basic Details</h5>
-                                    <div class="card-body">
+                                    
+                                    <div class="card-body" style="width: 650px;">
                                         <form method="post" action="/seadmin/createareamanager" enctype=multipart/form-data>
-                                             <div class="form-group">
+											<div class="form-group">
+												<label for="date">District Allocate</label>
+												<input type="text" name="Districtallocation" class="form-control" required />
+											</div>
+											<div class="form-group">
 												<label for="date">Date Of Joining</label>
 												<input type="date" name="DateOfJoining" class="form-control" required />
 											</div>
+											 <h4 style="font-size:14px; color:#ff001a; text-decoration: underline; text-align:left;">Basic Details</h4>
+                                             
 										  <div class="form-group">
-												<label for="date"> Name </label>
+												<label for="text"> Name of Candidate </label>
 												<input type="text" name="Name" class="form-control" required />
 										  </div>
 										  <div class="form-group">
-												<label for="date">DOB </label>
+												<label for="date">Date of Birth </label>
 												<input type="date" name="DOB" class="form-control" required  />
 										  </div>
 										  <div class="form-group">
 												<label for="date"> Qualification  </label>
 												<input type="text" name="Qualification" class="form-control" required />
 										  </div>
-										 <h4 style="font-size:14px; color:#FF9900; text-align:left;">ID Proof Address</h4>
+										 
 										  <div class="form-group">
-												<label for="centerid"> AdharNo </label>
-												<input type="text"  class="form-control" name="AdharNo" required />
-										   </div>
-										  <div class="form-group">
-												<label for="centerid"> Mobile No </label>
-												<input type="text" class="form-control" name="Mobile" required />
+												<label for="centerid"> Adhar Card No </label>
+												<input type="text"  Placeholder = "Please Enter 12 -digit numbers"class="form-control" name="AdharNo" required />
 										   </div>
 										   <div class="form-group">
-												<label for="centerid"> Email Id </label>
+												<label for="centerid"> PAN Card No </label>
+												<input type="text"  class="form-control" name="Pancard" required />
+										   </div>
+										  <div class="form-group">
+												<label for="centerid"> Mobile Number </label>
+												<input type="text" class="form-control" Placeholder="Please Enter 10-digit numbers" name="Mobile" required />
+										   </div>
+										   <div class="form-group">
+												<label for="centerid"> E-mail Id </label>
 												<input type="email" class="form-control" name="Email" required />
 										   </div>
-										   
-										   <h4 style="font-size:14px; color:#FF9900; text-align:left;">Bank Details</h4>
+										   <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Experience</h4>
 										   <div class="form-group">
-												<label for="centerid"> Bank Account No </label>
-												<input type="text" class="form-control" name="BankAccountNo" required />
+												<label for="centerid">Year of experience</label>
+												<input type="text" class="form-control" name="Yearofexperience" required />
 										   </div>
 										   <div class="form-group">
-												<label for="centerid"> IFSC Code </label>
-												<input type="text" class="form-control" name="IFSC" required />
+												<label for="centerid"> Experience Sector</label>
+												<input type="text" class="form-control" name="ExperienceSector" required />
 										   </div>
-										   <div class="form-group">
-												<label for="centerid"> Bank Name </label>
-												<input type="text" class="form-control" name="BankName" required />
-											</div>
-											<h4 style="font-size:14px; color:#FF9900; text-align:left;">Work Experience Details</h4>
 										   <div class="form-group">
 												<label for="centerid"> Presently  working as </label>
 												<input type="text" class="form-control" name="PresentlyWorking" required />
 										   </div>
-										  
-										  <div class="form-group">
-											<label for="branchid">Appoint For </label>
-											<select class="form-control" name="AppointCenter" required >
-												<option value="SalesCenter">Sales Center</option>
-												<option value="ServiceCenter">Service Center</option>
-												<option value="SalesandService">Sales & Service Center</option>
-											</select>
-										  </div>
-										  <div class="form-group">
-											<label for="centerid"> Name of Sales /Service Center </label>
-											<input type="text" class="form-control" name="NameCenter" required />
+										   <h4 style="font-size:14px; color:#ff001a; text-decoration: underline;  text-align:left;">Address(As per ID proof)</h4>
+										   <div class="form-group">
+												<label for="centerid">Street/Village </label>
+												<input type="text" class="form-control" name="StreetVillage" required />
 										   </div>
-										  <div class="form-group">
-											<label for="centerid"> Center Brand </label>
-											<input type="text" class="form-control" name="CenterBrand" required />
-										   </div>
-											<div class="form-group">
-											<label for="branchid">Sales /Service Center For </label>
-											<select class="form-control" name="CenterFor" required >
-												<option value="motorcycle">Two Wheeler</option>
-												<option value="car">Four Wheeler</option>
-												
-											</select>
-										  </div>
-											<div class="form-group">
-											<label for="centerid"> Center Location </label>
-											<input type="text" class="form-control" name="CenterLocation" required />
-										   </div>
-										 <div class="form-group">
-											<label for="centerid"> PO </label>
+										   <div class="form-group">
+											<label for="centerid"> Post Office </label>
 											<input type="text" class="form-control" name="PostOffice" required />
 											
 										   </div>
 										  <div class="form-group">
-											<label for="villageid"> PS  </label>
+											<label for="villageid"> Police Station  </label>
 											<input type="text" class="form-control" name="PoliceStation" required />
 											
 										  </div> 
 										   <div class="form-group">
-											<label for="centerid"> Dist </label>
+											<label for="centerid"> District </label>
 											<input type="text" class="form-control" name="District" required  />
 										   </div>
 										   <div class="form-group">
@@ -177,28 +157,60 @@
 											<input type="text" class="form-control" name="State" required />
 										   </div>
 										   <div class="form-group">
-											<label for="centerid"> Sales/Service Center Contact No</label>
-											<input type="text" class="form-control" name="CenterContactNo" required />
+											<label for="centerid"> Pin code </label>
+											<input type="text" Placeholder="Please enter 6-digit numbers"class="form-control" name="Pincode" required />
 										   </div>
-											 
+										   
+										   
+										   <h4 style="font-size:14px;color:#ff001a; text-decoration: underline;  text-align:left;">Bank Details</h4>
+										    <div class="form-group">
+												<label for="centerid"> Bank Name </label>
+												<input type="text" class="form-control" name="BankName" required />
+											</div>
+										   
 										   <div class="form-group">
-											<p style="font-weight:bold;">Upload a photo of candidates ID proof (Adhara card/ DL/ Voter ID)</p>
+												<label for="centerid"> A/C Number </label>
+												<input type="text" Placeholder="Please enter minimum 14 and maximum 16 digit number "class="form-control" name="BankAccountNo" required />
+										   </div>
+										   <div class="form-group">
+												<label for="centerid"> IFSC Code </label>
+												<input type="text" class="form-control" name="IFSC" placeholder="Please enter first 4-capital characters and rest 7-digits" required />
+										   </div>
+
+										   <div class="form-group">
+											
 											</div>
 												<div class="form-group">
 												<div class="input-group-btn">
 												<span class="fileUpload btn btn-success">
 												  <span class="upl" id="upload">Upload from gallery</span>
-												  <input type="file" class="upload up" id="inputfile" name="inputfile"  required />
+												  <input type="file" class="upload up" id="inputfile" name="inputfile" 
+											
+													onchange="readURL(this);" required />
 												</span>
 											   </div>
-										  
+										  </div>
+										  <div>
 											<div class="sub">
-											<button class="btn btn-primary"  type="submit" >Create</button>
+											<button class="btn btn-primary"  type="submit" >Appoint</button>
                                             </div>
-										</div>
+										<div>
                                         </form>
                                     
                                 </div>
+								
+								
+							<div class="card-body" >
+								<div style="width:170px; height:170px; border:1px; position:absolute; right:10px; top:60px;">
+								  <div id = "one"  >
+									<img id="user_photo" style="width:170px; height:170px;"/>
+								  </div>
+								</div>
+								</div> 
+								
+								
+								
+								
                             </div>
                         </div>
                         <!-- ============================================================== -->
@@ -275,7 +287,28 @@
                 }
             })
     });
+	
+
     </script>
+	<script type="text/javascript">
+	function readURL(input) {
+    $('#one').css("display","block");
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = function(e) {
+        $('#user_photo').attr('src', e.target.result);
+      }
+
+      reader.readAsDataURL(input.files[0]);
+    }
+  }
+
+  $("#inputfile").change(function() {
+    readURL(this);
+  });
+	</script>
+	
 </body>
  
 </html>

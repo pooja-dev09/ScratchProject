@@ -80,10 +80,10 @@
                                                 <td>{{r["ClaimNo"]}}</td>
                                                 <td>{{r["name"]}}</td>
 												<td>{{r["ClaimStatus"]}}</td>
-												<td>{{r["MoneyReceiptPhoto"]}}</td>
-										<td><img src="video/{{ r['MoneyReceiptPhoto']}}" width="100" height="100"></img></td>
 												
-                                              	
+										<td><img src="static/video/{{ r["MoneyReceiptPhoto"]}}" width="100" height="100"></img></td>
+												
+                                         	
 												
 												
                                             </tr>
