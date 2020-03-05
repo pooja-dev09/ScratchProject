@@ -50,11 +50,25 @@ class Request(Resource):
         State = args['State']
         CurrentTime = datetime.datetime.now()
         CurrentTime = CurrentTime.strftime("%m-%d-%Y")
-        mydb = mycus()
-        mycursor = mydb.cursor()
         if validNumber(MobileNo) == True:
-            sql = "INSERT INTO customerrequest (Name,Mobile,VehicleCategory,DateOfPurchase,PoliceStation,District,State,DateOfRegistration) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"
-            val = (Name, MobileNo, VehicleCategory, DateOfPurchase, PoliceStation, District, State, CurrentTime)
+            mydb = mycus()
+            mycursor = mydb.cursor()
+            mycursor.execute(
+                "SELECT EmployeeId FROM `customerrequest` WHERE EmployeeId LIKE 'SCNR%' ORDER BY UserID DESC LIMIT 1")
+            rowcursor = mycursor.fetchall()
+            if len(rowcursor) > 0:
+                for i in rowcursor:
+                    Employeeid_user = i[0]
+                    Employeeid_user = Employeeid_user.split("R")
+                    print(Employeeid_user)
+                    totalval = int(Employeeid_user[1])
+                    EmployeeId = RequestCustomer(totalval)
+            else:
+                totalval = 'SCNR0123'
+                EmployeeId = totalval
+
+            sql = "INSERT INTO customerrequest (EmployeeId,Name,Mobile,VehicleCategory,DateOfPurchase,PoliceStation,District,State,DateOfRegistration) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            val = (EmployeeId,Name, MobileNo, VehicleCategory, DateOfPurchase, PoliceStation, District, State, CurrentTime)
             result = mycursor.execute(sql, val)
             mydb.commit()
             mydb.close()
@@ -323,6 +337,7 @@ class Newclaim(Resource):
                             help='Video/Photo cannot be found', location='files')
         args = parser.parse_args()
         UserID = args['UserID']
+        print(UserID)
         DateOfIncident = args['DateOfIncident']
         DateOfClaim = args['DateOfClaim']
         AreaName = args['AreaName']
@@ -332,41 +347,56 @@ class Newclaim(Resource):
         file = args['Video']
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT count(*) as totalval from claim")
+        mycursor.execute("SELECT ClaimNo FROM `claim` WHERE ClaimNo LIKE 'SECL%' ORDER BY ClaimID DESC LIMIT 1")
         rowcursor = mycursor.fetchall()
-        for i in rowcursor:
-            totalval = i[0]
-        ClaimNos = ClaimNo(totalval)
-        mycursor.execute("SELECT VcID,Mobile from vehiclecontract WHERE UserID = '" + str(UserID) + "'")
+        if len(rowcursor) > 0:
+            for i in rowcursor:
+                Employeeid_user = i[0]
+                Employeeid_user = Employeeid_user.split("L")
+                totalval = int(Employeeid_user[1])
+                ClaimNos = ClaimNo(totalval)
+        else:
+            totalval = 'SECL0123'
+            ClaimNos = totalval
+
+        mycursor.execute("SELECT VcID,Mobile from vehiclecontract WHERE UserID = '" + str(UserID)+ "'")
         rowcursor = mycursor.fetchall()
-        for i in rowcursor:
-            VcID = i[0]
-            Mobile = i[1]
-        if not file is None:
-            filename = Upload_fun(file)
-            CurrentTime = datetime.datetime.now()
-            CurrentTime = CurrentTime.strftime("%m-%d-%Y")
-            mydb = mycus()
-            mycursor = mydb.cursor()
-            sql = "INSERT INTO claim (ClaimNo,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,VehiclesaffectedAreaVideo,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-            val = (
-            ClaimNos, VcID, UserID, DateOfIncident, DateOfClaim, AreaName, Ps, Dist, State, filename, CurrentTime)
-            result = mycursor.execute(sql, val)
-            mydb.commit()
-            mydb.close()
-            # msg = "You are submitting your claim successfully.Your claim ID is" +str(ClaimNos)
-            msg = 'You have submitted your claim successfully.' + str(ClaimNos)
-            SMS_Integration(msg, Mobile)
-            return jsonify({
-                'Message': "You are submitting your claim successfully.Your claim ID is" + str(ClaimNos),
-                'DateOfIncident': DateOfIncident,
-                'DateOfClaim': DateOfClaim,
-                'AreaName': AreaName,
-                'Police Station': Ps,
-                'District': Dist,
-                'State': State,
-                'Status': "1",
-                'video': filename})
+        if len(rowcursor) > 0:
+            print(rowcursor)
+            for i in rowcursor:
+                VcID = i[0]
+                print(VcID)
+                Mobile = i[1]
+            if not file is None:
+                filename = Upload_fun(file)
+                CurrentTime = datetime.datetime.now()
+                CurrentTime = CurrentTime.strftime("%m-%d-%Y")
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql = "INSERT INTO claim (ClaimNo,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,VehiclesaffectedAreaVideo,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                val = (ClaimNos, VcID, UserID, DateOfIncident, DateOfClaim, AreaName, Ps, Dist, State, filename, CurrentTime)
+                result = mycursor.execute(sql, val)
+                mydb.commit()
+                mydb.close()
+                msg = "You are submitting your claim successfully.Your claim ID is" +str(ClaimNos)+"."
+                SMS_Integration(msg, Mobile)
+                return jsonify({
+                    'Message': "You are submitting your claim successfully.Your claim ID is " + str(ClaimNos),
+                    'DateOfIncident': DateOfIncident,
+                    'DateOfClaim': DateOfClaim,
+                    'AreaName': AreaName,
+                    'Police Station': Ps,
+                    'District': Dist,
+                    'State': State,
+                    'Status': "1",
+                    'video': filename})
+            else:
+                return jsonify({
+                    'Message': "Sorry Data is not exit " + str(ClaimNos),
+                    'Status': "0"
+                    })
+
+
 
 
 api.add_resource(Newclaim, "/NewCustomerClaim")
@@ -607,11 +637,20 @@ class VehicleContract(Resource):
             AddedBy = args['UserID']
             mydb = mycus()
             mycursor = mydb.cursor()
-            mycursor.execute("SELECT count(*) as totalval from user")
+            mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 2 and EmployeeId LIKE 'SCAA%' ORDER BY UserID DESC LIMIT 1")
             rowcursor = mycursor.fetchall()
-            for i in rowcursor:
-                totalval = i[0]
-            EmployeeId = RegisterNo(totalval)
+            print(rowcursor)
+            if len(rowcursor) > 0:
+                for i in rowcursor:
+                    Employeeid_user = i[0]
+                    Employeeid_user = Employeeid_user.split("A")
+                    totalval = int(Employeeid_user[2])
+                    print('totalval',totalval)
+                    EmployeeId = RegisterCustomer(totalval)
+
+            else:
+                totalval = 'SCAA0123'
+                EmployeeId = totalval
             password = Password_encoded(MobileNo)
             RoleID = 2
             if PaymentMode == 'CASH' or PaymentMode == 'CHEQUE' or PaymentMode == 'UPI':
@@ -632,19 +671,17 @@ class VehicleContract(Resource):
                 OwnerName, MobileNo, Email, Location, PostOffice, PoliceStation, District, State, Video, CurrentTime)
                 result = mycursor.execute(sql, val)
                 mydb.commit()
-                print('fdkhvhvfdfh')
                 if PaymentMode == 'CASH':
                     sql = "INSERT INTO paymentrequest (UserID,Paymenttype,Amount,OnDate) VALUES (%s,%s,%s,%s)"
                     val = (UserID, PaymentMode, Amount, CurrentTime)
                     result = mycursor.execute(sql, val)
                     print('PaymentMode', result)
                     mydb.commit()
-                    msg = 'Your payment was successfully done for employee id ' + str(
-                        EmployeeId) + '.We will send you a contract certificate within 48 hours.'
+                    msg="Your payment "+str(Amount)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
                     SMS_Integration(msg, MobileNo)
                     mydb.close()
                     return jsonify(
-                        {'Message': 'Payment Confirmed we will send certificate within 48 Hours.' + EmployeeId,
+                        {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
                          "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
 
                 elif PaymentMode == 'CHEQUE':
@@ -659,12 +696,11 @@ class VehicleContract(Resource):
                     print('PaymentMode', result)
                     print('dfiodfvoidfioj')
                     mydb.commit()
-                    msg = 'Your payment was successfully done for employee id ' + str(
-                        EmployeeId) + '.We will send you a contract certificate within 48 hours.'
+                    msg="Your payment "+str(Amount)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
                     SMS_Integration(msg, MobileNo)
                     mydb.close()
                     return jsonify(
-                        {'Message': 'Payment Confirmed we will send certificate within 48 Hours.' + EmployeeId,
+                        {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
                          "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
                 elif PaymentMode == 'UPI':
                     parser.add_argument('UPIName', required=False, type=str, help='UPIName cannot be found')
@@ -678,13 +714,11 @@ class VehicleContract(Resource):
                     mydb.commit()
                     print('sdkjbjsdhji')
                     print('sdjgcdgsc', MobileNo)
-                    # msg = 'Your payment'+str(Amount)+'is successfully accepted.Your vehicle contract ID is'+str(EmployeeId)+'. You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password
-                    msg = 'Your payment was successfully done for employee id ' + str(
-                        EmployeeId) + '.We will send you a contract certificate within 48 hours.'
+                    msg="Your payment "+str(Amount)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
                     SMS_Integration(msg, MobileNo)
                     mydb.close()
                     return jsonify(
-                        {'Message': 'Contract with vehicle done successfully.Its contract ID is ' + EmployeeId,
+                        {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
                          "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
 
             else:
@@ -768,11 +802,17 @@ class ServiceCenterAuthorization(Resource):
         CurrentTime = CurrentTime.strftime("%m-%d-%Y")
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT count(*) as totalval from user")
+        mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 5 and EmployeeId LIKE 'SEAU%' ORDER BY UserID DESC LIMIT 1")
         rowcursor = mycursor.fetchall()
-        for i in rowcursor:
-            totalval = i[0]
-        EmployeeId = EmpId(totalval)
+        if len(rowcursor) > 0:
+            for i in rowcursor:
+                Employeeid_user = i[0]
+                Employeeid_user = Employeeid_user.split("U")
+                totalval = int(Employeeid_user[1])
+                EmployeeId = EmpIdAU(totalval)
+        else:
+            totalval = 'SEAU0123'
+            EmployeeId = totalval
         RoleID = 5
         UserPassword = Password_encoded(MobileNo)
         if not Photo is None and file is None:
@@ -791,8 +831,8 @@ class ServiceCenterAuthorization(Resource):
             result = mycursor.execute(sql, val)
             mydb.commit()
             mydb.close()
-            # msg = "Authorisation of Service Center is successfully accepted.Its authorization ID is "+str(EmployeeId)
-            # SMS_Integration(msg,MobileNo)
+            msg = "Authorisation of Service Center is successfully accepted.Its authorization ID is "+str(EmployeeId)+"."
+            SMS_Integration(msg,MobileNo)
             return jsonify({
                                'Message': "Authorisation of Service Center is successfully accepted.Its authorization ID is " + str(
                                    EmployeeId), "RoleID": RoleID, "Status": 1, "UserID": UserID})
@@ -812,8 +852,8 @@ class ServiceCenterAuthorization(Resource):
             result = mycursor.execute(sql, val)
             mydb.commit()
             mydb.close()
-            # msg = "Authorisation of Service Center is successfully accepted.Its authorization ID is "+str(EmployeeId)
-            # SMS_Integration(msg,MobileNo)
+            msg = "Authorisation of Service Center is successfully accepted.Its authorization ID is "+str(EmployeeId)+"."
+            SMS_Integration(msg,MobileNo)
 
             return jsonify({
                                'Message': "Authorisation of Service Center is successfully accepted.Its authorization ID is " + str(
@@ -917,11 +957,18 @@ class AdminAddSM(Resource):
         CurrentTime = CurrentTime.strftime("%m-%d-%Y")
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT count(*) as totalval from user")
+        mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 3 and EmployeeId LIKE 'SESM%' ORDER BY UserID DESC LIMIT 1")
         rowcursor = mycursor.fetchall()
-        for i in rowcursor:
-            totalval = i[0]
-        EmployeeId = EmpId(totalval)
+        if len(rowcursor) > 0:
+            for i in rowcursor:
+                Employeeid_user = i[0]
+                Employeeid_user = Employeeid_user.split("M")
+                totalval=int(Employeeid_user[1])
+                EmployeeId = EmpIdSM(totalval)
+        else:
+            totalval = 'SESM0123'
+            EmployeeId = totalval
+
         file = args['IdProofPhoto']
         Photo = args['imageData']
         RoleID = 3
@@ -944,7 +991,10 @@ class AdminAddSM(Resource):
             result = mycursor.execute(sql, val)
             mydb.commit()
             mydb.close()
-            return jsonify({'Message': " SalesManager successfully Added Your EmployeeId is:" + str(EmployeeId),
+            msg = "Congratulations, Your joining in Scratch Exponent as Sales Manager is successfully accepted. Your ID is " + str(
+                EmployeeId) + ". You are eligible to login as an official, using this ID as username & your registered mobile number is password. Wish you a great career."
+            SMS_Integration(msg, MobileNo)
+            return jsonify({'Message': "Joining of Sales Manager is successfully accepted. Its joining ID is " + str(EmployeeId)+".",
                             "Status": 1,
                             "RoleID": RoleID})
 
@@ -958,16 +1008,21 @@ class AdminAddSM(Resource):
             result = mycursor.execute(sql, val)
             mydb.commit()
             UserID = mycursor.lastrowid
-            sql = "INSERT INTO salesmanager (AddedBy,UserID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation	,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            sql = "INSERT INTO salesmanager (AddedBy,UserID,EmployeeId,DateOfJoining,Name,DOB,Qualification,AdharNo,MobileNo,EmailId,BankAccountNo,IFSC,BankName,PresentlyWorking,AppointCenter,NameCenter,CenterBrand,Sale_ScFor,CenterLocation,Po,Ps,District,State,CenterContctNo,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             val = (AddedBy, UserID, EmployeeId, DateOfJoining, Name, DOB, Qualification, AdharNo, MobileNo, EmailId,
                    BankAccountNo, IFSC, BankName, PresentlyWorking, AppointCenter, NameCenter, CenterBrand, CenterFor,
                    CenterLocation, PostOffice, PoliceStation, District, State, CenterContactNo, Photo, CurrentTime)
             result = mycursor.execute(sql, val)
             mydb.commit()
             mydb.close()
-            return jsonify({'Message': " SalesManager successfully Added Your EmployeeId is:" + str(EmployeeId),
+            msg = "Congratulations, Your joining in Scratch Exponent as Sales Manager is successfully accepted. Your ID is " + str(
+                EmployeeId) + ". You are eligible to login as an official, using this ID as username & your registered mobile number is password. Wish you a great career."
+
+            SMS_Integration(msg, MobileNo)
+            return jsonify({'Message': "Joining of Sales Manager is successfully accepted. Its joining ID is "+ str(EmployeeId)+".",
                             "Status": 1,
-                            "RoleID": RoleID})
+                            "RoleID": RoleID
+                          })
 
 
 api.add_resource(AdminAddSM, "/AppointSM")
@@ -1055,8 +1110,7 @@ class MyTeamSalesRpt(Resource):
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute(
-            "SELECT SUM( CASE WHEN VehicleCategory = 'car' THEN 1 ELSE 0 END ) AS carcount, SUM( CASE WHEN VehicleCategory = 'motorcycle' THEN 1 ELSE 0 END ) AS motorcyclecount,date(OnDate) FROM `vehiclecontract` WHERE ( VehicleCategory='car' or VehicleCategory='motorcycle' ) AND AddedBy = " + str(
-                AddedBy) + "' GROUP BY DATE(`OnDate`)")
+            "SELECT SUM( CASE WHEN VehicleCategory = 'car' THEN 1 ELSE 0 END ) AS carcount, SUM( CASE WHEN VehicleCategory = 'motorcycle' THEN 1 ELSE 0 END ) AS motorcyclecount,date(OnDate) FROM `vehiclecontract` WHERE ( VehicleCategory='car' or VehicleCategory='motorcycle' ) AND AddedBy = '" + str(AddedBy) + "' GROUP BY DATE(`OnDate`)")
         row = mycursor.fetchall()
         print('data', row)
         if len(row) > 0:
@@ -1076,6 +1130,36 @@ class MyTeamSalesRpt(Resource):
 
 
 api.add_resource(MyTeamSalesRpt, "/MyTeamSalesRpt")
+
+
+class ContactUs(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('Name', required=True, type=str, help='Name cannot be found')
+        parser.add_argument('MobileNo', required=True, type=str, help='MobileNo cannot be found')
+        parser.add_argument('Email', required=False, type=str, help='Email cannot be found')
+        parser.add_argument('Message', required=True, type=str, help='Message Id cannot be found')
+        args = parser.parse_args()
+        Name = args['Name']
+        MobileNo = args['MobileNo']
+        Email = args['Email']
+        Message = args['Message']
+        CurrentTime = datetime.datetime.now()
+        CurrentTime = CurrentTime.strftime("%m-%d-%Y")
+        if check(Email) == True and  validNumber(MobileNo) == True:
+            mydb = mycus()
+            mycursor = mydb.cursor()
+            sql = "INSERT INTO contactus (Name,MobileNo,Email,Message,OnDate) VALUES (%s,%s,%s,%s,%s)"
+            val = (Name, MobileNo,Email,Message,CurrentTime)
+            result = mycursor.execute(sql, val)
+            mydb.commit()
+            mydb.close()
+            return jsonify({'Message': "You are Successfully submitted. We will contact you soon.", "Status": 1})
+        else:
+            return jsonify({'Message': "Please enter correct details.", "Status": 0})
+
+
+api.add_resource(ContactUs, "/ContactUs")
 
 if __name__ == '__main__':
     app.run(port='5000', host='0.0.0.0', debug=False)

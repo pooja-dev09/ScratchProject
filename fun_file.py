@@ -16,12 +16,16 @@ def generateOTP() :
 	return str(OTP)
 	
 
-def RegisterNo(totalval):
+def RegisterCustomer(totalval):
 	totalval += 1
-	Result = 'SEC'+ str(totalval)
+	Result = 'SEAA'+ str(totalval)
 	return str(Result)
-	
-	
+
+def RequestCustomer(totalval):
+	totalval += 1
+	Result = 'SECL'+ str(totalval)
+	return str(Result)
+
 	
 def allowed_file(filename):
     return '.' in filename and \
@@ -43,19 +47,25 @@ def save(Photo):
 		return (filename.replace('static/video/',''))
 		
 
-def EmpId(totalval):
+def EmpIdSM(totalval):
 	totalval += 1
-	Result = 'EMP'+ str(totalval)
+	Result = 'SESM'+ str(totalval)
+	return str(Result)
+
+def EmpIdAU(totalval):
+	totalval += 1
+	Result = 'SESM'+ str(totalval)
 	return str(Result)
 	
 def ClaimNo(totalval):
 	totalval += 1
-	Result = 'CLAIM'+ str(totalval)
+	Result = 'SECL' + str(totalval)
 	return str(Result)
-	
-	
+
+
 def SMS_Integration(msg,contactno):
 	print('sms',contactno)
+	print('msg', msg)
 	uname ='krititech'
 	pwd = 'kriti@2705'
 	senderid='SCREXP'
