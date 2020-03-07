@@ -18,13 +18,23 @@ def generateOTP() :
 
 def RegisterCustomer(totalval):
 	totalval += 1
-	Result = 'SEAA'+ str(totalval)
+	Result = 'SCAA'+ str(totalval)
 	return str(Result)
 
 def RequestCustomer(totalval):
+	print('asjhsj',totalval)
+
 	totalval += 1
-	Result = 'SECL'+ str(totalval)
+	print('increment',totalval)
+	Result = 'SENR0'+ str(totalval)
 	return str(Result)
+
+def AreaManager(totalval):
+	print(totalval)
+	totalval += 1
+	Result = 'SEAM0' + str(totalval)
+	return str(Result)
+
 
 	
 def allowed_file(filename):
@@ -48,18 +58,19 @@ def save(Photo):
 		
 
 def EmpIdSM(totalval):
+	print('zxcbjkbd',totalval)
 	totalval += 1
-	Result = 'SESM'+ str(totalval)
+	Result = 'SESM0'+ str(totalval)
 	return str(Result)
 
 def EmpIdAU(totalval):
 	totalval += 1
-	Result = 'SESM'+ str(totalval)
+	Result = 'SEAU0'+ str(totalval)
 	return str(Result)
 	
 def ClaimNo(totalval):
 	totalval += 1
-	Result = 'SECL' + str(totalval)
+	Result = 'SECL0' + str(totalval)
 	return str(Result)
 
 

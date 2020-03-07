@@ -3278,3 +3278,426 @@ AttributeError: 'NoneType' object has no attribute 'strftime'
 45.114.50.159 - - [29/Feb/2020 11:08:24] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
 185.202.2.149 - - [01/Mar/2020 17:11:32] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
 185.202.2.149 - - [01/Mar/2020 17:11:32] "  /*à     Cookie: mstshash=Administr" HTTPStatus.BAD_REQUEST -
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+45.114.50.159 - - [06/Mar/2020 07:12:08] "GET /login HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 07:12:09] "GET /static/assets/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:09] "GET /static/assets/vendor/fonts/circular-std/style.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:09] "GET /static/assets/libs/css/style.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:09] "GET /static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:09] "GET /static/assets/vendor/datatables/css/dataTables.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:09] "GET /static/assets/vendor/datatables/css/buttons.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:10] "GET /static/assets/vendor/datatables/css/select.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:10] "GET /static/assets/vendor/datatables/css/fixedHeader.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:10] "GET /static/assets/vendor/jquery/jquery-3.3.1.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:11] "GET /static/assets/vendor/bootstrap/js/bootstrap.bundle.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:11] "GET /static/assets/vendor/multi-select/js/jquery.multi-select.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:11] "GET /static/assets/vendor/slimscroll/jquery.slimscroll.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:12] "GET /static/assets/libs/js/main-js.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:12] "GET /static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:12] "GET /static/assets/vendor/datatables/js/buttons.bootstrap4.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:12] "GET /static/assets/vendor/datatables/js/data-table.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:13] "GET /static/assets/images/logo.png HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:14] "GET /favicon.ico HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:19] "POST /login HTTP/1.1" 302 -
+45.114.50.159 - - [06/Mar/2020 07:12:20] "GET /seadmin/index HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 07:12:21] "GET /static/assets/vendor/vector-map/jqvmap.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:21] "GET /static/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:21] "GET /static/assets/vendor/fonts/flag-icon-css/flag-icon.min.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:21] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:21] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:22] "GET /static/assets/vendor/charts/charts-bundle/chartjs.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:22] "GET /static/assets/vendor/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:22] "GET /static/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:22] "GET /seadmin/assets/images/product-pic.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/images/avatar-1.jpg HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/vendor/charts/sparkline/jquery.sparkline.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/vendor/charts/charts-bundle/Chart.bundle.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/vendor/charts/sparkline/spark-js.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /seadmin/assets/images/product-pic-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/libs/js/dashboard-sales.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /seadmin/assets/images/product-pic-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /seadmin/assets/images/product-pic-4.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/vendor/fonts/circular-std/CircularStd-Book.woff HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/vendor/fonts/fontawesome/webfonts/fa-solid-900.html HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:23] "GET /static/assets/vendor/fonts/circular-std/CircularStd-Medium.woff HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:29] "GET /seadmin/createareamanager HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 07:12:29] "GET /static/assets/vendor/datepicker/tempusdominus-bootstrap-4.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:30] "GET /static/assets/vendor/inputmask/css/inputmask.css HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:30] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:12:30] "GET /static/assets/vendor/inputmask/js/jquery.inputmask.bundle.js HTTP/1.1" 304 -
+45.114.50.159 - - [06/Mar/2020 07:12:30] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:16:33] "POST /seadmin/createareamanager HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 07:16:34] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 07:16:34] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+sms 7406573134
+msg Congratulation, you are selected as area manager in Scratch Exponent for KHURDA district. Your employee ID is SEAM0123. You are eligible to login in our app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon.
+{'JobId': '12678691', 'ErrorMessage': 'Success', 'MessageData': [{'Number': '917406573134', 'MessageParts': [{'Text': 'Congratulation, you are selected as area manager in Scratch Exponent for KHURDA district. Your employee ID is SEAM0123. You are eligible to login in our ', 'MsgId': '917406573134-a98f344fdf4b48e3876a35e96adadfda', 'PartId': 1}, {'Text': 'app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon.', 'MsgId': '917406573134-a4773c8bc57f49da98c1a3e8264eb73a', 'PartId': 2}]}], 'ErrorCode': '000'}
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+45.114.50.159 - - [06/Mar/2020 08:19:48] "GET /seadmin/viewsc HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 08:19:53] "GET /seadmin/createareamanager HTTP/1.1" 200 -
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+45.114.50.159 - - [06/Mar/2020 09:04:08] "GET /login HTTP/1.1" 200 -
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 689
+    parser.add_ar
+                ^
+SyntaxError: unexpected EOF while parsing
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 688
+    parser.add_argument('ChequeNo', required=True, type=str, help
+                                                                ^
+SyntaxError: unexpected EOF while parsing
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 688
+    parser.add_argument('ChequeNo', required=True, type=str, help
+                                                                ^
+SyntaxError: unexpected EOF while parsing
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 688
+    parser.add_argument('ChequeNo', required=True, type=str, help
+                                                                ^
+SyntaxError: unexpected EOF while parsing
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+45.114.50.159 - - [06/Mar/2020 11:08:52] "POST /login HTTP/1.1" 302 -
+45.114.50.159 - - [06/Mar/2020 11:08:53] "GET /seadmin/index HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 11:08:54] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:08:54] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:08:54] "GET /seadmin/assets/images/product-pic.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:08:54] "GET /seadmin/assets/images/product-pic-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:08:54] "GET /seadmin/assets/images/product-pic-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:08:54] "GET /seadmin/assets/images/product-pic-4.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:08:58] "GET /seadmin/createareamanager HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 11:08:59] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:09:00] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:11:49] "POST /seadmin/createareamanager HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 11:11:50] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:11:50] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/fun_file.py', reloading
+sms 7406573134
+msg Congratulation, you are selected as area manager in Scratch Exponent for KHURDA district. Your employee ID is SEAM124. You are eligible to login in our app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon.
+{'ErrorMessage': 'Success', 'MessageData': [{'MessageParts': [{'PartId': 1, 'MsgId': '917406573134-6f3355c755a34569ab88fdf5be950e2a', 'Text': 'Congratulation, you are selected as area manager in Scratch Exponent for KHURDA district. Your employee ID is SEAM124. You are eligible to login in our a'}, {'PartId': 2, 'MsgId': '917406573134-c19323efd3964db2a6661ae05488881f', 'Text': 'pp for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon.'}], 'Number': '917406573134'}], 'JobId': '12725181', 'ErrorCode': '000'}
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/admin.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+45.114.50.159 - - [06/Mar/2020 11:47:18] "POST /seadmin/createareamanager HTTP/1.1" 200 -
+45.114.50.159 - - [06/Mar/2020 11:47:19] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [06/Mar/2020 11:47:19] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+Employeeid_user ['SEA', '124']
+jsc 124
+124
+sms 7978558442
+msg Congratulation, you are selected as area manager in Scratch Exponent for KHURDA district. Your employee ID is SEAM0125. You are eligible to login in our app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon.
+{'JobId': '12731737', 'ErrorMessage': 'Success', 'ErrorCode': '000', 'MessageData': [{'MessageParts': [{'Text': 'Congratulation, you are selected as area manager in Scratch Exponent for KHURDA district. Your employee ID is SEAM0125. You are eligible to login in our ', 'PartId': 1, 'MsgId': '917978558442-276f73281ced4be480fac719d04d5fe9'}, {'Text': 'app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon.', 'PartId': 2, 'MsgId': '917978558442-f253cfeb32734193a93ecbbe3ec01cbd'}], 'Number': '917978558442'}]}
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 1083
+    else:
+       ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 1083
+    else:
+       ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 1083
+    else:
+       ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 1083
+    else:
+       ^
+SyntaxError: invalid syntax
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 1083
+    else:
+       ^
+SyntaxError: invalid syntax

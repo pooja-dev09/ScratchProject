@@ -59,11 +59,20 @@ def createareamanager():
 			UserPassword=Password_encoded(MobileNo)
 			mydb=mycus()
 			mycursor = mydb.cursor()
-			mycursor.execute("SELECT count(*) as totalval from user")
+			mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 4 and EmployeeId LIKE 'SEAM%' ORDER BY UserID DESC LIMIT 1")
 			rowcursor=mycursor.fetchall()
-			for i in rowcursor:
-				totalval = i[0]
-			EmployeeId=EmpId(totalval)
+			if len(rowcursor) > 0:
+				for i in rowcursor:
+					Employeeid_user = i[0]
+					Employeeid_user = Employeeid_user.split("M")
+					print('Employeeid_user',Employeeid_user)
+					totalval = int(Employeeid_user[1])
+					print('jsc',totalval)
+					EmployeeId = AreaManager(totalval)
+
+			else:
+				totalval = 'SEAM0123'
+				EmployeeId = totalval
 			if accountNo(BankAccountNo) == True:
 				if adharNo(AdharNo) == True:
 					if check (EmailId) == True:
@@ -79,6 +88,8 @@ def createareamanager():
 								result = mycursor.execute(sql,val)
 								mydb.commit()
 								mydb.close()
+								msg = "Congratulation, you are selected as area manager in Scratch Exponent for "+str(District)+" district. Your employee ID is "+str(EmployeeId)+". You are eligible to login in our app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon."
+								SMS_Integration(msg, MobileNo)
 								flash('Area Manager Register Successfully')
 							else:
 								flash('Something went wrong')

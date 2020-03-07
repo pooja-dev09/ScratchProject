@@ -54,7 +54,7 @@ class Request(Resource):
             mydb = mycus()
             mycursor = mydb.cursor()
             mycursor.execute(
-                "SELECT EmployeeId FROM `customerrequest` WHERE EmployeeId LIKE 'SCNR%' ORDER BY UserID DESC LIMIT 1")
+                "SELECT EmployeeId FROM `customerrequest` WHERE EmployeeId LIKE 'SENR%' ORDER BY UserID DESC LIMIT 1")
             rowcursor = mycursor.fetchall()
             if len(rowcursor) > 0:
                 for i in rowcursor:
@@ -64,7 +64,7 @@ class Request(Resource):
                     totalval = int(Employeeid_user[1])
                     EmployeeId = RequestCustomer(totalval)
             else:
-                totalval = 'SCNR0123'
+                totalval = 'SENR0123'
                 EmployeeId = totalval
 
             sql = "INSERT INTO customerrequest (EmployeeId,Name,Mobile,VehicleCategory,DateOfPurchase,PoliceStation,District,State,DateOfRegistration) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)"
@@ -72,7 +72,7 @@ class Request(Resource):
             result = mycursor.execute(sql, val)
             mydb.commit()
             mydb.close()
-            return jsonify({'Message': ' You are Successfully submitted your Request we will contact you soon ',
+            return jsonify({'Message': ' You are Successfully submitted your Request we will contact you soon. Your Request ID is:'+EmployeeId,
                             'Name': Name,
                             'Mobile': MobileNo,
                             'VehicleCategory': VehicleCategory,
@@ -378,7 +378,7 @@ class Newclaim(Resource):
                 result = mycursor.execute(sql, val)
                 mydb.commit()
                 mydb.close()
-                msg = "You are submitting your claim successfully.Your claim ID is" +str(ClaimNos)+"."
+                msg = "You are submitting your claim successfully.Your claim ID is "+str(ClaimNos)+"."
                 SMS_Integration(msg, Mobile)
                 return jsonify({
                     'Message': "You are submitting your claim successfully.Your claim ID is " + str(ClaimNos),
@@ -392,7 +392,7 @@ class Newclaim(Resource):
                     'video': filename})
             else:
                 return jsonify({
-                    'Message': "Sorry Data is not exit " + str(ClaimNos),
+                    'Message': "Sorry something went wrong ",
                     'Status': "0"
                     })
 
@@ -639,17 +639,20 @@ class VehicleContract(Resource):
             mycursor = mydb.cursor()
             mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 2 and EmployeeId LIKE 'SCAA%' ORDER BY UserID DESC LIMIT 1")
             rowcursor = mycursor.fetchall()
-            print(rowcursor)
+            print('asjhhsc',rowcursor)
             if len(rowcursor) > 0:
                 for i in rowcursor:
                     Employeeid_user = i[0]
                     Employeeid_user = Employeeid_user.split("A")
+                    print('after split',Employeeid_user)
+
                     totalval = int(Employeeid_user[2])
                     print('totalval',totalval)
                     EmployeeId = RegisterCustomer(totalval)
 
+
             else:
-                totalval = 'SCAA0123'
+                totalval = 'SCAA9123'
                 EmployeeId = totalval
             password = Password_encoded(MobileNo)
             RoleID = 2
@@ -963,7 +966,9 @@ class AdminAddSM(Resource):
             for i in rowcursor:
                 Employeeid_user = i[0]
                 Employeeid_user = Employeeid_user.split("M")
+                print('Employeeid_user',Employeeid_user)
                 totalval=int(Employeeid_user[1])
+                print('totalval',totalval)
                 EmployeeId = EmpIdSM(totalval)
         else:
             totalval = 'SESM0123'
@@ -1039,7 +1044,7 @@ class SMTeam(Resource):
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute(
-            "SELECT Name,NameCenter,CenterLocation,District,Sale_ScFor,MobileNo FROM salesmanager where AddedBy = '" + str(
+            "SELECT Name,NameCenter,CenterLocation,District,Sale_ScFor,MobileNo,EmployeeId FROM salesmanager where AddedBy = '" + str(
                 AddedBy) + "'")
         row = mycursor.fetchall()
         if len(row) > 0:
@@ -1050,8 +1055,9 @@ class SMTeam(Resource):
                 District = i[3]
                 CenterFor = i[4]
                 MobileNo = i[5]
+                EmployeeId = i[6]
                 data = {'Name': Name, 'NameCenter': NameCenter, 'CenterLocation': CenterLocation, 'District': District,
-                        'CenterFor': CenterFor, 'MobileNo': MobileNo}
+                        'CenterFor': CenterFor, 'MobileNo': MobileNo, "EmployeeId":EmployeeId}
                 new.append(data)
             mydb.close()
             return jsonify({'Status': 1, 'new': new})
@@ -1087,7 +1093,6 @@ class SalesRpt(Resource):
                 date = i[2]
                 data = {'car': car, 'motorcycle': motorcycle, 'date': date}
                 arraynew.append(data)
-                print('djhjvcjdh', arraynew)
             mydb.close()
             return jsonify({'Status': 1, 'new': arraynew})
         else:
@@ -1103,30 +1108,48 @@ class MyTeamSalesRpt(Resource):
         arraynew = []
         parser = reqparse.RequestParser()
         parser.add_argument('UserID', required=True, type=str, help='UserID cannot be found')
-
         args = parser.parse_args()
         AddedBy = args['UserID']
         print('hello', AddedBy)
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute(
-            "SELECT SUM( CASE WHEN VehicleCategory = 'car' THEN 1 ELSE 0 END ) AS carcount, SUM( CASE WHEN VehicleCategory = 'motorcycle' THEN 1 ELSE 0 END ) AS motorcyclecount,date(OnDate) FROM `vehiclecontract` WHERE ( VehicleCategory='car' or VehicleCategory='motorcycle' ) AND AddedBy = '" + str(AddedBy) + "' GROUP BY DATE(`OnDate`)")
+        mycursor.execute('select a.UserID as areamanager_user_id, s.UserID as salesmanager_user_id from areamanager a left join salesmanager s on a.UserID=s.AddedBy where a.UserID = '+ AddedBy +'')
         row = mycursor.fetchall()
-        print('data', row)
-        if len(row) > 0:
-            for i in row:
-                result = (list(map(str, list(i))))
-                new.append(result)
-            for i in new:
-                car = i[0]
-                motorcycle = i[1]
-                date = i[2]
-                data = {'car': car, 'motorcycle': motorcycle, 'date': date}
-                arraynew.append(data)
-            mydb.close()
-            return jsonify({'Status': 1, 'new': arraynew})
-        else:
-            return jsonify({'Message': 'Sorry you dont have sales report', 'Status': 0})
+        for j in row[0]:
+            print(j)
+            mycursor = mydb.cursor()
+            sql = "SELECT SUM( CASE WHEN VehicleCategory = 'car' THEN 1 ELSE 0 END ) AS carcount, SUM( CASE WHEN VehicleCategory = 'motorcycle' THEN 1 ELSE 0 END ) AS motorcyclecount,date(OnDate) FROM `vehiclecontract` WHERE ( VehicleCategory='car' or VehicleCategory='motorcycle' ) AND AddedBy = "+str(j)+" GROUP BY DATE(`OnDate`)"
+            print('sql', sql)
+            query = mycursor.execute(sql)
+            rows = mycursor.fetchall()
+            if len(rows)>0:
+                print('finaldata',rows)
+                new.append(rows)
+        print('append',new)
+        for i in new:
+            a = 0
+            for j in i[0]:
+                if a == 0:
+                    car = j
+                    print('car',car)
+
+                if a == 1:
+                    motorcycle = j
+                    print('motorcycle',motorcycle)
+
+                if a == 2:
+                    datetime = j
+                    print('datetime',datetime)
+
+
+                a = a + 1
+            data = {'car': str(car), 'motorcycle': str(motorcycle), 'datetime': str(datetime)}
+            arraynew.append(data)
+            print(arraynew)
+
+
+
+        return jsonify({'Status': 1,'new':arraynew})
 
 
 api.add_resource(MyTeamSalesRpt, "/MyTeamSalesRpt")
