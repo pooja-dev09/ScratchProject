@@ -76,7 +76,7 @@ def ClaimNo(totalval):
 
 def SMS_Integration(msg,contactno):
 	print('sms',contactno)
-	print('msg', msg)
+	print('jknlmsg', msg)
 	uname ='krititech'
 	pwd = 'kriti@2705'
 	senderid='SCREXP'
