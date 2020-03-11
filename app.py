@@ -324,32 +324,34 @@ api.add_resource(RegisterProfile, "/getProfile")
 
 class ProfileUpdate(Resource):
     def post(self):
-        # try:
-        parser = reqparse.RequestParser()
-        parser.add_argument('UserID', required=True, type=str, help='User Id cannot be found')
-        parser.add_argument('MobileNo', required=True, type=int, help='Mobile cannot be found')
-        args = parser.parse_args()
-        UserID = args['UserID']
-        print(UserID)
-        MobileNo = str(args['MobileNo'])
-        password = Password_encoded(MobileNo)
-        mydb = mycus()
-        mycursor = mydb.cursor()
-        sql ="SELECT Mobile from user WHERE UserID = "+ UserID + ""
-        print(sql)
-        result = mycursor.execute(sql)
-        rowcursor = mycursor.fetchall()
-        mycursor.execute("UPDATE user SET Mobile = '" + str(MobileNo) + "',Password = '" + str(
-            password) + "'WHERE UserID = '" + str(UserID) + "'")
-        mydb.commit()
-        mydb.close()
-        return jsonify({'Message': 'Mobile Number Successfully Update',
-                        'Mobile': MobileNo,
-                        'Status': 1})
+        try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('UserID', required=True, type=str, help='User Id cannot be found')
+            parser.add_argument('MobileNo', required=True, type=int, help='Mobile cannot be found')
+            args = parser.parse_args()
+            UserID = args['UserID']
+            MobileNo = str(args['MobileNo'])
+            if len(MobileNo) == 10:
+                password = Password_encoded(MobileNo)
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql ="SELECT Mobile from user WHERE UserID = "+ UserID + ""
+                result = mycursor.execute(sql)
+                rowcursor = mycursor.fetchall()
+                mycursor.execute("UPDATE user SET Mobile = '" + str(MobileNo) + "',Password = '" + str(
+                    password) + "'WHERE UserID = '" + str(UserID) + "'")
+                mydb.commit()
+                mydb.close()
+                return jsonify({'Message': 'Mobile Number Successfully Update',
+                                'Mobile': MobileNo,
+                                'Status': 1})
+            else:
+                return jsonify({'Message': 'Please Enter a valid mobile number',
+                                'Status': 0})
 
 
-        # except Exception as e:
-        #     return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
+        except Exception as e:
+            return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
 
 api.add_resource(ProfileUpdate, "/MobileUpdate")

@@ -3701,3 +3701,211 @@ Traceback (most recent call last):
     else:
        ^
 SyntaxError: invalid syntax
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+185.137.234.165 - - [09/Mar/2020 15:31:33] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+185.137.234.165 - - [09/Mar/2020 15:31:33] "  /*à     Cookie: mstshash=Administr" HTTPStatus.BAD_REQUEST -
+185.137.234.165 - - [09/Mar/2020 15:31:33] code 400, message Bad HTTP/0.9 request type ('\x03\x00\x00/*à\x00\x00\x00\x00\x00Cookie:')
+185.137.234.165 - - [09/Mar/2020 15:31:33] "  /*à     Cookie: mstshash=Administr" HTTPStatus.BAD_REQUEST -
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 671
+    parser.add_argument('Location', required=True,
+                                                 ^
+SyntaxError: unexpected EOF while parsing
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Detected change in '/home/scripts/dbms/scrach_Exponent/app.py', reloading
+ * Restarting with stat
+Traceback (most recent call last):
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 10, in <module>
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+NameError: name 'app' is not defined
+Traceback (most recent call last):
+  File "admin.py", line 3, in <module>
+    from fun_file import *
+  File "/home/scripts/dbms/scrach_Exponent/fun_file.py", line 2, in <module>
+    from app import *
+  File "/home/scripts/dbms/scrach_Exponent/app.py", line 672
+    parser.add_argument('District', required=True, type=str, help='District canno
+                                                                                ^
+SyntaxError: EOL while scanning string literal
