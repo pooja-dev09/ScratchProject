@@ -4,6 +4,7 @@ from fun_file import *
 import datetime
 import mysql.connector
 from werkzeug.utils import secure_filename
+from app import app
 import os
 UPLOAD_FOLDER = 'static/video/'
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif','mp4','mp3'])
@@ -31,27 +32,28 @@ def createareamanager():
 		return render_template('login.html')
 	else:
 		if (request.method == 'POST'):
-			Districtallocation=str(request.form.get('Districtallocation'))
+			Districtallocation=str(request.form.get('Districtallocation')).capitalize()
 			DateOfJoining=str(request.form.get('DateOfJoining'))
-			Name=str(request.form.get('Name'))
+			Name=str(request.form.get('Name')).title()
 			DOB=str(request.form.get('DOB'))
-			Qualification=str(request.form.get('Qualification'))
+			Qualification=str(request.form.get('Qualification').capitalize())
 			AdharNo=str(request.form.get('AdharNo'))
-			Pancard=str(request.form.get('Pancard'))
-			EmailId=str(request.form.get('Email'))
+			Pancard=str(request.form.get('Pancard').upper())
+			print(type(Pancard))
+			EmailId=str(request.form.get('Email').lower())
 			MobileNo=str(request.form.get('Mobile'))
-			Yearofexperience=str(request.form.get('Yearofexperience'))
-			ExperienceSector=str(request.form.get('ExperienceSector'))
-			PresentlyWorking=str(request.form.get('PresentlyWorking'))
-			StreetVillage=str(request.form.get('StreetVillage'))
-			PostOffice=str(request.form.get('PostOffice'))
-			PoliceStation=str(request.form.get('PoliceStation'))
-			District=str(request.form.get('District'))
-			State=str(request.form.get('State'))
+			Yearofexperience=str(request.form.get('Yearofexperience').title())
+			ExperienceSector=str(request.form.get('ExperienceSector').title())
+			PresentlyWorking=str(request.form.get('PresentlyWorking').capitalize())
+			StreetVillage=str(request.form.get('StreetVillage').title())
+			PostOffice=str(request.form.get('PostOffice').title())
+			PoliceStation=str(request.form.get('PoliceStation').title())
+			District=str(request.form.get('District').title())
+			State=str(request.form.get('State').title())
 			Pincode=str(request.form.get('Pincode'))
-			BankName=str(request.form.get('BankName'))
+			BankName=str(request.form.get('BankName').title())
 			BankAccountNo=str(request.form.get('BankAccountNo'))
-			IFSC=str(request.form.get('IFSC'))
+			IFSC=str(request.form.get('IFSC').upper())
 			file = request.files['inputfile']
 			filename=Upload_fun(file)
 			CurrentTime = datetime.datetime.now()
@@ -73,37 +75,44 @@ def createareamanager():
 			else:
 				totalval = 'SEAM0123'
 				EmployeeId = totalval
-			if accountNo(BankAccountNo) == True:
-				if adharNo(AdharNo) == True:
-					if check (EmailId) == True:
-						if fun_ifsc (IFSC) == True :
-							if accountNo(BankAccountNo)== True and adharNo(AdharNo) == True and check (EmailId) == True and fun_ifsc (IFSC) == True:
-								sql = "INSERT INTO user (Password,RoleID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,Mobile,Email,YrsOfExp,ExpSector,PresentlyWorking,Town,Po,Ps,District,State,Pincode,BankName,BankAccountNo,IFSC,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-								val=(UserPassword,RoleID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,MobileNo,EmailId,Yearofexperience,ExperienceSector,PresentlyWorking,StreetVillage,PostOffice,PoliceStation,District,State,Pincode,BankName,BankAccountNo,IFSC,filename,CurrentTime)
-								result = mycursor.execute(sql,val)
-								mydb.commit()
-								UserID = mycursor.lastrowid
-								sql = "INSERT INTO areamanager (UserID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,MobileNo,EmailId,Yearofexperience,ExperienceSector,PresentlyWorking,StreetVillage,Po,Ps,District,State,Pincode,BankName,BankAccountNo,IFSC,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-								val=(UserID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,MobileNo,EmailId,Yearofexperience,ExperienceSector,PresentlyWorking,StreetVillage,PostOffice,PoliceStation,District,State,Pincode,BankName,BankAccountNo,IFSC,filename,CurrentTime)
-								result = mycursor.execute(sql,val)
-								mydb.commit()
-								mydb.close()
-								msg = "Congratulation, you are selected as area manager in Scratch Exponent for "+str(District)+" district. Your employee ID is "+str(EmployeeId)+". You are eligible to login in our app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon."
-								SMS_Integration(msg, MobileNo)
-								flash('Area Manager Register Successfully')
+			if pincode(Pincode) == True:
+				if pancard(Pancard) == True:
+					print(Pancard)
+					if validNumber(MobileNo) == True:
+						if accountNo(BankAccountNo) == True:
+							if adharNo(AdharNo) == True:
+								if check (EmailId) == True:
+									if fun_ifsc (IFSC) == True :
+										if accountNo(BankAccountNo)== True and adharNo(AdharNo) == True and check (EmailId) == True and fun_ifsc (IFSC) == True and pancard(Pancard) == True:
+											sql = "INSERT INTO user (Password,RoleID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,Mobile,Email,YrsOfExp,ExpSector,PresentlyWorking,Town,Po,Ps,District,State,Pincode,BankName,BankAccountNo,IFSC,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+											val=(UserPassword,RoleID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,MobileNo,EmailId,Yearofexperience,ExperienceSector,PresentlyWorking,StreetVillage,PostOffice,PoliceStation,District,State,Pincode,BankName,BankAccountNo,IFSC,filename,CurrentTime)
+											result = mycursor.execute(sql,val)
+											mydb.commit()
+											UserID = mycursor.lastrowid
+											sql = "INSERT INTO areamanager (UserID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,MobileNo,EmailId,Yearofexperience,ExperienceSector,PresentlyWorking,StreetVillage,Po,Ps,District,State,Pincode,BankName,BankAccountNo,IFSC,IdproofPhoto,OnDate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+											val=(UserID,EmployeeId,Districtallocation,DateOfJoining,Name,DOB,Qualification,AdharNo,Pancard,MobileNo,EmailId,Yearofexperience,ExperienceSector,PresentlyWorking,StreetVillage,PostOffice,PoliceStation,District,State,Pincode,BankName,BankAccountNo,IFSC,filename,CurrentTime)
+											result = mycursor.execute(sql,val)
+											mydb.commit()
+											mydb.close()
+											msg = "Congratulation, you are selected as area manager in Scratch Exponent for "+str(District)+" district. Your employee ID is "+str(EmployeeId)+". You are eligible to login in our app for your job performance using your ID as username & registered mobile number as password. We send you T&C by your E-mail soon."
+											SMS_Integration(msg, MobileNo)
+											flash('Area Manager Register Successfully')
+										else:
+											flash('Something went wrong')
+									else:
+										flash('IFSC code invalid')
+								else:
+									flash('Email is invalid')
 							else:
-								flash('Something went wrong')
+								flash('AadharNo should be 12 digit')
 						else:
-							flash('IFSC code invalid')
-						
+							flash('AccountNo should be 14 to 16 digit')
 					else:
-						flash('Email is invalid')
+						flash('Please enter valid mobile number')
 				else:
-					flash('AdharNo should be 12 digit')
+					flash('Please enter valid pancard')
 			else:
-				flash('AccountNo should be 14 to 16 digit')
-			
-			
+				flash('Please enter valid pincode')
 		return render_template('createareamanager.php')
 	
 

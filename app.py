@@ -476,7 +476,7 @@ class claimAmount(Resource):
                 mydb.commit()
                 mydb.close()
                 return jsonify({
-                    'Message': "You submit your claim successfully;we send your claim amount within one working day",
+                    'Message': "You submit your claim successfully,we will send your claim amount within one working day",
                     'Status': 1,
                 })
 
@@ -499,9 +499,9 @@ class claimAmount(Resource):
                 mydb.commit()
                 mydb.close()
                 return jsonify({
-                    'Message': "You submit your claim successfully;we send your claim amount within one working day",
+                    'Message': "You submit your claim successfully,We will send your claim amount within one working day",
                     'Status': 1,
-                })
+                    })
         except Exception as e:
             return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
@@ -519,14 +519,15 @@ class claimStatus(Resource):
             mydb = mycus()
             mycursor = mydb.cursor()
             mycursor.execute(
-                "SELECT claim.DateOfClaim,claim.VcID,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = " + str(
+                "SELECT claim.DateOfClaim,claim.VcID,claim.ClaimNo,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = " + str(
                     UserID))
             rowcursor = mycursor.fetchall()
             if len(rowcursor) > 0:
                 for i in rowcursor:
                     ClaimDate = i[0]
                     VcID = i[1]
-                    ClaimStatus = i[2]
+                    ClaimNo = i[2]
+                    ClaimStatus = i[3]
                     if ClaimStatus is None:
                         ClaimStatus = 0
                     mycursor.execute("SELECT VehicleNo from vehiclecontract where VcID = " + str(VcID))
@@ -538,6 +539,7 @@ class claimStatus(Resource):
                                         'ClaimDate': ClaimDate,
                                         'VehicleNo': VehicleNo,
                                         'ClaimStatus': ClaimStatus,
+                                        'ClaimNo':ClaimNo,
                                         'Status': 1})
 
             else:
@@ -1251,17 +1253,14 @@ class ContactUs(Resource):
             Message = args['Message']
             CurrentTime = datetime.datetime.now()
             CurrentTime = CurrentTime.strftime("%m-%d-%Y")
-            if check(Email) == True and  validNumber(MobileNo) == True:
-                mydb = mycus()
-                mycursor = mydb.cursor()
-                sql = "INSERT INTO contactus (Name,MobileNo,Email,Message,OnDate) VALUES (%s,%s,%s,%s,%s)"
-                val = (Name, MobileNo,Email,Message,CurrentTime)
-                result = mycursor.execute(sql, val)
-                mydb.commit()
-                mydb.close()
-                return jsonify({'Message': "You are Successfully submitted. We will contact you soon.", "Status": 1})
-            else:
-                return jsonify({'Message': "Please enter correct details.", "Status": 0})
+            mydb = mycus()
+            mycursor = mydb.cursor()
+            sql = "INSERT INTO contactus (Name,MobileNo,Email,Message,OnDate) VALUES (%s,%s,%s,%s,%s)"
+            val = (Name, MobileNo,Email,Message,CurrentTime)
+            result = mycursor.execute(sql, val)
+            mydb.commit()
+            mydb.close()
+            return jsonify({'Message': "You are Successfully submitted. We will contact you soon.", "Status": 1})
 
         except Exception as e:
             return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})

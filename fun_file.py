@@ -129,10 +129,21 @@ def GSTINo(GSTINo):
 		return True
 		
 def ChassisNo(ChassisNo):
-	if len(adharNo) == 17: 
+	if len(ChassisNo) == 17:
 		return True
-		
-		
+
+
+def pancard(Pancard):
+	print('checking')
+	if re.match("[A-Za-z]{5}\d{4}[A-Za-z]{1}", Pancard):
+		print(Pancard)
+		return True
+
+
+def pincode(Pincode):
+	if len(Pincode) == 6:
+		return True
+
 		
 def fun_ifsc(IFSC):
 	if re.match("^[A-Z]{4}\d{7}$", IFSC):

@@ -81,36 +81,37 @@
                                     
                                     <div class="card-body" style="width: 650px;">
                                         <form method="post" action="/seadmin/createareamanager" enctype=multipart/form-data>
-											<div class="form-group">
+											<div class="form-group"  >
 												<label for="date">District Allocate</label>
-												<input type="text" name="Districtallocation" class="form-control" required />
+												<input type="text" name="Districtallocation" class="form-control" style = "text-transform:capitalize;"  required />
 											</div>
-											<div class="form-group">
+											<div class="form-group" style = "text-transform:capitalize;">
 												<label for="date">Date Of Joining</label>
-												<input type="date" name="DateOfJoining" class="form-control" required />
+												<input type="date" name="DateOfJoining" class="form-control" style = "text-transform:capitalize;"  required />
 											</div>
-											 <h4 style="font-size:14px; color:#ff001a; text-decoration: underline; text-align:left;">Basic Details</h4>
+
+											 <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Basic Details</h4>
                                              
 										  <div class="form-group">
 												<label for="text"> Name of Candidate </label>
-												<input type="text" name="Name" class="form-control" required />
+												<input type="text" name="Name" class="form-control" style = "text-transform:capitalize;"  required />
 										  </div>
 										  <div class="form-group">
 												<label for="date">Date of Birth </label>
-												<input type="date" name="DOB" class="form-control" required  />
+												<input type="date" name="DOB" class="form-control" style = "text-transform:capitalize;"  required  />
 										  </div>
 										  <div class="form-group">
 												<label for="date"> Qualification  </label>
-												<input type="text" name="Qualification" class="form-control" required />
+												<input type="text" name="Qualification" class="form-control" style = "text-transform:capitalize;" required />
 										  </div>
 										 
 										  <div class="form-group">
-												<label for="centerid"> Adhar Card No </label>
+												<label for="centerid"> Aadhar Card No </label>
 												<input type="text"  Placeholder = "Please Enter 12 -digit numbers"class="form-control" name="AdharNo" required />
 										   </div>
 										   <div class="form-group">
 												<label for="centerid"> PAN Card No </label>
-												<input type="text"  class="form-control" name="Pancard" required />
+												<input type="text"  class="form-control" name="Pancard" style = "text-transform:uppercase;" required />
 										   </div>
 										  <div class="form-group">
 												<label for="centerid"> Mobile Number </label>
@@ -118,67 +119,64 @@
 										   </div>
 										   <div class="form-group">
 												<label for="centerid"> E-mail Id </label>
-												<input type="email" class="form-control" name="Email" required />
+												<input type="email" class="form-control" name="Email" style = "text-transform:lowercase;" required />
 										   </div>
 										   <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Experience</h4>
 										   <div class="form-group">
 												<label for="centerid">Year of experience</label>
-												<input type="text" class="form-control" name="Yearofexperience" required />
+												<input type="text" class="form-control" name="Yearofexperience" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
-												<label for="centerid"> Experience Sector</label>
-												<input type="text" class="form-control" name="ExperienceSector" required />
+												<label> Experience Sector</label>
+												<input type="text" class="form-control" name="ExperienceSector" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
-												<label for="centerid"> Presently  working as </label>
-												<input type="text" class="form-control" name="PresentlyWorking" required />
+												<label> Presently  working as </label>
+												<input type="text" class="form-control" name="PresentlyWorking" style = "text-transform:capitalize;" required />
 										   </div>
 										   <h4 style="font-size:14px; color:#ff001a; text-decoration: underline;  text-align:left;">Address(As per ID proof)</h4>
 										   <div class="form-group">
-												<label for="centerid">Street/Village </label>
-												<input type="text" class="form-control" name="StreetVillage" required />
+												<label >Street/Village </label>
+												<input type="text" class="form-control" name="StreetVillage" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
-											<label for="centerid"> Post Office </label>
-											<input type="text" class="form-control" name="PostOffice" required />
+											<label > Post Office </label>
+											<input type="text" class="form-control" name="PostOffice" style = "text-transform:capitalize;" required />
 											
 										   </div>
 										  <div class="form-group">
-											<label for="villageid"> Police Station  </label>
-											<input type="text" class="form-control" name="PoliceStation" required />
+											<label > Police Station  </label>
+											<input type="text" class="form-control" name="PoliceStation" style = "text-transform:capitalize;" required />
 											
 										  </div> 
 										   <div class="form-group">
-											<label for="centerid"> District </label>
-											<input type="text" class="form-control" name="District" required  />
+											<label > District </label>
+											<input type="text" class="form-control" name="District" style = "text-transform:capitalize;" required  />
 										   </div>
 										   <div class="form-group">
-											<label for="centerid"> State </label>
-											<input type="text" class="form-control" name="State" required />
+											<label > State </label>
+											<input type="text" class="form-control" name="State" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
-											<label for="centerid"> Pin code </label>
+											<label > Pin code </label>
 											<input type="text" Placeholder="Please enter 6-digit numbers"class="form-control" name="Pincode" required />
 										   </div>
 										   
 										   
 										   <h4 style="font-size:14px;color:#ff001a; text-decoration: underline;  text-align:left;">Bank Details</h4>
 										    <div class="form-group">
-												<label for="centerid"> Bank Name </label>
-												<input type="text" class="form-control" name="BankName" required />
+												<label> Bank Name </label>
+												<input type="text" class="form-control" name="BankName" style = "text-transform:capitalize;" required />
 											</div>
-										   
 										   <div class="form-group">
-												<label for="centerid"> A/C Number </label>
+												<label > A/C Number </label>
 												<input type="text" Placeholder="Please enter minimum 14 and maximum 16 digit number "class="form-control" name="BankAccountNo" required />
 										   </div>
 										   <div class="form-group">
-												<label for="centerid"> IFSC Code </label>
-												<input type="text" class="form-control" name="IFSC" placeholder="Please enter first 4-capital characters and rest 7-digits" required />
+												<label> IFSC Code </label>
+												<input type="text" class="form-control" name="IFSC" placeholder="Please enter first 4-capital characters and rest 7-digits" style = "text-transform:uppercase;" required />
 										   </div>
-
 										   <div class="form-group">
-											
 											</div>
 												<div class="form-group">
 												<div class="input-group-btn">
