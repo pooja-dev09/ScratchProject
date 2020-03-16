@@ -74,6 +74,7 @@ font-size: 1rem;
 									</div>
 									
 									<div class="form-group">
+									{{result}}
 										<center><h5> {{result[0]['Name']}} </h5></center>
 									</div>
 										

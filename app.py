@@ -476,7 +476,7 @@ class claimAmount(Resource):
                 mydb.commit()
                 mydb.close()
                 return jsonify({
-                    'Message': "You submit your claim successfully,we will send your claim amount within one working day",
+                    'Message': "You submitted your claim amount details successfully.We send you this amount within four working days.",
                     'Status': 1,
                 })
 
@@ -499,7 +499,7 @@ class claimAmount(Resource):
                 mydb.commit()
                 mydb.close()
                 return jsonify({
-                    'Message': "You submit your claim successfully,We will send your claim amount within one working day",
+                    'Message': "You submitted your claim amount details successfully.We send you this amount within four working days.",
                     'Status': 1,
                     })
         except Exception as e:
@@ -530,14 +530,14 @@ class claimStatus(Resource):
                     ClaimStatus = i[3]
                     if ClaimStatus is None:
                         ClaimStatus = 0
-                    mycursor.execute("SELECT VehicleNo from vehiclecontract where VcID = " + str(VcID))
-                    rowcursor = mycursor.fetchall()
-                    mydb.close()
-                    for i in rowcursor:
-                        VehicleNo = i[0]
+                    # mycursor.execute("SELECT VehicleNo from vehiclecontract where VcID = " + str(VcID))
+                    # rowcursor = mycursor.fetchall()
+                    # mydb.close()
+                    # for i in rowcursor:
+                    #     VehicleNo = i[0]
                         return jsonify({'Message': " Successfully claim recorded.",
                                         'ClaimDate': ClaimDate,
-                                        'VehicleNo': VehicleNo,
+                                        # 'VehicleNo': VehicleNo,
                                         'ClaimStatus': ClaimStatus,
                                         'ClaimNo':ClaimNo,
                                         'Status': 1})
@@ -629,11 +629,11 @@ class ClaimViewSM(Resource):
                     ClaimStatus = i[4]
                     if ClaimStatus is None:
                         ClaimStatus = 0
-                    mycursor.execute("SELECT Name from user WHERE UserID = '" + str(UserID) + "'")
-                    rowcursor = mycursor.fetchall()
-                    for i in rowcursor:
-                        name = i[0]
-                    data = {'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo, 'name': name, 'ClaimID': ClaimID,
+                    # mycursor.execute("SELECT Name from user WHERE UserID = '" + str(UserID) + "'")
+                    # rowcursor = mycursor.fetchall()
+                    # for i in rowcursor:
+                    #     name = i[0]
+                    data = {'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo,'ClaimID': ClaimID,
                             'ClaimStatus': ClaimStatus}
                     new.append(data)
                 mydb.close()
@@ -648,148 +648,153 @@ api.add_resource(ClaimViewSM, "/ClaimViewSM")
 class VehicleContract(Resource):
 
     def post(self):
-        try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('UserID', required=True, type=int, help='UserID cannot be found')
-            parser.add_argument('PaymentMode', required=True, type=str, help='PayementMode cannot be found')
-            parser.add_argument('DateOfContract', required=True, type=str, help='DateOfContract Id cannot be found')
-            parser.add_argument('VehicleCategory', required=True, type=str, help='VehicleCategory Id cannot be found')
-            parser.add_argument('VehicleNo', required=True, type=str, help='VehicleNo cannot be found')
-            parser.add_argument('Maker', required=True, type=str, help='Maker cannot be found')
-            parser.add_argument('Model', required=True, type=str, help='Model cannot be found')
-            parser.add_argument('ChassisNo', required=True, type=str, help='ChassisNo  cannot be found')
-            parser.add_argument('Color', required=True, type=str, help='Color  cannot be found')
-            parser.add_argument('DateofRegd', required=True, type=str, help='DateofRegd  cannot be found')
-            parser.add_argument('Package', required=True, type=str, help='Package  cannot be found')
-            parser.add_argument('OwnerName', required=True, type=str, help='OwnerName  cannot be found')
-            parser.add_argument('Mobile', required=True, type=int, help='MobileNo cannot be found')
-            parser.add_argument('Email', required=False, type=str, help='Email Id cannot be found')
-            parser.add_argument('Location', required=True, type=str, help='Location cannot be found')
-            parser.add_argument('PostOffice', required=True, type=str, help='PostOfficcannot be found')
-            parser.add_argument('PoliceStation', required=True, type=str, help='PoliceStation Id cannot be found')
-            parser.add_argument('District', required=True, type=str, help='District cannot be found')
-            parser.add_argument('State', required=True, type=str, help='State cannot be found')
-            parser.add_argument('Video', type=werkzeug.datastructures.FileStorage, required=True,
-                                help='Video cannot be found', location='files')
-            args = parser.parse_args()
-            PaymentMode = (args['PaymentMode'].upper())
-            Amount = args['Package']
-            DateOfContract = args['DateOfContract']
-            VehicleNo = (args['VehicleNo'].upper())
-            VehicleCategory = args['VehicleCategory']
-            Maker = args['Maker']
-            Model = args['Model']
-            ChassisNo = args['ChassisNo']
-            Color = args['Color']
-            DateofRegd = args['DateofRegd']
-            OwnerName = args['OwnerName']
-            MobileNo = str(args['Mobile'])
-            Email = args['Email']
-            Location = args['Location']
-            PostOffice = args['PostOffice']
-            PoliceStation = args['PoliceStation']
-            District = args['District']
-            State = args['State']
-            file = args['Video']
-            AddedBy = args['UserID']
-            print('added by:',AddedBy)
-            print(type(AddedBy))
-            mydb = mycus()
-            mycursor = mydb.cursor()
-            mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 2 and EmployeeId LIKE 'SCAA%' ORDER BY UserID DESC LIMIT 1")
-            rowcursor = mycursor.fetchall()
-            if len(rowcursor) > 0:
-                for i in rowcursor:
-                    Employeeid_user = i[0]
-                    Employeeid_user = Employeeid_user.split("A")
-                    print('after split',Employeeid_user)
+        # try:
+        parser = reqparse.RequestParser()
+        parser.add_argument('UserID', required=True, type=int, help='UserID cannot be found')
+        parser.add_argument('PaymentMode', required=True, type=str, help='PayementMode cannot be found')
+        parser.add_argument('DateOfContract', required=True, type=str, help='DateOfContract Id cannot be found')
+        parser.add_argument('VehicleCategory', required=True, type=str, help='VehicleCategory Id cannot be found')
+        parser.add_argument('VehicleNo', required=True, type=str, help='VehicleNo cannot be found')
+        parser.add_argument('Maker', required=True, type=str, help='Maker cannot be found')
+        parser.add_argument('Model', required=True, type=str, help='Model cannot be found')
+        parser.add_argument('ChassisNo', required=True, type=str, help='ChassisNo  cannot be found')
+        parser.add_argument('Color', required=True, type=str, help='Color  cannot be found')
+        parser.add_argument('DateofRegd', required=True, type=str, help='DateofRegd  cannot be found')
+        parser.add_argument('Package', required=True, type=str, help='Package  cannot be found')
+        parser.add_argument('OwnerName', required=True, type=str, help='OwnerName  cannot be found')
+        parser.add_argument('Mobile', required=True, type=int, help='MobileNo cannot be found')
+        parser.add_argument('Email', required=False, type=str, help='Email Id cannot be found')
+        parser.add_argument('Location', required=True, type=str, help='Location cannot be found')
+        parser.add_argument('PostOffice', required=True, type=str, help='PostOfficcannot be found')
+        parser.add_argument('PoliceStation', required=True, type=str, help='PoliceStation Id cannot be found')
+        parser.add_argument('District', required=True, type=str, help='District cannot be found')
+        parser.add_argument('State', required=True, type=str, help='State cannot be found')
+        parser.add_argument('Video', type=werkzeug.datastructures.FileStorage, required=True,
+                            help='Video cannot be found', location='files')
+        args = parser.parse_args()
+        PaymentMode = (args['PaymentMode'].upper())
+        Amount = args['Package']
+        DateOfContract = args['DateOfContract']
+        VehicleNo = (args['VehicleNo'].upper())
+        VehicleCategory = args['VehicleCategory']
+        Maker = args['Maker']
+        Model = args['Model']
+        ChassisNo = args['ChassisNo']
+        Color = args['Color']
+        DateofRegd = args['DateofRegd']
+        OwnerName = args['OwnerName']
+        MobileNo = str(args['Mobile'])
+        Email = args['Email']
+        Location = args['Location']
+        PostOffice = args['PostOffice']
+        PoliceStation = args['PoliceStation']
+        District = args['District']
+        State = args['State']
+        file = args['Video']
+        AddedBy = args['UserID']
+        print('added by:',AddedBy)
+        print(type(AddedBy))
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 2 and EmployeeId LIKE 'SCAA%' ORDER BY UserID DESC LIMIT 1")
+        rowcursor = mycursor.fetchall()
+        if len(rowcursor) > 0:
+            for i in rowcursor:
+                Employeeid_user = i[0]
+                Employeeid_user = Employeeid_user.split("A")
+                print('after split',Employeeid_user)
 
-                    totalval = int(Employeeid_user[2])
-                    print('totalval',totalval)
-                    EmployeeId = RegisterCustomer(totalval)
+                totalval = int(Employeeid_user[2])
+                print('totalval',totalval)
+                EmployeeId = RegisterCustomer(totalval)
 
 
-            else:
-                totalval = 'SCAA9123'
-                EmployeeId = totalval
-            password = Password_encoded(MobileNo)
-            RoleID = 2
-            if PaymentMode == 'CASH' or PaymentMode == 'CHEQUE' or PaymentMode == 'UPI':
-                Video = Upload_fun(file)
-                print('Video',Video)
-                CurrentTime = datetime.datetime.now()
-                endDate = CurrentTime + datetime.timedelta(days=1 * 365)
-                endDate = endDate.strftime("%m-%d-%Y")
-                sql = "INSERT INTO user (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,Name,Mobile,Email,CenterLocation,Po,Ps,District,State,VehiclePhoto,Password,OnDate,DateOfExp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                val = (EmployeeId, RoleID, DateOfContract, VehicleCategory, VehicleNo, Maker, Model, ChassisNo, Color,
-                       DateofRegd, OwnerName, MobileNo, Email, Location, PostOffice, PoliceStation, District, State,
-                       Video, password, CurrentTime, endDate)
+        else:
+            totalval = 'SCAA9123'
+            EmployeeId = totalval
+        password = Password_encoded(MobileNo)
+        RoleID = 2
+        if PaymentMode == 'CASH' or PaymentMode == 'CHEQUE' or PaymentMode == 'UPI':
+            Video = Upload_fun(file)
+            print('Video',Video)
+            CurrentTime = datetime.datetime.now()
+            endDate = CurrentTime + datetime.timedelta(days=1 * 365)
+            endDate = endDate.strftime("%m-%d-%Y")
+            sql = "INSERT INTO user (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,Name,Mobile,Email,CenterLocation,Po,Ps,District,State,VehiclePhoto,Password,OnDate,DateOfExp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            val = (EmployeeId, RoleID, DateOfContract, VehicleCategory, VehicleNo, Maker, Model, ChassisNo, Color,
+                   DateofRegd, OwnerName, MobileNo, Email, Location, PostOffice, PoliceStation, District, State,
+                   Video, password, CurrentTime, endDate)
+            result = mycursor.execute(sql, val)
+            mydb.commit()
+            UserID = mycursor.lastrowid
+            sql = "INSERT INTO vehiclecontract (EmployeeId,AddedBy,UserID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,OwnerName,Mobile,Email,Location,Po,Ps,District,State,VehicleVideo,OnDate,Package,DateOfExp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+            val = (EmployeeId,
+            AddedBy, UserID, DateOfContract, VehicleCategory, VehicleNo, Maker, Model, ChassisNo, Color, DateofRegd,
+            OwnerName, MobileNo, Email, Location, PostOffice, PoliceStation, District, State, Video, CurrentTime,Amount,endDate)
+            result = mycursor.execute(sql, val)
+            mydb.commit()
+            if PaymentMode == 'CASH':
+                sql = "INSERT INTO paymentrequest (UserID,Paymenttype,Amount,OnDate) VALUES (%s,%s,%s,%s)"
+                val = (UserID, PaymentMode, Amount, CurrentTime)
                 result = mycursor.execute(sql, val)
                 mydb.commit()
-                UserID = mycursor.lastrowid
-                sql = "INSERT INTO vehiclecontract (AddedBy,UserID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,OwnerName,Mobile,Email,Location,Po,Ps,District,State,VehicleVideo,OnDate,Package) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                val = (
-                AddedBy, UserID, DateOfContract, VehicleCategory, VehicleNo, Maker, Model, ChassisNo, Color, DateofRegd,
-                OwnerName, MobileNo, Email, Location, PostOffice, PoliceStation, District, State, Video, CurrentTime,Amount)
+                Amountmsg = 'Rs.' + str(Amount) + '/-'
+                msg="Your payment "+str(Amountmsg)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
+                SMS_Integration(msg, MobileNo)
+                mydb.close()
+                return jsonify(
+                    {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
+                     "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
+
+            elif PaymentMode == 'CHEQUE':
+                parser.add_argument('ChequeNo', required=True, type=str, help='chequeno cannot be found')
+                parser.add_argument('BankName', required=True, type=str, help='BankName cannot be found')
+                args = parser.parse_args()
+                ChequeNo = args['ChequeNo']
+                BankName = args['BankName']
+                sql = "INSERT INTO paymentrequest (UserID,Paymenttype,ChequeNo,BankName,Amount,OnDate) VALUES (%s,%s,%s,%s,%s,%s)"
+                val = (UserID, PaymentMode, ChequeNo, BankName, Amount, CurrentTime)
+                result = mycursor.execute(sql, val)
+                print('PaymentMode', result)
+                print('dfiodfvoidfioj')
+                mydb.commit()
+                Amountmsg = 'Rs.'+str(Amount)+'/-'
+                print(Amountmsg)
+
+                msg="Your payment "+str(Amountmsg)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
+                SMS_Integration(msg, MobileNo)
+                mydb.close()
+                return jsonify(
+                    {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
+                     "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
+            elif PaymentMode == 'UPI':
+                parser.add_argument('UPIName', required=False, type=str, help='UPIName cannot be found')
+                parser.add_argument('TransactionId', required=False, type=str, help='TransactionId cannot be found')
+                args = parser.parse_args()
+                UPIName = args['UPIName']
+                TransactionId = args['TransactionId']
+                sql = "INSERT INTO paymentrequest (UserID,Paymenttype,WalletName,UpiTransactionId,Amount,OnDate) VALUES (%s,%s,%s,%s,%s,%s)"
+                val = (UserID, PaymentMode, UPIName, TransactionId, Amount, CurrentTime)
                 result = mycursor.execute(sql, val)
                 mydb.commit()
-                if PaymentMode == 'CASH':
-                    sql = "INSERT INTO paymentrequest (UserID,Paymenttype,Amount,OnDate) VALUES (%s,%s,%s,%s)"
-                    val = (UserID, PaymentMode, Amount, CurrentTime)
-                    result = mycursor.execute(sql, val)
-                    print('PaymentMode', result)
-                    mydb.commit()
-                    msg="Your payment "+str(Amount)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
-                    SMS_Integration(msg, MobileNo)
-                    mydb.close()
-                    return jsonify(
-                        {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
-                         "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
+                print('sdkjbjsdhji')
+                print('sdjgcdgsc', MobileNo)
+                Amountmsg = 'Rs.' + str(Amount) + '/-'
+                msg="Your payment "+str(Amountmsg)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
+                SMS_Integration(msg, MobileNo)
+                print(Amountmsg)
+                mydb.close()
+                return jsonify(
+                    {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
+                     "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
 
-                elif PaymentMode == 'CHEQUE':
-                    parser.add_argument('ChequeNo', required=True, type=str, help='chequeno cannot be found')
-                    parser.add_argument('BankName', required=True, type=str, help='BankName cannot be found')
-                    args = parser.parse_args()
-                    ChequeNo = args['ChequeNo']
-                    BankName = args['BankName']
-                    sql = "INSERT INTO paymentrequest (UserID,Paymenttype,ChequeNo,BankName,Amount,OnDate) VALUES (%s,%s,%s,%s,%s,%s)"
-                    val = (UserID, PaymentMode, ChequeNo, BankName, Amount, CurrentTime)
-                    result = mycursor.execute(sql, val)
-                    print('PaymentMode', result)
-                    print('dfiodfvoidfioj')
-                    mydb.commit()
-                    msg="Your payment "+str(Amount)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
-                    SMS_Integration(msg, MobileNo)
-                    mydb.close()
-                    return jsonify(
-                        {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
-                         "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
-                elif PaymentMode == 'UPI':
-                    parser.add_argument('UPIName', required=False, type=str, help='UPIName cannot be found')
-                    parser.add_argument('TransactionId', required=False, type=str, help='TransactionId cannot be found')
-                    args = parser.parse_args()
-                    UPIName = args['UPIName']
-                    TransactionId = args['TransactionId']
-                    sql = "INSERT INTO paymentrequest (UserID,Paymenttype,WalletName,UpiTransactionId,Amount,OnDate) VALUES (%s,%s,%s,%s,%s,%s)"
-                    val = (UserID, PaymentMode, UPIName, TransactionId, Amount, CurrentTime)
-                    result = mycursor.execute(sql, val)
-                    mydb.commit()
-                    print('sdkjbjsdhji')
-                    print('sdjgcdgsc', MobileNo)
-                    msg="Your payment "+str(Amount)+" is successfully accepted.Your vehicle contract ID is "+str(EmployeeId)+". You are eligible to login as registered customer using your vehicle number as user ID & mobile number is password."
-                    SMS_Integration(msg, MobileNo)
-                    mydb.close()
-                    return jsonify(
-                        {'Message': 'Contract with vehicle done successfully. Its contract ID is ' + EmployeeId,
-                         "RoleID": RoleID, "Status": 1, "UserID": AddedBy})
+        else:
 
-            else:
-
-                return jsonify({'Message': 'Something went wrong', "Status": 0})
+            return jsonify({'Message': 'Something went wrong', "Status": 0})
 
 
-        except Exception as e:
-            return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
+        # except Exception as e:
+        #     return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
 
 api.add_resource(VehicleContract, "/getVehicleContract")
@@ -898,7 +903,8 @@ class ServiceCenterAuthorization(Resource):
                 result = mycursor.execute(sql, val)
                 mydb.commit()
                 mydb.close()
-                msg = "Authorisation of Service Center is successfully accepted.Its authorization ID is "+str(EmployeeId)+"."
+                msg = 'Your Service center'+ CenterName +'accepted by Scratch Exponent as a authorize service center. Your center ID is '+ str(
+                    EmployeeId) +',you are eligible to login with our App using this ID as user name & your mobile number is password.'
                 SMS_Integration(msg,MobileNo)
                 return jsonify({
                                    'Message': "Authorisation of Service Center is successfully accepted.Its authorization ID is " + str(
@@ -919,7 +925,8 @@ class ServiceCenterAuthorization(Resource):
                 result = mycursor.execute(sql, val)
                 mydb.commit()
                 mydb.close()
-                msg = "Authorisation of Service Center is successfully accepted.Its authorization ID is "+str(EmployeeId)+"."
+                msg = 'Your Service center'+CenterName+'accepted by Scratch Exponent as a authorize service center. Your center ID is '+str(
+                                      EmployeeId)+',you are eligible to login with our App using this ID as user name & your mobile number is password.'
                 SMS_Integration(msg,MobileNo)
 
                 return jsonify({
@@ -1115,7 +1122,7 @@ class SMTeam(Resource):
         mydb = mycus()
         mycursor = mydb.cursor()
 
-        sql=  "SELECT Name,NameCenter,CenterLocation,District,Sale_ScFor,MobileNo,EmployeeId FROM salesmanager where AddedBy = "+str(AddedBy)+""
+        sql=  "SELECT Name,NameCenter,CenterLocation,District,AppointCenter,MobileNo,EmployeeId FROM salesmanager where AddedBy = "+str(AddedBy)+""
         print(sql)
         query = mycursor.execute(sql)
 
@@ -1127,11 +1134,11 @@ class SMTeam(Resource):
                 NameCenter = i[1]
                 CenterLocation = i[2]
                 District = i[3]
-                CenterFor = i[4]
+                AppointCenter = i[4]
                 MobileNo = i[5]
                 EmployeeId = i[6]
                 data = {'Name': Name, 'NameCenter': NameCenter, 'CenterLocation': CenterLocation, 'District': District,
-                        'CenterFor': CenterFor, 'MobileNo': MobileNo, "EmployeeId":EmployeeId}
+                        'CenterFor': AppointCenter, 'MobileNo': MobileNo, "EmployeeId":EmployeeId}
                 new.append(data)
             mydb.close()
             return jsonify({'Status': 1, 'new': new})

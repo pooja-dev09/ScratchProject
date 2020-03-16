@@ -42,15 +42,9 @@
                                     </ul>
                                 </div>
                             </li>
-							<li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>Contract Record</a>
-                                <div id="submenu-3" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            
-                                        
-                                    </ul>
-                                </div>
+							 <li class="nav-item ">
+                                <a class="nav-link active" href="/seadmin/Registercustomer"><i class="fa fa-fw fa-user-circle"></i>Contract Record <span class="badge badge-success">6</span></a>
+
                             </li>
 							
 							

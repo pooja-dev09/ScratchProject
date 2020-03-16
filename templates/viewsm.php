@@ -71,7 +71,7 @@
                                                 <th>View Profile</th>
                                                 <th>View Business</th>
 												<th>Send Notification To All</th>
-												
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -85,7 +85,7 @@
 												<td>{{r["Sales_CenterBrand"]}}</td>
                                                 
                                                 <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsmdetails/{{r.Sales_UserId}}">View</a></td>
-                                                <td><a style="color:#ff001a;text-decoration: underline;"href="#">View</a></td>	
+                                                <td><a style="color:#ff001a;text-decoration: underline;"href="/viewsmbusiness/{{r.Sales_UserId}}">View</a></td>
 												<td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
 												
                                             </tr>
@@ -101,8 +101,8 @@
                                                 <th>View Profile</th>
                                                 <th>View Business</th>
 												<th>Send Notification To All</th>
-												
-												
+
+
                                             </tr>
 											
                                         </tfoot>

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
- 
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -40,8 +40,8 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
                             <h2 class="pageheader-title">View All Register Customer</h2>
-                            
-                           
+
+
                         </div>
                     </div>
                 </div>
@@ -62,55 +62,48 @@
 
                                             <tr>
                                                 <th>Slno</th>
-												<th>DateOfContract</th>
-												<th>EmployeeId</th>
-											    <th>Name</th>
-											    <th>Mobile</th>
-                                                <th>VehicleNo</th>
-												<th>VehicleCategory</th>
-                                                <th>PostOffice</th>
-												<th>PoliceStation</th>
-												<th>Added By</th>
-												<th>Designation</th>
-												
-												
+												<th>Entry Date</th>
+												<th>Expiry Date</th>
+											    <th>Entry by ID</th>
+											    <th>Vehicle Type</th>
+                                                <th>Amount</th>
+												<th>Contract No</th>
+												<th>view all</th>
+
+
+
                                             </tr>
                                         </thead>
                                         <tbody>
 										{% for r in result %}
                                             <tr>
                                                 <td>{{r["count"]}}</td>
-                                                <td>{{r["DateOfContract"]}}</td>
-												<td>{{r["EmployeeId"]}}</td>
-												<td>{{r["OwnerName"]}}</td>
-                                                <td>{{r["Mobile"]}}</td>
-                                                <td>{{r["VehicleNo"]}}</td>
-												<td>{{r["VehicleCategory"]}}</td>
-                                                <td>{{r["Po"]}}</td>
-												<td>{{r["Ps"]}}</td>
-												<td>{{r["Name"]}}</td>
-												<td>{{r["Role"]}}</td>
-											
-										
-												
+                                                <td>{{r["OnDate"]}}</td>
+												<td>{{r["DateOfExp"]}}</td>
+												<td>{{r["AddedEmployeeId"]}}</td>
+                                                <td>{{r["VehicleCategory"]}}</td>
+                                                <td>{{r["Package"]}}</td>
+                                                 <td>{{r["EmployeeId"]}}</td>
+												<td><a style="color:#ff001a; text-decoration: underline;" href="/contractrecord/{{r.UserID}}">View</a></td>
+
+
+
+
                                             </tr>
 											{% endfor %}
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                               <th>Slno</th>
-												<th>DateOfContract</th>
-												<th>EmployeeId</th>
-											    <th>Name</th>
-											    <th>Mobile</th>
-                                                <th>VehicleNo</th>
-												<th>VehicleCategory</th>
-                                                <th>PostOffice</th>
-												<th>PoliceStation</th>
-												<th>Added By</th>
-												<th>Designation</th>
-												
-												
+                                              <th>Slno</th>
+												<th>Entry Date</th>
+												<th>Expiry Date</th>
+											    <th>Entry by ID</th>
+											    <th>Vehicle Type</th>
+                                                <th>Amount</th>
+												<th>Contract No</th>
+												<th>view all</th>
+
+
                                             </tr>
                                         </tfoot>
                                     </table>
@@ -122,10 +115,10 @@
                     <!-- end basic table  -->
                     <!-- ============================================================== -->
                 </div>
-                
-                
-                
-                
+
+
+
+
             </div>
             <!-- ============================================================== -->
             <!-- footer -->
@@ -174,7 +167,7 @@
     <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-	
+
 	<script>
 		$(document).ready(function () {
             $("button").click(function () {
@@ -182,9 +175,9 @@
                     });
     });
 </script>
-    
+
 </body>
- 
+
 </html>
 
 

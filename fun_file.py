@@ -22,15 +22,12 @@ def RegisterCustomer(totalval):
 	return str(Result)
 
 def RequestCustomer(totalval):
-	print('asjhsj',totalval)
-
 	totalval += 1
 	print('increment',totalval)
 	Result = 'SENR0'+ str(totalval)
 	return str(Result)
 
 def AreaManager(totalval):
-	print(totalval)
 	totalval += 1
 	Result = 'SEAM0' + str(totalval)
 	return str(Result)
@@ -58,7 +55,6 @@ def save(Photo):
 		
 
 def EmpIdSM(totalval):
-	print('zxcbjkbd',totalval)
 	totalval += 1
 	Result = 'SESM0'+ str(totalval)
 	return str(Result)
@@ -75,8 +71,7 @@ def ClaimNo(totalval):
 
 
 def SMS_Integration(msg,contactno):
-	print('sms',contactno)
-	print('jknlmsg', msg)
+	print('msg',msg)
 	uname ='krititech'
 	pwd = 'kriti@2705'
 	senderid='SCREXP'
@@ -134,7 +129,6 @@ def ChassisNo(ChassisNo):
 
 
 def pancard(Pancard):
-	print('checking')
 	if re.match("[A-Za-z]{5}\d{4}[A-Za-z]{1}", Pancard):
 		print(Pancard)
 		return True

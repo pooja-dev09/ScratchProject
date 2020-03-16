@@ -79,7 +79,7 @@
 												<td>{{r["District"]}}</td>
                                                 <td><a style="color:#ff001a; text-decoration: underline;" href="/viewamdetails/{{r.UserID}}">View</a></td>
                                                 <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsm/{{r.UserID}}">View</a></td>
-                                                <td><a style="color:#ff001a;text-decoration: underline;"href="/viewsmdetails/{{r.UserID}}">View</a></td>	
+                                                <td><a style="color:#ff001a;text-decoration: underline;"href="/viewambusiness/{{r.UserID}}">View</a></td>
 												<td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
 												
                                             </tr>

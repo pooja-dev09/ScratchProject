@@ -168,13 +168,13 @@ def viewamdetails(UserID):
 			StreetVillage = i[15]
 			YrsOfExp = i[16]
 			ExpSector = i[17]
-			Po=i[23]
-			Ps = i[24]
-			Dist = i[25]
-			state = i[26]
-			pincode = i[27]
-			Districtallocation = i[29]
-			IdproofPhoto = i[30]
+			Po=i[18]
+			Ps = i[19]
+			Dist = i[20]
+			state = i[21]
+			pincode = i[22]
+			Districtallocation = i[23]
+			IdproofPhoto = i[24]
 			count = count + 1
 			data = {'Id':count,'EmployeeId':EmployeeId,'Dateofjoining':Dateofjoining,'Name':Name,'DOB':DOB,'Qualification':Qualification,'Adhar':Adhar,'Mobile':Mobile,'Pancard':Pancard,'Email':Email,'BankAccountNo':BankAccountNo,'IFSC':IFSC,'BankName':BankName,'PresentlyWorking':PresentlyWorking,'StreetVillage':StreetVillage,'YrsOfExp':YrsOfExp,'ExpSector':ExpSector,'Po':Po,'Ps':Ps,'Dist':Dist,'state':state,'pincode':pincode,'Districtallocation':Districtallocation,'IdproofPhoto':IdproofPhoto,'UserID':UserID}
 			new.append(data)
@@ -221,6 +221,35 @@ def viewamdetails_update():
 			mydb.commit()
 			mydb.close()
 		return redirect(url_for('viewam'))
+
+@app.route('/viewambusiness/<string:UserID>')
+def viewambusiness(UserID):
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		# if (request.method == 'POST'):
+		new = []
+		count = 0
+		print(UserID)
+		mydb = mycus()
+		mycursor = mydb.cursor()
+		sql='SELECT * FROM vehiclecontract WHERE AddedBy in (SELECT UserID FROM salesmanager where AddedBy='+str(158)+') or AddedBy='+str(158)+' ORDER BY VcID ASC'
+		print(sql)
+		result = mycursor.execute(sql)
+		row = mycursor.fetchall()
+		print(row)
+		for i in row:
+			AddedBy=row[AddedBy]
+			print('ghej',AddedBy)
+
+
+		return render_template('viewbusinessam.php')
+
+
+
+
+
+
 
 @app.route('/viewsm/<string:UserID>')
 def viewsm(UserID):
@@ -294,7 +323,7 @@ def viewsmdetails(UserID):
 		return render_template('viewsmdetails.php',result = new)	
 		
 		
-@app.route('/viewsmdetails_update/<string:UserID>')
+@app.route('/viewsmdetails_update',methods=['POST'])
 def viewsmdetails_update():
 	if not session.get('logged_in'):
 		return render_template('login.html')
@@ -334,6 +363,41 @@ def viewsmdetails_update():
 			mydb.commit()
 			mydb.close()
 		return redirect(url_for('viewam'))
+
+@app.route('/viewsmbusiness/<string:UserID>')
+def viewsmbusiness(UserID):
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		print(UserID)
+		new = []
+		count = 0
+		mydb = mycus()
+		mycursor = mydb.cursor()
+		sql='SELECT salesmanager.EmployeeId,salesmanager.Name,vehiclecontract.EmployeeId,vehiclecontract.Package,vehiclecontract.VehicleNo,vehiclecontract.OnDate FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID and salesmanager.UserID ='+UserID+''
+		print(sql)
+		result = mycursor.execute(sql)
+		row = mycursor.fetchall()
+		print(row)
+		for i in row:
+			salesemployeeId=i[0]
+			salesname = i[1]
+			vehicleemployeeId = i[2]
+			package= i[3]
+			vehicleno = i[4]
+			date = i[5]
+			count  = count + 1
+			data = {'Id': count, 'salesemployeeId': salesemployeeId, 'salesname': salesname,'vehicleemployeeId': vehicleemployeeId, 'package': package,'vehicleno':vehicleno,'date':date,'UserID':UserID}
+			new.append(data)
+
+
+		return render_template('viewbusinesssm.php',result = new)
+
+
+
+
+
+
 
 
 
@@ -531,8 +595,8 @@ def claim():
 		mydb.close()
 		return render_template('claim.php',result = new)
 	
-@app.route('/seadmin/Requestcustomer')
-def Requestcustomer():
+@app.route('/seadmin/Registercustomer')
+def Registercustomer():
 	if not session.get('logged_in'):
 		return render_template('login.html')
 	else:
@@ -540,70 +604,115 @@ def Requestcustomer():
 		count = 0
 		mydb=mycus()
 		mycursor = mydb.cursor()
-		mycursor.execute("SELECT DateOfRegistration,Name ,Mobile ,VehicleCategory,DateOfPurchase,UserID FROM `customerrequest` order by DateOfRegistration desc")
+		sql="SELECT vehiclecontract.UserID,vehiclecontract.VehicleCategory, vehiclecontract.Package, vehiclecontract.EmployeeId, vehiclecontract.DateOfExp,vehiclecontract.OnDate,user.EmployeeId FROM vehiclecontract LEFT JOIN user ON vehiclecontract.AddedBy = user.UserID ORDER BY vehiclecontract.VcID"
+		print(sql)
+		mycursor.execute(sql)
 		rowcursor=mycursor.fetchall()
-		mydb.close()
+		print(rowcursor)
 		if len(rowcursor) > 0:
 			for i in rowcursor:
-				DateOfRegistration = i[0]
-				Name = i[1]
-				Mobile = i[2]
-				VehicleCategory = i[3]
-				DateOfPurchase = i[4]
-				UserID = i[5]
+				UserID = i[0]
+				VehicleCategory = i[1]
+				Package = i[2]
+				EmployeeId = i[3]
+				DateOfExp = i[4]
+				OnDate = i[5]
+				AddedEmployeeId = i[6]
 				count = count + 1
-				DateOfRegistration = DateOfRegistration.strftime("%m-%d-%Y")
-				data = {'Slno':count,'DateOfRegistration':DateOfRegistration,'Name':Name,'Mobile':Mobile,'VehicleCategory':VehicleCategory,'DateOfPurchase':DateOfPurchase,'UserID':UserID}
+				# sql='SELECT SUM('+str(Package)+') as totalamount FROM vehiclecontract'
+				# print(sql)
+				# mycursor.execute(sql)
+				# row = mycursor.fetchall()
+				# for i in row:
+				# 	totalamount = i[0]
+				data = {'UserID':UserID,'count':count,'VehicleCategory':VehicleCategory,'Package':Package,'EmployeeId':EmployeeId,'DateOfExp':DateOfExp,'OnDate':OnDate,'AddedEmployeeId':AddedEmployeeId}
 				new.append(data)
-								
-		return render_template('viewcustomer.php',result = new)	
+			mydb.close()
+		return render_template('registercustomer.php',result = new)
 	
-@app.route('/Requestcustomer_update/<string:id>')
-def Requestcustomer_update(id):
-	row = []
+@app.route('/contractrecord/<string:UserID>')
+def contractrecord(UserID):
+	count = 0
+	new = []
+	print()
 	mydb=mycus()
 	mycursor = mydb.cursor()
-	mycursor.execute("SELECT UserID FROM customerrequest WHERE UserID= %s",[id])
-	new = mycursor.fetchall()
-	for j in new:
-		id = j[0]
-		data = {'id':id}
-		row.append(data)
-	return render_template('viewcustomer.php', row = row)
+	mycursor.execute("SELECT * FROM vehiclecontract WHERE VcID= %s",[UserID])
+	rowcursor = mycursor.fetchall()
+	for i in rowcursor:
+		DateOfContract = i[3]
+		VehicleCategory = i[4]
+		Model = i[7]
+		color = i[9]
+		ownername = i[12]
+		email = i[15]
+		po = i[17]
+		district = i[19]
+		dateofexpiry = i[16]
+		maker = i[5]
+		chassis = i[8]
+		dateofregd = i[11]
+		mobile = i[14]
+		streetvillage = i[16]
+		ps = i[12]
+		state = i[13]
+		VehicleVideo = i[21]
+		EmployeeId = i[24]
+		count = count + 1
+		data = {'count':count,'DateOfContract':DateOfContract,'VehicleCategory':VehicleCategory,'Model':Model,'color':color,'ownername':ownername,'email':email,'po':po,'district':district,'dateofexpiry':dateofexpiry,'maker':maker,'chassis':chassis,'dateofregd':dateofregd,'mobile':mobile,'streetvillage':streetvillage,'ps':ps,'state':state,'VehicleVideo':VehicleVideo,'EmployeeId':EmployeeId,'UserID':UserID}
+		new.append(data)
+	return render_template('contractrecord.php', result = new)
 
 
-@app.route('/seadmin/Registercustomer')
-def Registercustomer():
+@app.route('/viewcontract_update',methods=['POST'])
+def viewcontract_update():
 	if not session.get('logged_in'):
 		return render_template('login.html')
 	else:
-		mydb=mycus()
-		mycursor = mydb.cursor()
-		row = []
-		count = 0
-		mycursor.execute("SELECT vehiclecontract.DateOfContract,vehiclecontract.VehicleNo,vehiclecontract.Mobile,vehiclecontract.OwnerName,vehiclecontract.Po,vehiclecontract.Ps,user.Name,user.RoleID,user.EmployeeId,vehiclecontract.VehicleCategory FROM user LEFT JOIN vehiclecontract ON user.UserID = vehiclecontract.AddedBy")
-		new = mycursor.fetchall()
-		for i in new:
-			DateOfContract = i[0]
-			VehicleNo = i[1]
-			Mobile = i[2]
-			OwnerName = i[3]
-			Po = i[4]
-			Ps = i[5]
-			Name = i[6]
-			RoleID = i[7]
-			EmployeeId = i[8]
-			VehicleCategory = i[9]
-			count = count + 1
-			mycursor.execute("SELECT RoleName from role WHERE RoleID = '"+str(RoleID)+"'")
-			rowcursor=mycursor.fetchall()
-			
-			for i in rowcursor:
-				Role=i[0]
-				data = {'count':count,'DateOfContract':DateOfContract,'VehicleNo':VehicleNo,'Mobile':Mobile,'OwnerName':OwnerName,'Po':Po,'Ps':Ps,'Name':Name,'Role':Role,'EmployeeId':EmployeeId,'VehicleCategory':VehicleCategory}
-				row.append(data)
-		mydb.close()		
-		return render_template('registercustomer.php', result = row)
+		if (request.method == 'POST'):
+			DateOfContract = str(request.form.get('DateOfContract'))
+			VehicleCategory = str(request.form.get('VehicleCategory'))
+			Model = str(request.form.get('Model'))
+			color = str(request.form.get('color'))
+			ownername = str(request.form.get('ownername'))
+			email = str(request.form.get('email'))
+			po = str(request.form.get('po'))
+			district = str(request.form.get('district'))
+			dateofexpiry = str(request.form.get('dateofexpiry'))
+			maker = str(request.form.get('maker'))
+			chassis = str(request.form.get('chassis'))
+			dateofregd = str(request.form.get('dateofregd'))
+			mobile = str(request.form.get('mobile'))
+			streetvillage = str(request.form.get('streetvillage'))
+			ps = str(request.form.get('ps'))
+			state = str(request.form.get('state'))
+			UserID = str(request.form.get('UserID'))
+
+			mydb = mycus()
+			mycursor = mydb.cursor()
+			sql = "UPDATE vehiclecontract SET DateOfContract = '" + str(
+				DateOfContract) + "',VehicleCategory = '" + str(VehicleCategory) + "',	Model = '" + str(
+				Model) + "', Color = '" + str(color) + "',Name = '" + str(
+				ownername) + "', Email = '" + str(email) + "',	Po = '" + str(
+				po) + "',District = '" + str(district) + "',DateOfExp ='" + str(dateofexpiry) + "',Maker = '" + str(maker) + "',ChassisNo = '" + str(
+				chassis) + "',DateOfRegd = '" + str(dateofregd) + "',mobile = '" + str(mobile) + "',	Location = '" + str(
+				streetvillage) + "',	Ps = '" + str(ps) + "',	State = '" + str(
+				state) + "' WHERE UserID = '" + str(UserID) + "'"
+			result = mycursor.execute(sql)
+			mydb.commit()
+
+			mycursor.execute(
+				"UPDATE user SET DateOfContract = '" + str(DateOfContract) + "',VehicleCategory = '" + str(
+					VehicleCategory) + "',	Model = '" + str(Model) + "',	Color = '" + str(
+					color) + "',Name = '" + str(ownername) + "',Email = '" + str(email) + "',	Po = '" + str(po) + "', District = '" + str(
+					district) + "',DateOfExp = '" + str(dateofexpiry) + "',Maker = '" + str(maker
+					) + "',	ChassisNo = '" + str(chassis) + "',	Ps ='" + str(
+					ps) + "',State = '" + str(state) + "' WHERE UserID = '" + str(UserID) + "'")
+			mydb.commit()
+			mydb.close()
+		return redirect(url_for('Registercustomer'))
+
+
 
 
 @app.route('/seadmin/Vehiclereport')
