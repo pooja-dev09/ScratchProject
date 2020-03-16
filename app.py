@@ -377,7 +377,7 @@ class Newclaim(Resource):
                                 help='Video/Photo cannot be found', location='files')
             args = parser.parse_args()
             UserID = args['UserID']
-            print(UserID)
+            print('UserID',UserID)
             DateOfIncident = args['DateOfIncident']
             DateOfClaim = args['DateOfClaim']
             AreaName = args['AreaName']
@@ -412,12 +412,12 @@ class Newclaim(Resource):
                 if not file is None:
                     filename = Upload_fun(file)
                     CurrentTime = datetime.datetime.now()
-                    CurrentTime = CurrentTime.strftime("%m-%d-%Y")
+                    print(CurrentTime)
                     mydb = mycus()
                     mycursor = mydb.cursor()
-                    sql = "INSERT INTO claim (ClaimNo,VcID,UserID,DateOfIncident,DateOfClaim,AreaName,Ps,District,State,VehiclesaffectedAreaVideo,Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+                    sql = "INSERT INTO claim (ClaimNo, VcID ,UserID , DateOfIncident, DateOfClaim, AreaName, Ps, District, State, VehiclesaffectedAreaVideo, Ondate) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                     val = (ClaimNos, VcID, UserID, DateOfIncident, DateOfClaim, AreaName, Ps, Dist, State, filename, CurrentTime)
-                    result = mycursor.execute(sql, val)
+                    mycursor.execute(sql, val)
                     mydb.commit()
                     mydb.close()
                     msg = "You are submitting your claim successfully.Your claim ID is "+str(ClaimNos)+"."
@@ -512,34 +512,31 @@ api.add_resource(claimAmount, "/claimAmount")
 class claimStatus(Resource):
     def post(self):
         try:
+            new = []
             parser = reqparse.RequestParser()
             parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
             args = parser.parse_args()
             UserID = args['UserID']
+            print('UserID',UserID)
             mydb = mycus()
             mycursor = mydb.cursor()
             mycursor.execute(
-                "SELECT claim.DateOfClaim,claim.VcID,claim.ClaimNo,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = " + str(
+                "SELECT claim.DateOfClaim,claim.ClaimNo,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = " + str(
                     UserID))
             rowcursor = mycursor.fetchall()
             if len(rowcursor) > 0:
                 for i in rowcursor:
                     ClaimDate = i[0]
-                    VcID = i[1]
-                    ClaimNo = i[2]
-                    ClaimStatus = i[3]
+                    ClaimNo = i[1]
+                    ClaimStatus = i[2]
                     if ClaimStatus is None:
                         ClaimStatus = 0
-                    # mycursor.execute("SELECT VehicleNo from vehiclecontract where VcID = " + str(VcID))
-                    # rowcursor = mycursor.fetchall()
-                    # mydb.close()
-                    # for i in rowcursor:
-                    #     VehicleNo = i[0]
-                        return jsonify({'Message': " Successfully claim recorded.",
-                                        'ClaimDate': ClaimDate,
-                                        # 'VehicleNo': VehicleNo,
-                                        'ClaimStatus': ClaimStatus,
-                                        'ClaimNo':ClaimNo,
+
+                        data = {'ClaimDate': ClaimDate, 'ClaimStatus': ClaimStatus, 'ClaimNo': ClaimNo
+                               }
+                        new.append(data)
+                return jsonify({'Message': " Claim Inspection Report Submitted Successfully.",
+                                        'new':new,
                                         'Status': 1})
 
             else:
@@ -925,8 +922,7 @@ class ServiceCenterAuthorization(Resource):
                 result = mycursor.execute(sql, val)
                 mydb.commit()
                 mydb.close()
-                msg = 'Your Service center'+CenterName+'accepted by Scratch Exponent as a authorize service center. Your center ID is '+str(
-                                      EmployeeId)+',you are eligible to login with our App using this ID as user name & your mobile number is password.'
+                msg= 'Your Service center  '+CenterName+'  accepted by Scratch Exponent as a authorize service center. Your center ID is '+str(EmployeeId)+' ,you are eligible to login with our App using this ID as user name & your mobile number is password.'
                 SMS_Integration(msg,MobileNo)
 
                 return jsonify({
@@ -967,7 +963,7 @@ class ClaimInspection(Resource):
                 mycursor.execute("UPDATE claiminspection SET ClaimStatus = 1 WHERE ClaimID = '" + str(ClaimID) + "'")
                 mydb.commit()
                 mydb.close()
-                return jsonify({'Message': " claim inspection successfully", "Status": 1})
+                return jsonify({'Message': "Claim Inspection Report Submitted Successfully.", "Status": 1})
             else:
 
                 return jsonify({'Message': "Photo cannot be found", "Status": 0})
