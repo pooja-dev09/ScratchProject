@@ -50,7 +50,6 @@ class Request(Resource):
             District = args['District']
             State = args['State']
             CurrentTime = datetime.datetime.now()
-            CurrentTime = CurrentTime.strftime("%m-%d-%Y")
             if validNumber(MobileNo) == True:
                 mydb = mycus()
                 mycursor = mydb.cursor()
@@ -900,8 +899,7 @@ class ServiceCenterAuthorization(Resource):
                 result = mycursor.execute(sql, val)
                 mydb.commit()
                 mydb.close()
-                msg = 'Your Service center'+ CenterName +'accepted by Scratch Exponent as a authorize service center. Your center ID is '+ str(
-                    EmployeeId) +',you are eligible to login with our App using this ID as user name & your mobile number is password.'
+                msg= 'Your Service center  '+CenterName+'  accepted by Scratch Exponent as a authorize service center. Your center ID is '+str(EmployeeId)+' ,you are eligible to login with our App using this ID as user name & your mobile number is password.'
                 SMS_Integration(msg,MobileNo)
                 return jsonify({
                                    'Message': "Authorisation of Service Center is successfully accepted.Its authorization ID is " + str(

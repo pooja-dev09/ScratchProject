@@ -222,28 +222,28 @@ def viewamdetails_update():
 			mydb.close()
 		return redirect(url_for('viewam'))
 
-@app.route('/viewambusiness/<string:UserID>')
-def viewambusiness(UserID):
-	if not session.get('logged_in'):
-		return render_template('login.html')
-	else:
-		# if (request.method == 'POST'):
-		new = []
-		count = 0
-		print(UserID)
-		mydb = mycus()
-		mycursor = mydb.cursor()
-		sql='SELECT * FROM vehiclecontract WHERE AddedBy in (SELECT UserID FROM salesmanager where AddedBy='+str(158)+') or AddedBy='+str(158)+' ORDER BY VcID ASC'
-		print(sql)
-		result = mycursor.execute(sql)
-		row = mycursor.fetchall()
-		print(row)
-		for i in row:
-			AddedBy=row[AddedBy]
-			print('ghej',AddedBy)
-
-
-		return render_template('viewbusinessam.php')
+# @app.route('/viewambusiness/<string:UserID>')
+# def viewambusiness(UserID):
+# 	if not session.get('logged_in'):
+# 		return render_template('login.html')
+# 	else:
+# 		# if (request.method == 'POST'):
+# 		new = []
+# 		count = 0
+# 		print(UserID)
+# 		mydb = mycus()
+# 		mycursor = mydb.cursor()
+# 		sql='SELECT * FROM vehiclecontract WHERE AddedBy in (SELECT UserID FROM salesmanager where AddedBy='+str(158)+') or AddedBy='+str(158)+' ORDER BY VcID ASC'
+# 		print(sql)
+# 		result = mycursor.execute(sql)
+# 		row = mycursor.fetchall()
+# 		print(row)
+# 		for i in row:
+# 			AddedBy=row[AddedBy]
+# 			print('ghej',AddedBy)
+#
+#
+# 		return render_template('viewbusinessam.php')
 
 
 
@@ -393,175 +393,156 @@ def viewsmbusiness(UserID):
 
 		return render_template('viewbusinesssm.php',result = new)
 
+# 	--------------------SERVICE CENTER AUTHORIZATION------------------------------------------------------------
+@app.route('/seadmin/viewservicecenter')
+def viewservicecenter():
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		new = []
+		count = 0
+		mydb = mycus()
+		mycursor = mydb.cursor()
+		mycursor.execute("SELECT servicecenterauthorize.UserID,servicecenterauthorize.OwnerName,servicecenterauthorize.District,servicecenterauthorize.MobileNo,servicecenterauthorize.EmployeeId,servicecenterauthorize.WorkingFor,user.EmployeeId FROM servicecenterauthorize LEFT JOIN user ON servicecenterauthorize.AddedBy=user.UserID GROUP BY UserID")
+		row = mycursor.fetchall()
+		mydb.close()
+		for i in row:
+			UserID = i[0]
+			OwnerName = i[1]
+			District = i[2]
+			MobileNo = i[3]
+			EmployeeId = i[4]
+			workingfor = i[5]
+			addedbyemployeeid=i[6]
+			count = count + 1
+			data = {'count': count, 'UserID': UserID, 'OwnerName': OwnerName, 'District': District,'MobileNo':MobileNo,'EmployeeId':EmployeeId,'addedbyemployeeid':addedbyemployeeid,'workingfor':workingfor}
+			new.append(data)
+
+		return render_template('viewservicecenter.php', result=new)
+
+
+@app.route('/viewscdetails/<string:UserID>')
+def viewscdetails(UserID):
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		new = []
+		count = 0
+		mydb = mycus()
+		mycursor = mydb.cursor()
+		mycursor.execute("SELECT * FROM servicecenterauthorize WHERE UserID= %s", [UserID])
+		row = mycursor.fetchall()
+		mydb.close()
+		for i in row:
+			EmployeeId = i[3]
+			DateOfAuthorize = i[4]
+			OwnerName = i[6]
+			CenterLocation = i[9]
+			Po = i[11]
+			District = i[13]
+			CenterName = i[5]
+			Mobile = i[7]
+			GSTINno = i[9]
+			Town = i[10]
+			Ps = i[12]
+			State = i[14]
+			DentingPainting = i[15]
+			Mechanical = i[16]
+			WorkingFor = i[17]
+			count = count + 1
+			data = {'count': count, 'EmployeeId':EmployeeId,'DateOfAuthorize': DateOfAuthorize, 'OwnerName': OwnerName, 'CenterLocation': CenterLocation, 'Po': Po,
+					'District': District, 'CenterName': CenterName, 'Mobile': Mobile, 'GSTINno': GSTINno,
+					'Town': Town, 'Ps': Ps, 'State': State,
+					'DentingPainting': DentingPainting, 'Mechanical': Mechanical, 'WorkingFor': WorkingFor,
+					'UserID': UserID}
+			new.append(data)
+
+		return render_template('viewscdetails.php', result=new)
+
+
+@app.route('/viewscdetails_update', methods=['POST'])
+def viewscdetails_update():
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		if (request.method == 'POST'):
+			DateOfAuthorize = str(request.form.get('DateOfAuthorize'))
+			OwnerName = str(request.form.get('OwnerName'))
+			CenterLocation = str(request.form.get('CenterLocation'))
+			Po = str(request.form.get('Po'))
+			District = str(request.form.get('District'))
+			DentingPainting = str(request.form.get('DentingPainting'))
+			WorkingFor = str(request.form.get('WorkingFor'))
+			CenterName = str(request.form.get('CenterName'))
+			Mobile = str(request.form.get('Mobile'))
+			GSTINno = str(request.form.get('GSTINno'))
+			Town = str(request.form.get('Town'))
+			Ps = str(request.form.get('Ps'))
+			State = str(request.form.get('State'))
+			Mechanical = str(request.form.get('Mechanical'))
+			UserID = str(request.form.get('UserID'))
+
+			mydb = mycus()
+			mycursor = mydb.cursor()
+			sql = "UPDATE servicecenterauthorize SET DateOfAuthorize = '" + str(
+				DateOfAuthorize) + "',OwnerName = '" + str(OwnerName) + "',CenterLocation = '" + str(
+				CenterLocation) + "',Po = '" + str(Po) + "',District = '" + str(
+				District) + "',DentingPainting = '" + str(DentingPainting) + "',MobileNo = '" + str(
+				Mobile) + "', GSTINno = '" + str(GSTINno) + "',WorkingFor = '" + str(
+				WorkingFor) + "',CenterName = '" + str(CenterName) + "',Town = '" + str(
+				Town) + "',Ps ='" + str(Ps) + "',State = '" + str(State) + "' WHERE UserID = '" + str(UserID) + "'"
+			result = mycursor.execute(sql)
+			mydb.commit()
+
+			mycursor.execute(
+				"UPDATE user SET DateOfAuthorize = '" + str(DateOfAuthorize) + "',Name = '" + str(
+					OwnerName) + "',CenterLocation = '" + str(CenterLocation) + "',Po = '" + str(
+					Po) + "',District = '" + str(District) + "',DentingPainting = '" + str(
+					DentingPainting) + "',Mobile = '" + str(Mobile) + "', 	GSTINno = '" + str(
+					GSTINno) + "',WorkingFor = '" + str(WorkingFor) + "',NameCenter = '" + str(
+					CenterName) + "',Town = '" + str(Town) + "',Ps ='" + str(
+					Ps) + "',State = '" + str(State) + "'WHERE UserID = '" + str(UserID) + "'")
+			mydb.commit()
+			mydb.close()
+		return redirect(url_for('viewservicecenter'))
+
+
+#-----------------------end service center---------------------------
+#----------------------request customer----------------------------
+@app.route('/newcustomerrequest')
+def newcustomer():
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		new = []
+		count = 0
+		mydb = mycus()
+		mycursor = mydb.cursor()
+		mycursor.execute(
+			"SELECT UserID,OnDate,VehicleCategory,District,PoliceStation,EmployeeId FROM `customerrequest`")
+		rowcursor = mycursor.fetchall()
+		for i in rowcursor:
+			UserID = i[0]
+			date = i[1]
+			vehiclecategory = i[2]
+			district = i[3]
+			policestation = i[4]
+			employeeid = i[5]
+			count = count + 1
+			data = {'count': count, 'date': date, 'vehiclecategory': vehiclecategory,
+					'district': district, 'policestation': policestation, 'employeeid': employeeid,'UserID':UserID
+					}
+			new.append(data)
+			mydb.commit()
+			mydb.close()
+		return render_template('requestcustomer.php', result=new)
+#-----------------------end ------------------------------------
 
 
 
 
 
 
-
-
-# @app.route('/seadmin/viewsm')	
-# def viewsm():
-	# if not session.get('logged_in'):
-		# return render_template('login.html')
-	# else:
-		# new = []
-		# count = 0
-		# mydb=mycus()
-		# mycursor = mydb.cursor()
-		# mycursor.execute("SELECT salesmanager.EmployeeId,salesmanager.DateOfJoining,salesmanager.Name,salesmanager.MobileNo,vehiclecontract.OwnerName,vehiclecontract.AddedBy,salesmanager.UserID FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID")
-		# row=mycursor.fetchall()
-		# mydb.close()
-		# for i in row:
-			# EmployeeId = i[0]
-			# DateOfJoining = i[1]
-			# salesmanagername = i[2]
-			# MobileNo = i[3]
-			# CustomerName = i[4]
-			# count = count + 1
-			# data = {'Id':count,'EmployeeId':EmployeeId,'DateOfJoining':DateOfJoining,'salesmanagername':salesmanagername,'MobileNo':MobileNo,'CustomerName':CustomerName}
-			# new.append(data)
-			
-		# return render_template('viewsm.php', result = new)	
-
-	
-# @app.route('/seadmin/vc',methods = ['GET','POST'])
-# def vc():
-	# if not session.get('logged_in'):
-		# return render_template('login.html')
-	
-	# else:
-		# mydb=mycus()
-		# mycursor = mydb.cursor()
-		# new = []
-		# count = 0
-		# if (request.method == 'POST'):
-			
-			# if request.form['submit_button'] == 'Submit':
-				# start_dates = str(request.form.get('start'))
-				# start_ends = str(request.form.get('End'))
-				
-				# sql="SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy"
-				
-				# if start_dates!='' and start_dates is not None:
-					# sql=sql+" AND user.OnDate >= '"+str(start_dates)+"'"
-						
-				# if start_ends!='' and start_ends is not None:
-					# if  start_ends == "":
-						# sql=sql+"AND user.OnDate <= '"+str(start_ends)+"' "
-					# else:
-						# sql=sql+" AND user.OnDate >= '"+str(start_dates)+"'"
-						
-					# mycursor.execute(sql)
-					# myresult=mycursor.fetchall()
-					
-					
-					# for i in myresult:
-						# Name = i[0]
-						# RoleID = i[1]
-						# VehicleNo = i[2]
-						# OwnerName = i[3]
-						# VehicleCategory = i[4]
-						# OnDate = i[5]
-						# mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
-						# rowcursor=mycursor.fetchall()
-						
-						# for i in rowcursor:
-							# count +=  1
-							# designation = i[0]
-							# data = {'slno':count,'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
-							# new.append(data)
-			# return render_template('vc.php',result = new)
-		# else:
-			
-			# mycursor.execute("SELECT user.Name,user.RoleID,vehiclecontract.VehicleNo,vehiclecontract.OwnerName,vehiclecontract.	VehicleCategory,vehiclecontract.OnDate FROM user LEFT JOIN vehiclecontract ON user.UserID=vehiclecontract.AddedBy ORDER BY vehiclecontract.AddedBy desc limit 10")
-			# row=mycursor.fetchall()
-			# for i in row:
-				# Name = i[0]
-				# RoleID = i[1]
-				# VehicleNo = i[2]
-				# OwnerName = i[3]
-				# VehicleCategory = i[4]
-				# OnDate = i[5]
-				# mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
-				# rowcursor=mycursor.fetchall()
-				
-				# for i in rowcursor:
-					# count += 1
-					# designation = i[0]
-					# data = {'slno':count,'Name':Name,'VehicleNo':VehicleNo,'OwnerName':OwnerName,'VehicleCategory':VehicleCategory,'OnDate':OnDate,'designation':designation}
-					# new.append(data)
-		# mydb.close()
-		# return render_template('vc.php',result = new)
-	
-# @app.route('/seadmin/viewsc',methods = ['GET','POST'])
-# def viewsc():
-	# if not session.get('logged_in'):
-		# return render_template('login.html')
-	# else:
-		# mydb=mycus()
-		# mycursor = mydb.cursor()
-		# new = []
-		# if (request.method == 'POST'):
-			# if request.form['submit_button'] == 'Submit':
-				# start_dates = str(request.form.get('start'))
-				# start_ends = str(request.form.get('End'))
-				
-				# sql="SELECT user.Name,user.RoleID,servicecenterauthorize.OwnerName,servicecenterauthorize.CenterName,servicecenterauthorize.CenterLocation,servicecenterauthorize.Po,servicecenterauthorize.Ps,servicecenterauthorize.District,servicecenterauthorize.OnDate FROM user LEFT JOIN servicecenterauthorize ON user.UserID=servicecenterauthorize.AddedBy where user.UserID=servicecenterauthorize.AddedBy"
-		
-				# if start_dates!='' and start_dates is not None:
-					# sql=sql+" AND user.OnDate >= '"+str(start_dates)+"'"
-					# print(sql)	
-				# if start_ends!='' and start_ends is not None:
-					# if  start_ends == "":
-						# sql=sql+"AND user.OnDate <= '"+str(start_ends)+"' "
-						# print(sql)
-					# else:
-						# sql=sql+" AND user.OnDate >= '"+str(start_dates)+"'"
-						# print(sql)
-					# mycursor.execute(sql)
-					# row=mycursor.fetchall()
-					# for i in row:
-						# Name = i[0]
-						# RoleID = i[1]
-						# OwnerName = i[2]
-						# CenterName = i[3]
-						# CenterLocation = i[4]
-						# Po = i[5]
-						# Ps = i[6]
-						# District = i[7]
-						# OnDate = i[8]
-						# mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
-						# rowcursor=mycursor.fetchall()
-						# for i in rowcursor:
-							# designation = i[0]
-							# data = {'Name':Name,'OwnerName':OwnerName,'CenterName':CenterName,'CenterLocation':CenterLocation,'Po':Po,'Ps':Ps,'District':District,'OnDate':OnDate,'designation':designation}
-							# new.append(data)
-				# return render_template('viewsc.php',result = new)
-		# else:
-			# mycursor.execute("SELECT user.Name,user.RoleID,servicecenterauthorize.OwnerName,servicecenterauthorize.	CenterName,servicecenterauthorize.CenterLocation,servicecenterauthorize.Po,servicecenterauthorize.Ps,servicecenterauthorize.District,servicecenterauthorize.OnDate FROM user LEFT JOIN servicecenterauthorize ON user.UserID=servicecenterauthorize.AddedBy where user.UserID=servicecenterauthorize.AddedBy ORDER BY servicecenterauthorize.AddedBy desc limit 10")
-			# row=mycursor.fetchall()
-			# for i in row:
-				# Name = i[0]
-				# RoleID = i[1]
-				# OwnerName = i[2]
-				# CenterName = i[3]
-				# CenterLocation = i[4]
-				# Po = i[5]
-				# Ps = i[6]
-				# District = i[7]
-				# OnDate = i[8]
-				# mycursor.execute("SELECT RoleName from role WHERE RoleID = '%s' " % (RoleID))
-				# rowcursor=mycursor.fetchall()
-				# for i in rowcursor:
-					# designation = i[0]
-					# data = {'Name':Name,'OwnerName':OwnerName,'CenterName':CenterName,'CenterLocation':CenterLocation,'Po':Po,'Ps':Ps,'District':District,'OnDate':OnDate,'designation':designation}
-					# new.append(data)
-		# mydb.close()
-		# return render_template('viewsc.php',result = new)
-
-	
 @app.route('/claim',methods=['GET','POST'])
 def claim():
 	if not session.get('logged_in'):
@@ -594,7 +575,7 @@ def claim():
 				new.append(data)
 		mydb.close()
 		return render_template('claim.php',result = new)
-	
+#-----------------------------------------------------------Register Customer-----------------------------------------------------------------------------------------
 @app.route('/seadmin/Registercustomer')
 def Registercustomer():
 	if not session.get('logged_in'):
@@ -604,11 +585,9 @@ def Registercustomer():
 		count = 0
 		mydb=mycus()
 		mycursor = mydb.cursor()
-		sql="SELECT vehiclecontract.UserID,vehiclecontract.VehicleCategory, vehiclecontract.Package, vehiclecontract.EmployeeId, vehiclecontract.DateOfExp,vehiclecontract.OnDate,user.EmployeeId FROM vehiclecontract LEFT JOIN user ON vehiclecontract.AddedBy = user.UserID ORDER BY vehiclecontract.VcID"
-		print(sql)
+		sql="SELECT vehiclecontract.UserID,vehiclecontract.VehicleCategory, vehiclecontract.Package, vehiclecontract.EmployeeId, vehiclecontract.DateOfExp,vehiclecontract.OnDate,user.EmployeeId FROM vehiclecontract LEFT JOIN user ON vehiclecontract.AddedBy = user.UserID GROUP by UserID"
 		mycursor.execute(sql)
 		rowcursor=mycursor.fetchall()
-		print(rowcursor)
 		if len(rowcursor) > 0:
 			for i in rowcursor:
 				UserID = i[0]
@@ -634,11 +613,12 @@ def Registercustomer():
 def contractrecord(UserID):
 	count = 0
 	new = []
-	print()
+	print('UserID',UserID)
 	mydb=mycus()
 	mycursor = mydb.cursor()
-	mycursor.execute("SELECT * FROM vehiclecontract WHERE VcID= %s",[UserID])
+	mycursor.execute("SELECT * FROM vehiclecontract WHERE UserID= %s",[UserID])
 	rowcursor = mycursor.fetchall()
+	print('rowcursor',rowcursor)
 	for i in rowcursor:
 		DateOfContract = i[3]
 		VehicleCategory = i[4]
@@ -648,18 +628,19 @@ def contractrecord(UserID):
 		email = i[15]
 		po = i[17]
 		district = i[19]
-		dateofexpiry = i[16]
+		dateofexpiry = i[26]
 		maker = i[5]
 		chassis = i[8]
 		dateofregd = i[11]
 		mobile = i[14]
 		streetvillage = i[16]
-		ps = i[12]
-		state = i[13]
+		ps = i[18]
+		state = i[20]
 		VehicleVideo = i[21]
-		EmployeeId = i[24]
+		EmployeeId = i[25]
+		VehicleNo = i[6]
 		count = count + 1
-		data = {'count':count,'DateOfContract':DateOfContract,'VehicleCategory':VehicleCategory,'Model':Model,'color':color,'ownername':ownername,'email':email,'po':po,'district':district,'dateofexpiry':dateofexpiry,'maker':maker,'chassis':chassis,'dateofregd':dateofregd,'mobile':mobile,'streetvillage':streetvillage,'ps':ps,'state':state,'VehicleVideo':VehicleVideo,'EmployeeId':EmployeeId,'UserID':UserID}
+		data = {'count':count,'DateOfContract':DateOfContract,'VehicleCategory':VehicleCategory,'Model':Model,'color':color,'ownername':ownername,'email':email,'po':po,'district':district,'dateofexpiry':dateofexpiry,'maker':maker,'chassis':chassis,'dateofregd':dateofregd,'mobile':mobile,'streetvillage':streetvillage,'ps':ps,'state':state,'VehicleVideo':VehicleVideo,'EmployeeId':EmployeeId,'UserID':UserID,'VehicleNo':VehicleNo}
 		new.append(data)
 	return render_template('contractrecord.php', result = new)
 
@@ -692,12 +673,13 @@ def viewcontract_update():
 			mycursor = mydb.cursor()
 			sql = "UPDATE vehiclecontract SET DateOfContract = '" + str(
 				DateOfContract) + "',VehicleCategory = '" + str(VehicleCategory) + "',	Model = '" + str(
-				Model) + "', Color = '" + str(color) + "',Name = '" + str(
+				Model) + "', Color = '" + str(color) + "',OwnerName = '" + str(
 				ownername) + "', Email = '" + str(email) + "',	Po = '" + str(
 				po) + "',District = '" + str(district) + "',DateOfExp ='" + str(dateofexpiry) + "',Maker = '" + str(maker) + "',ChassisNo = '" + str(
 				chassis) + "',DateOfRegd = '" + str(dateofregd) + "',mobile = '" + str(mobile) + "',	Location = '" + str(
 				streetvillage) + "',	Ps = '" + str(ps) + "',	State = '" + str(
 				state) + "' WHERE UserID = '" + str(UserID) + "'"
+			print('update',sql)
 			result = mycursor.execute(sql)
 			mydb.commit()
 
@@ -712,6 +694,19 @@ def viewcontract_update():
 			mydb.close()
 		return redirect(url_for('Registercustomer'))
 
+#---------------------------------------------------------------------------register customer complete------------------------------------------------
+
+
+@app.route('/newrequest')
+def newrequest():
+	if not session.get('logged_in'):
+		return render_template('login.html')
+	else:
+		new = []
+		count = 0
+		mydb = mycus()
+		mycursor = mydb.cursor()
+		mycursor.execute("")
 
 
 

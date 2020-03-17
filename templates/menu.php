@@ -48,25 +48,14 @@
                             </li>
 							
 							
-                            <li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>Service Center</a>
-                                <div id="submenu-3" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="/seadmin/viewsc">View Service Center</a>
-                                        
-                                    </ul>
-                                </div>
+                           <li class="nav-item ">
+                                <a class="nav-link active" href="/seadmin/viewservicecenter"><i class="fa fa-fw fa-user-circle"></i>Service Center <span class="badge badge-success">6</span></a>
+
                             </li>
-							<li class="nav-item">
-                                <a class="nav-link" href="#" data-toggle="collapse" aria-expanded="false" data-target="#submenu-3" aria-controls="submenu-3"><i class="fa fa-fw fa-rocket"></i>New Customer</a>
-                                <div id="submenu-3" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                            
-                                        
-                                    </ul>
-                                </div>
+
+							 <li class="nav-item ">
+                                <a class="nav-link active" href="/newcustomerrequest"><i class="fa fa-fw fa-user-circle"></i>New Customers <span class="badge badge-success">6</span></a>
+
                             </li>
 									
 							

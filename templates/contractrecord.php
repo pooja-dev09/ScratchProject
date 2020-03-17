@@ -30,6 +30,9 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
+.textvalue{
+text-align:center
+}
 </style>
 
 <body>
@@ -78,84 +81,95 @@
 
                                 </div>
                                 <div class="card">
+                               <div class="form-group" style="padding-left: 25px; padding-top:20px; "  >
+
+												<label style="width:150px"; >Contract No</label>
+												<input type="text" name="EmployeeId" value= "{{result[0]['EmployeeId']}}" class="textvalue"   readonly />
+											</div>
+											<div class="form-group"  style="padding-left: 25px;"  >
+                                                <label style="width:150px">Number Plate No</label>
+												<input type="text" name="VehicleNo" value= "{{result[0]['VehicleNo']}}" class="textvalue"   readonly />
+
+											</div>
+
                                 <div class="form-group">
-                                {{result}}
+
 									</div>
 
                                     <div class="card-body" style="width: 650px;">
-                                        <form method="post" action="/viewcontract_update" enctype=multipart/form-data>
+                                        <form method="POST" action="/viewcontract_update" enctype=multipart/form-data>
 											<div class="form-group"  >
 												<label >Date of Contract</label>
-												<input type="text" name="DateOfContract" value= "{{result['DateOfContract']}}" placeholder="dateofcontract" class="form-control" style = "text-transform:capitalize;"  required />
+												<input type="Date" name="DateOfContract" value= "{{result[0]['DateOfContract']}}" placeholder="dateofcontract" class="form-control" style = "text-transform:capitalize;"  required />
 											</div>
 											<h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Vehicle Information</h4>
 											<div class="form-group" style = "text-transform:capitalize;">
 												<label >Vehicle Category</label>
-												<input type="text" name="VehicleCategory" value= "{{result['VehicleCategory']}}"placeholder="vehiclecategory" class="form-control" style = "text-transform:capitalize;"  required />
+												<input type="text" name="VehicleCategory" value= "{{result[0]['VehicleCategory']}}"placeholder="vehiclecategory" class="form-control" style = "text-transform:capitalize;"  required />
 											</div>
 
 										  <div class="form-group">
 												<label> Model </label>
-												<input type="text" name="Model" value= "{{result['Model']}}" placeholder="model" class="form-control" style = "text-transform:capitalize;"  required />
+												<input type="text" name="Model" value= "{{result[0]['Model']}}" placeholder="model" class="form-control" style = "text-transform:capitalize;"  required />
 										  </div>
 										  <div class="form-group">
 												<label >Color</label>
-												<input type="text" name="color" value= "{{result['color']}}" placeholder="color" class="form-control" style = "text-transform:capitalize;"  required  />
+												<input type="text" name="color" value= "{{result[0]['color']}}" placeholder="color" class="form-control" style = "text-transform:capitalize;"  required  />
 										  </div>
 										  <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Owner Details</h4>
 										  <div class="form-group">
 												<label> Owner Name</label>
-												<input type="text" name="ownername" value= "{{result['ownername']}}" placeholder="ownername" class="form-control" style = "text-transform:capitalize;" required />
+												<input type="text" name="ownername" value= "{{result[0]['ownername']}}" placeholder="ownername" class="form-control" style = "text-transform:capitalize;" required />
 										  </div>
 
 
 										   <div class="form-group">
 												<label> Email </label>
-												<input type="text" name="email" value= "{{result['email']}}" class="form-control" placeholder="email" style = "text-transform:uppercase;" required />
+												<input type="text" name="email" value= "{{result[0]['email']}}" class="form-control" placeholder="email" style = "text-transform:uppercase;" required />
 										   </div>
 										  <div class="form-group">
 												<label> Po </label>
-												<input type="text" name="po" value= "{{result['po']}}" class="form-control"  placeholder="po" required />
+												<input type="text" name="po" value= "{{result[0]['po']}}" class="form-control"  placeholder="po" required />
 										   </div>
 										   <div class="form-group">
 												<label >District</label>
-												<input type="text" name="district" value= "{{result['district']}}" class="form-control" placeholder="district" style = "text-transform:lowercase;" required />
+												<input type="text" name="district" value= "{{result[0]['district']}}" class="form-control" placeholder="district" style = "text-transform:lowercase;" required />
 										   </div>
 
 										   <div class="form-group">
 												<label >Date of Expiry</label>
-												<input type="text" name="dateofexpiry" value= "{{result['dateofexpiry']}}" class="form-control" placeholder="dateofexpiry" style = "text-transform:capitalize;" required />
+												<input type="text" name="dateofexpiry" value= "{{result[0]['dateofexpiry']}}" class="form-control" placeholder="dateofexpiry" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
 												<label> Maker</label>
-												<input type="text" name="maker" value= "{{result['maker']}}" class="form-control" placeholder="maker" style = "text-transform:capitalize;" required />
+												<input type="text" name="maker" value= "{{result[0]['maker']}}" class="form-control" placeholder="maker" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
 												<label> Chassis No </label>
-												<input type="text" name="chassis" value= "{{result['chassis']}}" class="form-control" placeholder="chassis" style = "text-transform:capitalize;" required />
+												<input type="text" name="chassis" value= "{{result[0]['chassis']}}" class="form-control" placeholder="chassis" style = "text-transform:capitalize;" required />
 										   </div>
 
 										   <div class="form-group">
 												<label >Date of Regd.</label>
-												<input type="text" name="dateofregd" value= "{{result['dateofregd']}}" class="form-control" placeholder="dateofregd" style = "text-transform:capitalize;" required />
+												<input type="text" name="dateofregd" value= "{{result[0]['dateofregd']}}" class="form-control" placeholder="dateofregd" style = "text-transform:capitalize;" required />
 										   </div>
 
 										  <div class="form-group">
 											<label > Mobile No </label>
-											<input type="text" name="mobile" value= "{{result['mobile']}}" class="form-control" placeholder="mobileno" style = "text-transform:capitalize;" required />
+											<input type="text" name="mobile" value= "{{result[0]['mobile']}}" class="form-control" placeholder="mobileno" style = "text-transform:capitalize;" required />
 										  </div>
 
 										   <div class="form-group">
 											<label > Street/Village </label>
-											<input type="text" name="streetvillage" value= "{{result['streetvillage']}}" class="form-control" placeholder="location" style = "text-transform:capitalize;" required  />
+											<input type="text" name="streetvillage" value= "{{result[0]['streetvillage']}}" class="form-control" placeholder="location" style = "text-transform:capitalize;" required  />
 										   </div>
 										   <div class="form-group">
 											<label > PS </label>
-											<input type="text" name="ps" value= "{{result['ps']}}" class="form-control" placeholder="ps" style = "text-transform:capitalize;" required />
+											<input type="text" name="ps" value= "{{result[0]['ps']}}" class="form-control" placeholder="ps" style = "text-transform:capitalize;" required />
 										   </div>
 										   <div class="form-group">
 											<label > State </label>
-											<input type="text" name="state" value= "{{result['state']}}" class="form-control" placeholder="state" required />
+											<input type="text" name="state" value= "{{result[0]['state']}}" class="form-control" placeholder="state" required />
 										   </div>
 
 										   <div class="form-group">
@@ -163,7 +177,7 @@
 										  </div>
 										  <div>
 											<div class="sub">
-											<input name="UserID" value="{{ result['UserID'] }}" type="hidden">
+											<input name="UserID" value="{{ result[0]['UserID'] }}" type="hidden">
 											<button class="btn btn-primary"  type="submit" >Submit</button>
                                             </div>
 										<div>
@@ -175,7 +189,7 @@
 							<div class="card-body" >
 								<div style="width:170px; height:170px; border:1px; position:absolute; right:10px; top:60px;">
 								  <div id = "one"  >
-									<img id="user_photo" style="width:170px; height:170px;"/>
+									<!--<img id="user_photo" style="width:170px; height:170px;"/>-->
 								  </div>
 								</div>
 								</div>
