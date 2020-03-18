@@ -943,19 +943,20 @@ class ClaimInspection(Resource):
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('ClaimID', required=True, type=str, help='UserID Id cannot be found')
+            parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
             parser.add_argument('imageData', type=werkzeug.datastructures.FileStorage, required=True,
                                 help='photo cannot be found', location='files')
             args = parser.parse_args()
             ClaimID = args['ClaimID']
+            UserID = args['UserID']
             Photo = args['imageData']
             CurrentTime = datetime.datetime.now()
-            CurrentTime = CurrentTime.strftime("%m-%d-%Y")
             mydb = mycus()
             mycursor = mydb.cursor()
             if not Photo is None:
                 filename = Upload_fun(Photo)
-                sql = "INSERT INTO claiminspection (ClaimID,photo,OnDate) VALUES (%s,%s,%s)"
-                val = (ClaimID, filename, CurrentTime)
+                sql = "INSERT INTO claiminspection (ClaimID,InspectBy,photo,OnDate) VALUES (%s,%s,%s,%s)"
+                val = (ClaimID,UserID, filename, CurrentTime)
                 result = mycursor.execute(sql, val)
                 mydb.commit()
                 mycursor.execute("UPDATE claiminspection SET ClaimStatus = 1 WHERE ClaimID = '" + str(ClaimID) + "'")

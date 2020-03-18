@@ -575,37 +575,7 @@ def viewscdetails_update():
 
 
 # -----------------------end service center---------------------------
-# ----------------------request customer----------------------------
-@app.route('/newcustomerrequest')
-def newcustomer():
-    if not session.get('logged_in'):
-        return render_template('login.html')
-    else:
-        new = []
-        count = 0
-        mydb = mycus()
-        mycursor = mydb.cursor()
-        mycursor.execute(
-            "SELECT UserID,OnDate,VehicleCategory,District,PoliceStation,EmployeeId FROM `customerrequest`")
-        rowcursor = mycursor.fetchall()
-        for i in rowcursor:
-            UserID = i[0]
-            date = i[1]
-            vehiclecategory = i[2]
-            district = i[3]
-            policestation = i[4]
-            employeeid = i[5]
-            count = count + 1
-            data = {'count': count, 'date': date, 'vehiclecategory': vehiclecategory,
-                    'district': district, 'policestation': policestation, 'employeeid': employeeid, 'UserID': UserID
-                    }
-            new.append(data)
-            mydb.commit()
-            mydb.close()
-        return render_template('requestcustomer.php', result=new)
-
-
-# -----------------------end ------------------------------------
+#-------------------------start claim section----------------------------
 
 
 @app.route('/claim', methods=['GET', 'POST'])
@@ -618,32 +588,55 @@ def claim():
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute(
-            "SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claiminspection.ClaimStatus,claim.MoneyReceiptPhoto FROM claim LEFT JOIN claiminspection ON claiminspection.ClaimID=claim.ClaimID order by claim.DateOfClaim desc ")
+            "select c.VcID,c.DateofClaim,c.ClaimNo,cl.Photo,cl.InspectBy,cl.ClaimStatus,v.EmployeeId,v.VehicleNo from claim c left join claiminspection cl on c.ClaimID=cl.ClaimID left join vehiclecontract v on c.VcID=v.VcID group by c.ClaimID")
         rowcursor = mycursor.fetchall()
         if len(rowcursor) > 0:
             for i in rowcursor:
                 count = count + 1
-                DateOfClaim = i[0]
-                ClaimNo = i[1]
-                UserID = i[2]
-                ClaimStatus = i[3]
-                MoneyReceiptPhoto = i[4]
-                if ClaimStatus is None:
+                VcID = i[0]
+                DateOfClaim = i[1]
+                ClaimNo = i[2]
+                Photo = i[3]
+                InspectBy = i[4]
+                ClaimStatus = i[5]
+                contract_employeeId = i[6]
+                VehicleNo = i[7]
+                if ClaimStatus is None :
                     ClaimStatus = 'Pending'
                 elif ClaimStatus == 1:
                     ClaimStatus = 'Approved'
-                mycursor.execute("SELECT Name from user WHERE UserID = '" + str(UserID) + "'")
-                rowcursor = mycursor.fetchall()
-
-                for i in rowcursor:
-                    name = i[0]
-                data = {'count': count, 'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo, 'name': name,
-                        'ClaimStatus': ClaimStatus, 'MoneyReceiptPhoto': MoneyReceiptPhoto}
+                data = {'count': count, 'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo, 'Photo': Photo,'VcID':VcID,
+                        'InspectBy': InspectBy, 'ClaimStatus': ClaimStatus,'contract_employeeId':contract_employeeId,'VehicleNo':VehicleNo}
                 new.append(data)
         mydb.close()
         return render_template('claim.php', result=new)
 
+@app.route('/claimreportview/<string:ClaimNo>')
+def claimreportview(ClaimNo):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT cl.DateOfClaim,cl.DateOfIncident,v.VehicleCategory,cl.Ps,cl.District,cl.VehiclesaffectedAreaVideo from claim cl LEFT JOIN vehiclecontract v on cl.VcID = v.VcID WHERE cl.VcID= %s", [UserID])
+        row = mycursor.fetchall()
+        for i in row:
+            DateOfClaim = i[0]
+            DateOfIncident = i[1]
+            VehicleCategory = i[2]
+            Ps = i[3]
+            District = i[4]
+            VehiclesaffectedAreaVideo = i[5]
+            data = {'DateOfClaim':DateOfClaim,'DateOfIncident':DateOfIncident,'VehicleCategory':VehicleCategory,'Ps':Ps,'District':District,'VehiclesaffectedAreaVideo':VehiclesaffectedAreaVideo}
+            new.append(data)
+        mydb.close()
+        return render_template('claimreport.php', result=new)
 
+
+
+#------------------------------------------------------------end claim section----------------------------------------------------------------------------------------
 # -----------------------------------------------------------Register Customer-----------------------------------------------------------------------------------------
 @app.route('/seadmin/Registercustomer')
 def Registercustomer():
@@ -779,10 +772,10 @@ def viewcontract_update():
 
 
 # ---------------------------------------------------------------------------register customer complete------------------------------------------------
-#----------------------------------------------------------------------------start request customer---------------------
+#----------------------------------------------------------------------------start request customer----------------------------------------------------
 
-@app.route('/newrequest')
-def newrequest():
+@app.route('/newcustomerrequest')
+def newcustomer():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
@@ -790,19 +783,24 @@ def newrequest():
         count = 0
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT UserID,OnDate,VehicleCategory,District,PoliceStation,EmployeeId FROM `customerrequest`")
-        row = mycursor.fetchall()
-        for i in row:
+        mycursor.execute(
+            "SELECT UserID,OnDate,VehicleCategory,District,PoliceStation,EmployeeId FROM `customerrequest`")
+        rowcursor = mycursor.fetchall()
+        for i in rowcursor:
             UserID = i[0]
-            OnDate = i[1]
-            VehicleCategory = i[2]
-            District = i[3]
-            PoliceStation = i[4]
-            EmployeeId = i[5]
+            date = i[1]
+            vehiclecategory = i[2]
+            district = i[3]
+            policestation = i[4]
+            employeeid = i[5]
             count = count + 1
-            data= {'count':count,'UserID':UserID,'OnDate':OnDate,'VehicleCategory':VehicleCategory,'District':District,'PoliceStation':PoliceStation,'EmployeeId':EmployeeId}
+            data = {'count': count, 'date': date, 'vehiclecategory': vehiclecategory,
+                    'district': district, 'policestation': policestation, 'employeeid': employeeid, 'UserID': UserID
+                    }
             new.append(data)
-        return render_template('requestcustomer.php',result=new)
+            mydb.commit()
+            mydb.close()
+        return render_template('requestcustomer.php', result=new)
 
 @app.route('/viewnewrequest/<string:UserID>')
 def viewnewrequest(UserID):
@@ -819,8 +817,8 @@ def viewnewrequest(UserID):
         rowcursor = mycursor.fetchall()
         print('rowcursor', rowcursor)
         for i in rowcursor:
-            EmployeeId = i[2]
-            Name = i[3]
+            EmployeeId = i[1]
+            Name = i[2]
             VehicleCategory = i[3]
             DateOfPurchase = i[6]
             District = i[8]
@@ -830,9 +828,10 @@ def viewnewrequest(UserID):
             count = count + 1
             data = {'count': count, 'EmployeeId': EmployeeId, 'Name': Name,
                     'VehicleCategory': VehicleCategory, 'DateOfPurchase': DateOfPurchase, 'District': District,
-                    'Mobile': Mobile, 'PoliceStation': PoliceStation,'UserID': UserID}
+                    'Mobile': Mobile,'state':state, 'PoliceStation': PoliceStation,'UserID': UserID}
             new.append(data)
         return render_template('viewrequestdetails.php', result=new)
+
 @app.route('/viewrequest_update', methods=['POST'])
 def viewrequest_update():
     if not session.get('logged_in'):
@@ -845,8 +844,9 @@ def viewrequest_update():
             District = str(request.form.get('District'))
             Mobile = str(request.form.get('Mobile'))
             PoliceStation = str(request.form.get('PoliceStation'))
-            State = str(request.form.get('State'))
+            state = str(request.form.get('state'))
             UserID = str(request.form.get('UserID'))
+            print('UserID',UserID)
 
             mydb = mycus()
             mycursor = mydb.cursor()
@@ -854,19 +854,15 @@ def viewrequest_update():
                 Name) + "',VehicleCategory = '" + str(VehicleCategory) + "',	DateOfPurchase = '" + str(
                 DateOfPurchase) + "', District = '" + str(District) + "',Mobile = '" + str(
                 Mobile) + "', PoliceStation = '" + str(PoliceStation) + "',	State = '" + str(
-                State) + "' WHERE UserID = '" + str(UserID) + "'"
-            print('update', sql)
+                state) + "' WHERE UserID = '" + str(UserID) + "'"
+
             result = mycursor.execute(sql)
             mydb.commit()
             mydb.close()
-        return redirect(url_for('viewnewrequest'))
+        return redirect(url_for('newcustomer'))
 
 
-
-
-
-
-#----------------------------------------------------------------------------------------request customer ----------------------------------
+#---------------------------------------------------------------------------------------- end request customer ----------------------------------
 @app.route('/seadmin/Vehiclereport')
 def Vehiclereport():
     if not session.get('logged_in'):

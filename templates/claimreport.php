@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="en">
- 
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Data Tables</title>
     <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='assets/vendor/bootstrap/css/bootstrap.min.css')}}">
     <link href="{{url_for('static',filename='assets/vendor/fonts/circular-std/style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{url_for('static',filename='assets/libs/css/style.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='assets/vendor/fonts/fontawesome/css/fontawesome-all.css')}}">
@@ -18,15 +18,29 @@
 </head>
 
 <body>
+
+<style>
+.welcome, input[type="url"], #contact textarea {
+	width:97%;
+	border:1px solid #CCC;
+	background:#FFF;
+	margin:0 0 5px;
+	border: 1px solid rgba(0,0,0,.12);
+border-radius: .3rem;
+    padding: 8px 10px;
+color: rgba(0,0,0,.87);
+font-size: 1rem;
+}
+</style>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      <?php include_once('header.php')?>
+      /* <?php include_once('header.php')?> */
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        <?php include_once('menu.php')?>
+        /* <?php include_once('menu.php')?> */
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -38,11 +52,6 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="page-header">
-                            <h2 class="pageheader-title">View All Claim </h2>
-                            
-                           
-                        </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -54,76 +63,71 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">View All Claim</h5>
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered first">
-                                        <thead>
+                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Authorized Service Center</h4></center>
+							<form method="post" action="/claimreportview">
 
-                                            <tr>
-												<th>Slno</th>
-												<th>Claim Date</th>
-                                                <th>Claim By(Contract ID)</th>
-                                                <th>Vehicle No</th>
-                                                <th>Claim No</th>
-												<th>Inspection</th>
-												<th>Amount Request</th>
-												<th>Status</th>
+									<center><div class="form-group">
+									<label style="width:150px;">Request No-</label>
+										<input name="EmployeeId" style="text-align:center" value= "{{result[0]['EmployeeId']}}" type="text" readonly>
+									</div></center>
 
-											</tr>
-                                        </thead>
-                                        <tbody>
-                                          {% for r in result %}
-                                            <tr>
-                                                <td>{{r["count"]}}</td>
-                                               <td>{{r["DateOfClaim"]}}</td>
-                                               <td>{{r["contract_employeeId"]}}</td>
-                                               <td>{{r["VehicleNo"]}}</td>
-                                               <td><a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.VcID}}">{{r["ClaimNo"]}}</a></td>
-                                               <td>
-                                                    {% if r['InspectBy'] is not none  %}
-                                                         <a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.UserID}}">Report</a>
-                                                    {% else %}
-                                                        <a style="color:#ff001a; text-decoration: underline;">No Report</a>
-                                                    {% endif %}
-                                               </td>
-                                                <td>
-                                                     {% if r['Photo'] is not none %}
-                                                         <a style="color:#ff001a; text-decoration: underline;">Request</a>
-                                                    {% else %}
-                                                         <a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.UserID}}">Not Request</a>
-                                                    {% endif %}
-                                                </td>
-                                                <td>{{r["ClaimStatus"]}}</td>
+							<div class="col-sm-12">
 
-                                            </tr>
-                                           {% endfor %}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-												<th>Slno</th>
-												<th>Claim Date</th>
-                                                <th>Claim By(Contract ID)</th>
-                                                <th>Vehicle No</th>
-                                                <th>Claim No</th>
-												<th>Inspection</th>
-												<th>Amount Request</th>
-												<th>Status</th>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                </div>
-                            </div>
+									<label >Name</label>
+									<div class="form-group">
+										<input name="Name" value= "{{result[0]['Name']}}" type="text" placeholder="Name" class="welcome" required>
+									</div>
+
+									<label >Vehicle Category</label>
+									<div class="form-group">
+										<input name="VehicleCategory" value= "{{result[0]['VehicleCategory']}}" type="text"  placeholder="VehicleCategory" class="welcome" required>
+									</div>
+
+									<label >Date of purchase</label>
+									<div class="form-group">
+										<input name="DateOfPurchase" value= "{{result[0]['DateOfPurchase']}}" type="date" placeholder="DateOfPurchase" class="welcome" required>
+									</div>
+
+									<label >District</label>
+									<div class="form-group">
+										<input name="District" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
+									</div>
+
+
+									<label >Mobile Number</label>
+									<div class="form-group">
+
+									       <input name="Mobile" value= "{{result[0]['Mobile']}}" type="text" placeholder="Mobile" class="welcome" required>
+									</div>
+
+									<label>Ps</label>
+									<div class="form-group">
+										<input name="PoliceStation" value= "{{result[0]['PoliceStation']}}" type="text" placeholder="CenterName" class="welcome" required>
+									</div>
+
+
+									<label >State</label>
+									<div class="form-group">
+										<input name="state" value= "{{result[0]['state']}}" type="text" placeholder="State" class="welcome" required>
+									</div>
+
+
+
+    								<input name="UserID" value="{{ result[0]['UserID'] }}" type="hidden">
+									<input type="submit"   value="Submit">
+
+
+							</form>
                         </div>
                     </div>
                     <!-- ============================================================== -->
                     <!-- end basic table  -->
                     <!-- ============================================================== -->
                 </div>
-                
-                
-                
-                
+
+
+
+
             </div>
             <!-- ============================================================== -->
             <!-- footer -->
@@ -132,11 +136,13 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
-                            Copyright &copy; 2019 Scratch Exponent. All rights reserved. Dashboard by <a href="#">Krititech</a>
+                            Copyright &copy; 2019 Concept. All rights reserved. Dashboard by <a href="https://colorlib.com/wp/">Colorlib</a>.
                         </div>
                         <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
                             <div class="text-md-right footer-links d-none d-sm-block">
-                               
+                                <a href="javascript: void(0);">About</a>
+                                <a href="javascript: void(0);">Support</a>
+                                <a href="javascript: void(0);">Contact Us</a>
                             </div>
                         </div>
                     </div>
@@ -151,7 +157,7 @@
     <!-- end main wrapper -->
     <!-- ============================================================== -->
     <!-- Optional JavaScript -->
-     <script src="{{url_for('static',filename='assets/vendor/jquery/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{url_for('static',filename='assets/vendor/jquery/jquery-3.3.1.min.js')}}"></script>
     <script src="{{url_for('static',filename='assets/vendor/bootstrap/js/bootstrap.bundle.js')}}"></script>
     <script src="{{url_for('static',filename='assets/vendor/slimscroll/jquery.slimscroll.js')}}"></script>
     <script src="{{url_for('static',filename='assets/vendor/multi-select/js/jquery.multi-select.js')}}"></script>
@@ -170,7 +176,7 @@
     <script src="https://cdn.datatables.net/rowgroup/1.0.4/js/dataTables.rowGroup.min.js"></script>
     <script src="https://cdn.datatables.net/select/1.2.7/js/dataTables.select.min.js"></script>
     <script src="https://cdn.datatables.net/fixedheader/3.1.5/js/dataTables.fixedHeader.min.js"></script>
-    
+
 </body>
- 
+
 </html>
