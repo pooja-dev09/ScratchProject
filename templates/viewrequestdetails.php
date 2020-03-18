@@ -18,6 +18,20 @@
 </head>
 
 <body>
+
+<style>
+.welcome, input[type="url"], #contact textarea {
+	width:97%;
+	border:1px solid #CCC;
+	background:#FFF;
+	margin:0 0 5px;
+	border: 1px solid rgba(0,0,0,.12);
+border-radius: .3rem;
+    padding: 8px 10px;
+color: rgba(0,0,0,.87);
+font-size: 1rem;
+}
+</style>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
@@ -38,11 +52,6 @@
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="page-header">
-                            <center><u><h2 class="pageheader-title">New Customer Request</h2></u></center>
-
-
-                        </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -54,57 +63,61 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
+                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Authorized Service Center</h4></center>
+							<form method="post" action="/viewrequest_update">
 
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-bordered first">
-                                        <thead>
+									<center><div class="form-group">
+									<label style="width:150px;">Request No-</label>
+										<input name="EmployeeId" style="text-align:center" value= "{{result[0]['EmployeeId']}}" type="text" readonly>
+									</div></center>
 
-                                            <tr>
-                                                <th>Slno</th>
-												<th>Date</th>
-											    <th>Vehicle Type</th>
-											    <th>District</th>
-                                                <th>Police Station</th>
-                                                <th>Request No</th>
-                                                <th>View all</th>
+							<div class="col-sm-12">
 
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-										{% for r in result %}
-                                            <tr>
-                                                <td>{{r["count"]}}</td>
-                                                <td>{{r["date"]}}</td>
-												<td>{{r["vehiclecategory"]}}</td>
-												<td>{{r["district"]}}</td>
-												<td>{{r["policestation"]}}</td>
-												<td>{{r["employeeid"]}}</td>
-                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.UserID}}">View</a></td>
+									<label for="date">Name</label>
+									<div class="form-group">
+										<input name="Name" value= "{{result[0]['Name']}}" type="text" placeholder="Name" class="welcome" required>
+									</div>
+
+									<label for="text">Vehicle Category</label>
+									<div class="form-group">
+										<input name="VehicleCategory" value= "{{result[0]['VehicleCategory']}}" type="text"  placeholder="VehicleCategory" class="welcome" required>
+									</div>
+
+									<label for="date">Date of purchase</label>
+									<div class="form-group">
+										<input name="DateOfPurchase" value= "{{result[0]['DateOfPurchase']}}" type="text" placeholder="DateOfPurchase" class="welcome" required>
+									</div>
+
+									<label for="date">District</label>
+									<div class="form-group">
+										<input name="District" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
+									</div>
 
 
-                                            </tr>
-											{% endfor %}
+									<label for="date">Mobile Number</label>
+									<div class="form-group">
 
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <th>Slno</th>
-												<th>Date</th>
-											    <th>Vehicle Type</th>
-											    <th>District</th>
-                                                <th>Police Station</th>
-                                                <th>Request No</th>
-                                                <th>View all</th>
+									       <input name="Mobile" value= "{{result[0]['Mobile']}}" type="text" placeholder="Mobile" class="welcome" required>
+									</div>
 
-                                            </tr>
+									<label for="date">Ps</label>
+									<div class="form-group">
+										<input name="PoliceStation" value= "{{result[0]['PoliceStation']}}" type="text" placeholder="CenterName" class="welcome" required>
+									</div>
 
-                                        </tfoot>
 
-                                    </table>
-									<button style="float:right;"type="button" onclick="alert('Hello world!')">Click Me!</button>
-                                </div>
-                            </div>
+									<label for="date">State</label>
+									<div class="form-group">
+										<input name="State" value= "{{result[0]['State']}}" type="text" placeholder="State" class="welcome" required>
+									</div>
+
+
+
+    								<input name="UserID" value="{{ result[0]['UserID'] }}" type="hidden">
+									<input type="submit"   value="Submit">
+
+
+							</form>
                         </div>
                     </div>
                     <!-- ============================================================== -->
