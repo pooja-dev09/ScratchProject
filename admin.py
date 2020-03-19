@@ -430,7 +430,6 @@ def viewsmbusiness(UserID):
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        print(UserID)
         new = []
         count = 0
         mydb = mycus()
@@ -588,31 +587,32 @@ def claim():
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute(
-            "select c.VcID,c.DateofClaim,c.ClaimNo,cl.Photo,cl.InspectBy,cl.ClaimStatus,v.EmployeeId,v.VehicleNo from claim c left join claiminspection cl on c.ClaimID=cl.ClaimID left join vehiclecontract v on c.VcID=v.VcID group by c.ClaimID")
+            "select c.ClaimID,c.VcID,c.DateofClaim,c.ClaimNo,cl.Photo,cl.InspectBy,cl.ClaimStatus,v.EmployeeId,v.VehicleNo from claim c left join claiminspection cl on c.ClaimID=cl.ClaimID left join vehiclecontract v on c.VcID=v.VcID group by c.ClaimID")
         rowcursor = mycursor.fetchall()
         if len(rowcursor) > 0:
             for i in rowcursor:
                 count = count + 1
-                VcID = i[0]
-                DateOfClaim = i[1]
-                ClaimNo = i[2]
-                Photo = i[3]
-                InspectBy = i[4]
-                ClaimStatus = i[5]
-                contract_employeeId = i[6]
-                VehicleNo = i[7]
+                ClaimID = i[0]
+                VcID = i[1]
+                DateOfClaim = i[2]
+                ClaimNo = i[3]
+                Photo = i[4]
+                InspectBy = i[5]
+                ClaimStatus = i[6]
+                contract_employeeId = i[7]
+                VehicleNo = i[8]
                 if ClaimStatus is None :
                     ClaimStatus = 'Pending'
                 elif ClaimStatus == 1:
                     ClaimStatus = 'Approved'
-                data = {'count': count, 'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo, 'Photo': Photo,'VcID':VcID,
+                data = {'count': count, 'ClaimID':ClaimID,'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo, 'Photo': Photo,'VcID':VcID,
                         'InspectBy': InspectBy, 'ClaimStatus': ClaimStatus,'contract_employeeId':contract_employeeId,'VehicleNo':VehicleNo}
                 new.append(data)
         mydb.close()
         return render_template('claim.php', result=new)
 
-@app.route('/claimreportview/<string:ClaimNo>')
-def claimreportview(ClaimNo):
+@app.route('/claimreportview/<string:VcID>')
+def claimreportview(VcID):
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
@@ -620,8 +620,9 @@ def claimreportview(ClaimNo):
         count = 0
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT cl.DateOfClaim,cl.DateOfIncident,v.VehicleCategory,cl.Ps,cl.District,cl.VehiclesaffectedAreaVideo from claim cl LEFT JOIN vehiclecontract v on cl.VcID = v.VcID WHERE cl.VcID= %s", [UserID])
+        mycursor.execute("SELECT cl.DateOfClaim,cl.DateOfIncident,v.VehicleCategory,cl.Ps,cl.District,cl.VehiclesaffectedAreaVideo,cl.claimNo from claim cl LEFT JOIN vehiclecontract v on cl.VcID = v.VcID WHERE cl.VcID= %s", [VcID])
         row = mycursor.fetchall()
+        print('row',row)
         for i in row:
             DateOfClaim = i[0]
             DateOfIncident = i[1]
@@ -629,10 +630,33 @@ def claimreportview(ClaimNo):
             Ps = i[3]
             District = i[4]
             VehiclesaffectedAreaVideo = i[5]
-            data = {'DateOfClaim':DateOfClaim,'DateOfIncident':DateOfIncident,'VehicleCategory':VehicleCategory,'Ps':Ps,'District':District,'VehiclesaffectedAreaVideo':VehiclesaffectedAreaVideo}
+            claimNo = i[6]
+            data = {'DateOfClaim':DateOfClaim,'DateOfIncident':DateOfIncident,'VehicleCategory':VehicleCategory,'Ps':Ps,'District':District,'VehiclesaffectedAreaVideo':VehiclesaffectedAreaVideo,'claimNo':claimNo}
             new.append(data)
         mydb.close()
         return render_template('claimreport.php', result=new)
+
+@app.route('/claiminspectionreport/<string:ClaimID>')
+def claiminspectionreport(ClaimID):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("claim.ClaimNo,claiminspection.OnDate,vehiclecontract.VehicleNo,vehiclecontract.ChassisNo from claim left JOIN claiminspection on claim.ClaimID = claiminspection.ClaimID LEFT JOIN vehiclecontract on vehiclecontract.VcID = claim.VcID WHERE claim.ClaimID=%",[ClaimID])
+        row = mycursor.fetchall()
+        print('row',row)
+        for i in row:
+            ClaimNo = i[0]
+            OnDate = i[1]
+            VehicleNo = i[2]
+            ChassisNo = i[3]
+            data = {'ClaimNo':ClaimNo,'OnDate':OnDate,'VehicleNo':VehicleNo,'ChassisNo':ChassisNo}
+            new.append(data)
+        mydb.close()
+        return render_template('inspectionreport.php', result=new)
 
 
 

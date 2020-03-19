@@ -68,49 +68,37 @@ font-size: 1rem;
 
 									<center><div class="form-group">
 									<label style="width:150px;">Request No-</label>
-										<input name="EmployeeId" style="text-align:center" value= "{{result[0]['EmployeeId']}}" type="text" readonly>
+										<input name="EmployeeId" style="text-align:center" value= "{{result[0]['claimNo']}}" type="text" readonly>
 									</div></center>
 
 							<div class="col-sm-12">
 
-									<label >Name</label>
+									<label >Date Of Claim</label>
 									<div class="form-group">
-										<input name="Name" value= "{{result[0]['Name']}}" type="text" placeholder="Name" class="welcome" required>
+										<input name="Name" value= "{{result[0]['DateOfClaim']}}" type="text" placeholder="Name" class="welcome" readonly>
 									</div>
 
-									<label >Vehicle Category</label>
+									<label >Vehicle Type</label>
 									<div class="form-group">
-										<input name="VehicleCategory" value= "{{result[0]['VehicleCategory']}}" type="text"  placeholder="VehicleCategory" class="welcome" required>
+										<input name="VehicleCategory" value= "{{result[0]['VehicleCategory']}}" type="text"  placeholder="VehicleCategory" class="welcome" readonly>
 									</div>
 
-									<label >Date of purchase</label>
+                                     <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Preferred area to repair the vehicle</h4>
+
+									<label >PS</label>
 									<div class="form-group">
-										<input name="DateOfPurchase" value= "{{result[0]['DateOfPurchase']}}" type="date" placeholder="DateOfPurchase" class="welcome" required>
+										<input name="DateOfPurchase" value= "{{result[0]['Ps']}}" type="text" placeholder="DateOfPurchase" class="welcome" readonly>
 									</div>
 
-									<label >District</label>
+									<label >Date of Incident</label>
 									<div class="form-group">
-										<input name="District" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
+										<input name="District" value= "{{result[0]['DateOfIncident']}}" type="text"  placeholder="District" class="welcome" readonly>
 									</div>
 
-
-									<label >Mobile Number</label>
+									<label>District</label>
 									<div class="form-group">
-
-									       <input name="Mobile" value= "{{result[0]['Mobile']}}" type="text" placeholder="Mobile" class="welcome" required>
+										<input name="PoliceStation" value= "{{result[0]['District']}}" type="text" placeholder="CenterName" class="welcome" readonly>
 									</div>
-
-									<label>Ps</label>
-									<div class="form-group">
-										<input name="PoliceStation" value= "{{result[0]['PoliceStation']}}" type="text" placeholder="CenterName" class="welcome" required>
-									</div>
-
-
-									<label >State</label>
-									<div class="form-group">
-										<input name="state" value= "{{result[0]['state']}}" type="text" placeholder="State" class="welcome" required>
-									</div>
-
 
 
     								<input name="UserID" value="{{ result[0]['UserID'] }}" type="hidden">
