@@ -182,19 +182,23 @@ class Otpverification(Resource):
         try:
             parser = reqparse.RequestParser()
             parser.add_argument('UserID', required=True, type=str, help='UserID cannot be found')
-            parser.add_argument('OTP', required=True, type=int, help='OTP cannot be found')
+            parser.add_argument('OTP', required=True, type=str, help='OTP cannot be found')
             args = parser.parse_args()
             UserID = args['UserID']
             Userotp = args['OTP']
+            print('Userotp',Userotp)
+            print(type(Userotp))
             if Userotp is not None:
                 mydb = mycus()
                 mycursor = mydb.cursor()
                 mycursor.execute("SELECT OTP,RoleID from user WHERE UserID = '" + str(UserID) + "'")
                 rowcursor = mycursor.fetchall()
+                print(rowcursor)
                 mydb.close()
                 if len(rowcursor) > 0:
                     for i in rowcursor:
                         dataotp = i[0]
+                        print(type(dataotp))
                         RoleID = i[1]
                         if Userotp == dataotp:
                             return jsonify({'Message': 'Login Successfully',
@@ -940,34 +944,36 @@ api.add_resource(ServiceCenterAuthorization, "/getServiceCenterAuthorization")
 
 class ClaimInspection(Resource):
     def post(self):
-        try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('ClaimID', required=True, type=str, help='UserID Id cannot be found')
-            parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
-            parser.add_argument('imageData', type=werkzeug.datastructures.FileStorage, required=True,
-                                help='photo cannot be found', location='files')
-            args = parser.parse_args()
-            ClaimID = args['ClaimID']
-            UserID = args['UserID']
-            Photo = args['imageData']
-            CurrentTime = datetime.datetime.now()
-            mydb = mycus()
-            mycursor = mydb.cursor()
-            if not Photo is None:
-                filename = Upload_fun(Photo)
-                sql = "INSERT INTO claiminspection (ClaimID,InspectBy,photo,OnDate) VALUES (%s,%s,%s,%s)"
-                val = (ClaimID,UserID, filename, CurrentTime)
-                result = mycursor.execute(sql, val)
-                mydb.commit()
-                mycursor.execute("UPDATE claiminspection SET ClaimStatus = 1 WHERE ClaimID = '" + str(ClaimID) + "'")
-                mydb.commit()
-                mydb.close()
-                return jsonify({'Message': "Claim Inspection Report Submitted Successfully.", "Status": 1})
-            else:
-
-                return jsonify({'Message': "Photo cannot be found", "Status": 0})
-        except Exception as e:
-            return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
+        # try:
+        parser = reqparse.RequestParser()
+        parser.add_argument('ClaimID', required=True, type=str, help='UserID Id cannot be found')
+        parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
+        parser.add_argument('imageData', type=werkzeug.datastructures.FileStorage, required=True,
+                            help='photo cannot be found', location='files')
+        args = parser.parse_args()
+        ClaimID = args['ClaimID']
+        print(ClaimID)
+        UserID = args['UserID']
+        print(UserID)
+        Photo = args['imageData']
+        print(Photo)
+        CurrentTime = datetime.datetime.now()
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        if not Photo is None:
+            filename = Upload_fun(Photo)
+            sql = "INSERT INTO claiminspection (ClaimID,InspectBy,photo,OnDate) VALUES (%s,%s,%s,%s)"
+            val = (ClaimID,UserID, filename, CurrentTime)
+            result = mycursor.execute(sql, val)
+            mydb.commit()
+            mycursor.execute("UPDATE claiminspection SET ClaimStatus = 1 WHERE ClaimID = '" + str(ClaimID) + "'")
+            mydb.commit()
+            mydb.close()
+            return jsonify({'Message': "Claim Inspection Report Submitted Successfully.", "Status": 1})
+        else:
+            return jsonify({'Message': "Photo cannot be found", "Status": 0})
+        # except Exception as e:
+        #     return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
 
 api.add_resource(ClaimInspection, "/claimInspection")

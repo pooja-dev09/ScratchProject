@@ -75,6 +75,7 @@
                                         <tbody>
                                           {% for r in result %}
                                             <tr>
+
                                                 <td>{{r["count"]}}</td>
                                                <td>{{r["DateOfClaim"]}}</td>
                                                <td>{{r["contract_employeeId"]}}</td>
@@ -82,19 +83,26 @@
                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/claimreportview/{{r.VcID}}">{{r["ClaimNo"]}}</a></td>
                                                <td>
                                                     {% if r['InspectBy'] is not none  %}
-                                                         <a style="color:#ff001a; text-decoration: underline;" href="/claiminspectionreport/{{r.ClaimID}}">Report</a>
+                                                         <a style="color:#4dc3ff; text-decoration: underline;" href="/claiminspectionreport/{{r.ClaimID}}">Report</a>
                                                     {% else %}
                                                         <a style="color:#ff001a; text-decoration: underline;">No Report</a>
                                                     {% endif %}
                                                </td>
                                                 <td>
-                                                     {% if r['Photo'] is not none %}
-                                                         <a style="color:#ff001a; text-decoration: underline;">Request</a>
+
+                                                     {% if r['AmountRequest'] == '1' %}
+                                                         <a style="color:#4dc3ff; text-decoration: underline;">Request</a>
                                                     {% else %}
-                                                         <a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.UserID}}">Not Request</a>
+                                                         <a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.ClaimNo}}">Not Request</a>
                                                     {% endif %}
                                                 </td>
-                                                <td>{{r["ClaimStatus"]}}</td>
+                                                <td>
+                                                     {% if r['AmountRequest'] == '1' %}
+                                                         <a style="color:#4dc3ff; text-decoration: underline;">Settled</a>
+                                                    {% else %}
+                                                         <a style="color:#ff001a; text-decoration: underline;">Pending</a>
+                                                    {% endif %}
+                                                </td>
 
                                             </tr>
                                            {% endfor %}

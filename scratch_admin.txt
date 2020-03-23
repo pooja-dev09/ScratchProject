@@ -3937,3 +3937,199 @@ SyntaxError: EOL while scanning string literal
 45.114.50.159 - - [12/Mar/2020 05:09:42] "GET /static/assets/vendor/datatables/js/data-table.js HTTP/1.1" 304 -
 45.114.50.159 - - [12/Mar/2020 05:09:42] "GET /static/assets/vendor/datatables/js/buttons.bootstrap4.min.js HTTP/1.1" 304 -
 45.114.50.159 - - [12/Mar/2020 05:09:43] "GET /favicon.ico HTTP/1.1" 404 -
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+Traceback (most recent call last):
+  File "admin.py", line 954, in <module>
+    app.run(port='7000', host='0.0.0.0', debug=True)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 990, in run
+    run_simple(host, port, self, **options)
+  File "/usr/local/lib/python3.5/dist-packages/werkzeug/serving.py", line 988, in run_simple
+    s.bind(server_address)
+OSError: [Errno 98] Address already in use
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+45.114.50.159 - - [20/Mar/2020 06:34:40] "GET /static/assets/vendor/datatables/css/buttons.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:40] "GET /static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:40] "GET /static/assets/vendor/datatables/css/dataTables.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:40] "GET /static/assets/libs/css/style.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:40] "GET /static/assets/vendor/fonts/circular-std/style.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:40] "GET /static/assets/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:41] "GET /static/assets/vendor/datatables/css/fixedHeader.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:41] "GET /static/assets/vendor/datatables/css/select.bootstrap4.css HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:41] "GET /static/assets/vendor/jquery/jquery-3.3.1.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:42] "GET /static/assets/images/avatar-1.jpg HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:42] "GET /static/assets/images/logo.png HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:42] "GET /static/assets/vendor/bootstrap/js/bootstrap.bundle.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:42] "GET /static/assets/vendor/slimscroll/jquery.slimscroll.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:42] "GET /static/assets/vendor/multi-select/js/jquery.multi-select.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:43] "GET /static/assets/libs/js/main-js.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:43] "GET /static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:43] "GET /static/assets/vendor/datatables/js/buttons.bootstrap4.min.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:43] "GET /assets/images/avatar-2.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [20/Mar/2020 06:34:43] "GET /static/assets/vendor/datatables/js/data-table.js HTTP/1.1" 304 -
+45.114.50.159 - - [20/Mar/2020 06:34:43] "GET /assets/images/avatar-3.jpg HTTP/1.1" 404 -
+45.114.50.159 - - [20/Mar/2020 08:20:56] "GET /login HTTP/1.1" 200 -
+45.114.50.159 - - [20/Mar/2020 08:20:58] "GET /favicon.ico HTTP/1.1" 404 -

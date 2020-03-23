@@ -587,7 +587,7 @@ def claim():
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute(
-            "select c.ClaimID,c.VcID,c.DateofClaim,c.ClaimNo,cl.Photo,cl.InspectBy,cl.ClaimStatus,v.EmployeeId,v.VehicleNo from claim c left join claiminspection cl on c.ClaimID=cl.ClaimID left join vehiclecontract v on c.VcID=v.VcID group by c.ClaimID")
+            "select c.ClaimID,c.VcID,c.DateofClaim,c.ClaimNo,cl.Photo,cl.InspectBy,cl.ClaimStatus,v.EmployeeId,v.VehicleNo,cl.AmountRequest from claim c left join claiminspection cl on c.ClaimID=cl.ClaimID left join vehiclecontract v on c.VcID=v.VcID group by c.ClaimID")
         rowcursor = mycursor.fetchall()
         if len(rowcursor) > 0:
             for i in rowcursor:
@@ -601,12 +601,13 @@ def claim():
                 ClaimStatus = i[6]
                 contract_employeeId = i[7]
                 VehicleNo = i[8]
+                AmountRequest = i[9]
                 if ClaimStatus is None :
                     ClaimStatus = 'Pending'
                 elif ClaimStatus == 1:
                     ClaimStatus = 'Approved'
                 data = {'count': count, 'ClaimID':ClaimID,'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo, 'Photo': Photo,'VcID':VcID,
-                        'InspectBy': InspectBy, 'ClaimStatus': ClaimStatus,'contract_employeeId':contract_employeeId,'VehicleNo':VehicleNo}
+                        'InspectBy': InspectBy, 'ClaimStatus': ClaimStatus,'contract_employeeId':contract_employeeId,'VehicleNo':VehicleNo,'AmountRequest':AmountRequest}
                 new.append(data)
         mydb.close()
         return render_template('claim.php', result=new)
@@ -645,7 +646,7 @@ def claiminspectionreport(ClaimID):
         count = 0
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("claim.ClaimNo,claiminspection.OnDate,vehiclecontract.VehicleNo,vehiclecontract.ChassisNo from claim left JOIN claiminspection on claim.ClaimID = claiminspection.ClaimID LEFT JOIN vehiclecontract on vehiclecontract.VcID = claim.VcID WHERE claim.ClaimID=%",[ClaimID])
+        mycursor.execute("SELECT claim.ClaimNo,claiminspection.OnDate,vehiclecontract.VehicleNo,vehiclecontract.ChassisNo from claim left JOIN claiminspection on claim.ClaimID = claiminspection.ClaimID LEFT JOIN vehiclecontract on vehiclecontract.VcID = claim.VcID WHERE claim.ClaimID=%s",[ClaimID])
         row = mycursor.fetchall()
         print('row',row)
         for i in row:
