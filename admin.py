@@ -648,16 +648,91 @@ def claiminspectionreport(ClaimID):
         mycursor = mydb.cursor()
         mycursor.execute("SELECT claim.ClaimNo,claiminspection.OnDate,vehiclecontract.VehicleNo,vehiclecontract.ChassisNo from claim left JOIN claiminspection on claim.ClaimID = claiminspection.ClaimID LEFT JOIN vehiclecontract on vehiclecontract.VcID = claim.VcID WHERE claim.ClaimID=%s",[ClaimID])
         row = mycursor.fetchall()
-        print('row',row)
         for i in row:
             ClaimNo = i[0]
             OnDate = i[1]
             VehicleNo = i[2]
             ChassisNo = i[3]
-            data = {'ClaimNo':ClaimNo,'OnDate':OnDate,'VehicleNo':VehicleNo,'ChassisNo':ChassisNo}
+            data = {'ClaimNo':ClaimNo,'OnDate':OnDate,'VehicleNo':VehicleNo,'ChassisNo':ChassisNo,'ClaimID':ClaimID}
             new.append(data)
         mydb.close()
         return render_template('inspectionreport.php', result=new)
+
+@app.route('/claiminspection_update', methods=['POST'])
+def claiminspection_update():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        if (request.method == 'POST'):
+            ClaimID = str(request.form.get('ClaimID'))
+            estimatebudget = str(request.form.get('estimatebudget'))
+            print(ClaimID)
+            print(estimatebudget)
+            mydb = mycus()
+            mycursor = mydb.cursor()
+            mycursor.execute(
+                "UPDATE claiminspection SET EstimatedBudget = '" + str(estimatebudget) + "',AmountRequest = '" + str(1) + "' WHERE ClaimID = '" + str(ClaimID) + "'")
+            mydb.commit()
+            mydb.close()
+        return redirect(url_for('claim'))
+
+@app.route('/claimsettle/<string:ClaimID>')
+def claimsettle(ClaimID):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "SELECT ClaimNo,BankName,AccountNumber,IFSC,UPI,ChequeNo,WalletName,MoneyReceiptPhoto from claim where ClaimID = %s",[ClaimID])
+        row = mycursor.fetchall()
+        for i in row:
+            ClaimNo = i[0]
+            BankName = i[1]
+            AccountNumber = i[2]
+            IFSC = i[3]
+            UPI = i[4]
+            ChequeNo = i[5]
+            WalletName = i[6]
+            MoneyReceiptPhoto = i[7]
+            data={'ClaimNo':ClaimNo,'BankName':BankName,'AccountNumber':AccountNumber,'IFSC':IFSC,'UPI':UPI,'ChequeNo':ChequeNo,'WalletName':WalletName,'MoneyReceiptPhoto':MoneyReceiptPhoto}
+            new.append(data)
+            mydb.close()
+        return render_template('claimsettle.php', result=new)
+
+@app.route('/commission',methods = ['GET','POST'])
+def commission():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        if (request.method == 'POST'):
+            if request.form['submit_button'] == 'Submit':
+                start_dates = str(request.form.get('start'))
+                print('start_dates',start_dates)
+                start_ends = str(request.form.get('End'))
+                print('start_ends',start_ends)
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                if start_dates is not None and start_ends is not None:
+                    sql="select sum(Package),u.EmployeeId,v.EmployeeId from vehiclecontract v ,user u where v.OnDate BETWEEN '"+str(start_dates)+"' and '"+str(start_ends)+"' and u.UserID=v.AddedBy GROUP BY v.AddedBy"
+                    print('sql',sql)
+                    mycursor.execute(sql)
+                    row = mycursor.fetchall()
+                    print(row)
+                    for i in row:
+                        package = i[0]
+                        commissionrate = (package*10)/100
+                        employeeid = i[1]
+                        count = count + 1
+                        data = {'package':package,'employeeid':employeeid,'count':count,'commissionrate':commissionrate}
+                        new.append(data)
+                        mydb.close()
+
+    return render_template('commission.php', result=new)
 
 
 

@@ -93,85 +93,88 @@ api.add_resource(Request, "/newCustomerRequest")
 
 class Login(Resource):
     def post(self):
-        try:
-            parser = reqparse.RequestParser()
-            parser.add_argument('RoleID', required=True, type=int, help='RoleID cannot be found')
-            parser.add_argument('UserName', required=True, type=str, help='UserName cannot be found')
-            parser.add_argument('Password', required=True, type=str, help='Password cannot be found')
-            parser.add_argument('token', required=False, type=str, help='token cannot be found')
-            args = parser.parse_args()
-            RoleID = args['RoleID']
-            UserName = args['UserName']
-            UserPassword = args['Password']
-            token = args['token']
-            UserPassword = Password_encoded(UserPassword)
-            if RoleID is not None and UserName is not None and UserPassword is not None:
-                if RoleID == 2:
-                    mydb = mycus()
-                    mycursor = mydb.cursor()
-                    mycursor.execute("SELECT UserID,RoleID,Mobile from user WHERE VehicleNo = '%s' AND Password = '%s'" % (
-                    UserName, UserPassword))
-                    rowcursor = mycursor.fetchall()
-                    if len(rowcursor) > 0:
-                        for i in rowcursor:
-                            UserID = i[0]
-                            RoleID = i[1]
-                            Mobile = i[2]
-                            OTP = generateOTP()
-                            msg = 'Dear Customer, Your One Time Password for Account Login is : ' + str(OTP)
-                            SMS_Integration(msg, Mobile)
-                            mycursor.execute(
-                                "UPDATE user SET OTP = '" + str(OTP) + "',token = '" + str(token) + "' WHERE UserID = '" + str(
-                                    UserID) + "'")
-                            mydb.commit()
-                            mydb.close()
-                            return jsonify({'Message': 'OTP Send Successfully',
-                                            'UserID': UserID,
-                                            'RoleID': RoleID,
-                                            'Status': 1
-                                            })
-                    else:
-                        return jsonify({'Message': 'Please Check Your UserId or Password May be wrong',
-                                        'Status': 0
+        # try:
+        parser = reqparse.RequestParser()
+        parser.add_argument('RoleID', required=True, type=int, help='RoleID cannot be found')
+        parser.add_argument('UserName', required=True, type=str, help='UserName cannot be found')
+        parser.add_argument('Password', required=True, type=str, help='Password cannot be found')
+        parser.add_argument('token', required=False, type=str, help='token cannot be found')
+        args = parser.parse_args()
+        RoleID = args['RoleID']
+        UserName = args['UserName']
+        UserPassword = args['Password']
+        token = args['token']
+        UserPassword = Password_encoded(UserPassword)
+        if RoleID is not None and UserName is not None and UserPassword is not None:
+            if RoleID == 2:
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql="SELECT UserID,RoleID,Mobile from user WHERE VehicleNo = '%s' AND Password = '%s'" % (
+                UserName, UserPassword)
+                mycursor.execute(sql)
+                print('js',sql)
+                rowcursor = mycursor.fetchall()
+                print('jsc',rowcursor)
+                if len(rowcursor) > 0:
+                    for i in rowcursor:
+                        UserID = i[0]
+                        RoleID = i[1]
+                        Mobile = i[2]
+                        OTP = generateOTP()
+                        msg = 'Dear Customer, Your One Time Password for Account Login is : ' + str(OTP)
+                        SMS_Integration(msg, Mobile)
+                        mycursor.execute(
+                            "UPDATE user SET OTP = '" + str(OTP) + "',token = '" + str(token) + "' WHERE UserID = '" + str(
+                                UserID) + "'")
+                        mydb.commit()
+                        mydb.close()
+                        return jsonify({'Message': 'OTP Send Successfully',
+                                        'UserID': UserID,
+                                        'RoleID': RoleID,
+                                        'Status': 1
+                                        })
+                else:
+                    return jsonify({'Message': 'Please Check Your UserId or Password May be wrong',
+                                    'Status': 0
+                                    })
+
+
+            elif RoleID == 3 or RoleID == 4 or RoleID == 5:
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                mycursor.execute(
+                    "SELECT UserID,Mobile from user WHERE EmployeeId = '%s' AND Password = '%s' AND RoleID = '%s'" % (
+                    UserName, UserPassword, RoleID))
+                rowcursor = mycursor.fetchall()
+                length = len(rowcursor)
+                if length > 0:
+                    for i in rowcursor:
+                        UserID = i[0]
+                        Mobile = i[1]
+                        OTP = generateOTP()
+                        msg = 'Dear Customer, Your One Time Password for Account Login is : ' + str(OTP)
+                        SMS_Integration(msg, Mobile)
+                        mycursor.execute("UPDATE user SET OTP = '" + str(OTP) + "' WHERE UserID = '" + str(UserID) + "'")
+                        mydb.commit()
+                        mydb.close()
+                        return jsonify({'Message': 'OTP Send Successfully',
+                                        'UserID': UserID,
+                                        'RoleID': RoleID,
+                                        'Status': 1
+
                                         })
 
+                else:
+                    return jsonify({'Message': 'Please Check Your UserId or Password May be wrong',
+                                    'Status': 0
+                                    })
+        else:
+            return jsonify({'Message': 'Data is Insufficent',
+                            'Status': 0
+                            })
 
-                elif RoleID == 3 or RoleID == 4 or RoleID == 5:
-                    mydb = mycus()
-                    mycursor = mydb.cursor()
-                    mycursor.execute(
-                        "SELECT UserID,Mobile from user WHERE EmployeeId = '%s' AND Password = '%s' AND RoleID = '%s'" % (
-                        UserName, UserPassword, RoleID))
-                    rowcursor = mycursor.fetchall()
-                    length = len(rowcursor)
-                    if length > 0:
-                        for i in rowcursor:
-                            UserID = i[0]
-                            Mobile = i[1]
-                            OTP = generateOTP()
-                            msg = 'Dear Customer, Your One Time Password for Account Login is : ' + str(OTP)
-                            SMS_Integration(msg, Mobile)
-                            mycursor.execute("UPDATE user SET OTP = '" + str(OTP) + "' WHERE UserID = '" + str(UserID) + "'")
-                            mydb.commit()
-                            mydb.close()
-                            return jsonify({'Message': 'OTP Send Successfully',
-                                            'UserID': UserID,
-                                            'RoleID': RoleID,
-                                            'Status': 1
-
-                                            })
-
-                    else:
-                        return jsonify({'Message': 'Please Check Your UserId or Password May be wrong',
-                                        'Status': 0
-                                        })
-            else:
-                return jsonify({'Message': 'Data is Insufficent',
-                                'Status': 0
-                                })
-
-        except Exception as e:
-            return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
+        # except Exception as e:
+        #     return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
 
 api.add_resource(Login, "/login")

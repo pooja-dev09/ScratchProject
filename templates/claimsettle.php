@@ -63,45 +63,53 @@ font-size: 1rem;
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Inspection Report</h4></center>
-							<form method="post" action="/claiminspection_update">
+                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Claim Settle</h4></center>
+							<form method="post" action="">
 
 									<center><div class="form-group">
-									<label style="width:150px;">Request No-</label>
+									<label style="width:150px;">ClaimNo-</label>
 										<input name="ClaimNo" style="text-align:center" value= "{{result[0]['ClaimNo']}}" type="text" readonly>
 									</div></center>
 
 							<div class="col-sm-12">
-							        <label >Date of Inspection</label>
+							         {% if result[0]['BankName'] is not none or result[0]['BankName'] == ''  %}
+							            <label>Bank Name</label>
+									    <div class="form-group">
+										    <input value= "{{result[0]['BankName']}}" type="text" class="welcome" readonly>
+									    </div>
+
+                                        <label>A/C Number</label>
+                                        <div class="form-group">
+                                            <input value= "{{result[0]['AccountNumber']}}" type="text" class="welcome" readonly>
+                                        </div>
+
+                                        <label>IFSC Code</label>
+                                        <div class="form-group">
+                                            <input value= "{{result[0]['IFSC']}}" type="text" class="welcome" readonly>
+                                        </div>
+                                     {% endif %}
+
+                                     {% if result[0]['UPI'] is not none or result[0]['UPI'] == ''  %}
+                                        <label>UPI Wallet Number</label>
+                                        <div class="form-group">
+                                            <input value= "{{result[0]['UPI']}}" type="text" class="welcome" readonly>
+                                        </div>
+                                        <label>Wallet Name</label>
+                                        <div class="form-group">
+                                            <input value= "{{result[0]['WalletName']}}" type="text" class="welcome" readonly>
+                                        </div>
+                                     {% endif %}
+									<label>MoneyReceiptPhoto</label>
 									<div class="form-group">
-										<input value= "{{result[0]['OnDate']}}" type="text" class="welcome" readonly>
+										<input value= "{{result[0]['MoneyReceiptPhoto']}}" type="text" class="welcome" readonly>
 									</div>
 
-									<label >Vehicle No</label>
-									<div class="form-group">
-										<input value= "{{result[0]['VehicleNo']}}" type="text" class="welcome" readonly>
-									</div>
 
-									<label >Chassis No</label>
-									<div class="form-group">
-										<input value= "{{result[0]['ChassisNo']}}" type="text" class="welcome" readonly>
-									</div>
-									<label >Estimate Budget-Rs</label>
-									<div class="form-group">
-										<input type="text" name="estimatebudget" class="form-control"   class="welcome"  required />
-									</div>
+
 									<div class="sub">
 									    <input name="ClaimID" value="{{ result[0]['ClaimID'] }}" type="hidden">
                                         <button class="btn btn-primary"  type="submit" >Submit</button>
                                     </div>
-
-
-
-
-									<div class="form-group">
-										<h4>I inspect this vehicle physically & find some damage as per owners view so; I prepare this budget estimate from service center for solve this claim.</h4>
-									</div>
-
 
 							</form>
                         </div>

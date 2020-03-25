@@ -90,14 +90,14 @@
                                                </td>
                                                 <td>
 
-                                                     {% if r['AmountRequest'] == '1' %}
+                                                     {% if r['AmountRequest'] == 1 %}
                                                          <a style="color:#4dc3ff; text-decoration: underline;">Request</a>
                                                     {% else %}
-                                                         <a style="color:#ff001a; text-decoration: underline;" href="/viewnewrequest/{{r.ClaimNo}}">Not Request</a>
+                                                         <a style="color:#ff001a; text-decoration: underline;" href="/claimsettle/{{r.ClaimID}}">Not Request</a>
                                                     {% endif %}
                                                 </td>
                                                 <td>
-                                                     {% if r['AmountRequest'] == '1' %}
+                                                     {% if r['AmountRequest'] == 1 %}
                                                          <a style="color:#4dc3ff; text-decoration: underline;">Settled</a>
                                                     {% else %}
                                                          <a style="color:#ff001a; text-decoration: underline;">Pending</a>

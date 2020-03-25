@@ -18,20 +18,6 @@
 </head>
 
 <body>
-
-<style>
-.welcome, input[type="url"], #contact textarea {
-	width:97%;
-	border:1px solid #CCC;
-	background:#FFF;
-	margin:0 0 5px;
-	border: 1px solid rgba(0,0,0,.12);
-border-radius: .3rem;
-    padding: 8px 10px;
-color: rgba(0,0,0,.87);
-font-size: 1rem;
-}
-</style>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
@@ -52,6 +38,11 @@ font-size: 1rem;
                 <!-- ============================================================== -->
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="page-header">
+                            <h2 class="pageheader-title">View All Service Center Authorise</h2>
+
+
+                        </div>
                     </div>
                 </div>
                 <!-- ============================================================== -->
@@ -63,47 +54,51 @@ font-size: 1rem;
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Inspection Report</h4></center>
-							<form method="post" action="/claiminspection_update">
-
-									<center><div class="form-group">
-									<label style="width:150px;">Request No-</label>
-										<input name="ClaimNo" style="text-align:center" value= "{{result[0]['ClaimNo']}}" type="text" readonly>
-									</div></center>
-
-							<div class="col-sm-12">
-							        <label >Date of Inspection</label>
-									<div class="form-group">
-										<input value= "{{result[0]['OnDate']}}" type="text" class="welcome" readonly>
+                            <h5 class="card-header">List Of Service Center Authorise Details</h5>
+                            <div class="card-body">
+							<form method="post" action="/commission">
+									<div class="box" style="width:50%; margin-top:10px;">
+										<h4>Enter Your Date</h4>
+										<input type="date"  name="start"/>
+										<input type="date"  name="End"/>
+										<input type="submit" value = "Submit" name ="submit_button" style="width:100px; ">
 									</div>
+								</form>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered first">
+                                        <thead>
 
-									<label >Vehicle No</label>
-									<div class="form-group">
-										<input value= "{{result[0]['VehicleNo']}}" type="text" class="welcome" readonly>
-									</div>
+                                            <tr>
+                                                <th>Sl.No</th>
+                                                <th>Employee ID </th>
+                                                <th>Total Amount(Rs)</th>
+                                                <th>Commission(Rs)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+										{% for r in result %}
+                                            <tr>
+                                                <td>{{r["count"]}}</td>
+                                                <td>{{r["employeeid"]}}</td>
+                                                <td>{{r["package"]}}</td>
+                                                <td>{{r["commissionrate"]}}</td>
+                                            </tr>
+											{% endfor %}
 
-									<label >Chassis No</label>
-									<div class="form-group">
-										<input value= "{{result[0]['ChassisNo']}}" type="text" class="welcome" readonly>
-									</div>
-									<label >Estimate Budget-Rs</label>
-									<div class="form-group">
-										<input type="text" name="estimatebudget" class="form-control"   class="welcome"  required />
-									</div>
-									<div class="sub">
-									    <input name="ClaimID" value="{{ result[0]['ClaimID'] }}" type="hidden">
-                                        <button class="btn btn-primary"  type="submit" >Submit</button>
-                                    </div>
-
-
-
-
-									<div class="form-group">
-										<h4>I inspect this vehicle physically & find some damage as per owners view so; I prepare this budget estimate from service center for solve this claim.</h4>
-									</div>
-
-
-							</form>
+                                        </tbody>
+                                        <tfoot>
+                                           <tr>
+                                                <th>Sl.No</th>
+                                                <th>Employee ID </th>
+                                                <th>Total Amount(Rs)</th>
+                                                <th>Commission(Rs)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- ============================================================== -->
