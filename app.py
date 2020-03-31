@@ -341,16 +341,35 @@ class ProfileUpdate(Resource):
                 password = Password_encoded(MobileNo)
                 mydb = mycus()
                 mycursor = mydb.cursor()
-                sql ="SELECT Mobile from user WHERE UserID = "+ UserID + ""
-                result = mycursor.execute(sql)
+                mycursor.execute("SELECT RoleID from user WHERE UserID = '" + str(UserID) + "'")
                 rowcursor = mycursor.fetchall()
-                mycursor.execute("UPDATE user SET Mobile = '" + str(MobileNo) + "',Password = '" + str(
-                    password) + "'WHERE UserID = '" + str(UserID) + "'")
-                mydb.commit()
+                for i in rowcursor:
+                    roleid = i[0]
+                    if roleid == 2 :
+                        mycursor.execute("UPDATE user,vehiclecontract SET user.Mobile ='" + str(MobileNo) + "',user.Password= '" + str(
+                          password) + "',vehiclecontract.Mobile='" + str(MobileNo) + "'  WHERE user.UserID = vehiclecontract .UserID ")
+                        mydb.commit()
+                        return jsonify({'Message': 'Mobile Number Successfully Update',
+                                        'Mobile': MobileNo,
+                                        'Status': 1})
+                    elif roleid == 3 :
+                        mycursor.execute("UPDATE user,salesmanager SET user.Mobile ='" + str(MobileNo) + "',user.Password= '" + str(
+                          password) + "',salesmanager.MobileNo='" + str(MobileNo) + "'  WHERE user.UserID = salesmanager .UserID ")
+                        mydb.commit()
+                        return jsonify({'Message': 'Mobile Number Successfully Update',
+                                        'Mobile': MobileNo,
+                                        'Status': 1})
+                    elif roleid == 4 :
+                        mycursor.execute(
+                            "UPDATE user,areamanager SET user.Mobile ='" + str(MobileNo) + "',user.Password= '" + str(
+                                password) + "',areamanager.MobileNo='" + str(
+                                MobileNo) + "'  WHERE user.UserID = areamanager .UserID ")
+                        mydb.commit()
+                        return jsonify({'Message': 'Mobile Number Successfully Update',
+                                        'Mobile': MobileNo,
+                                        'Status': 1})
                 mydb.close()
-                return jsonify({'Message': 'Mobile Number Successfully Update',
-                                'Mobile': MobileNo,
-                                'Status': 1})
+
             else:
                 return jsonify({'Message': 'Please Enter a valid mobile number',
                                 'Status': 0})
@@ -722,7 +741,7 @@ class VehicleContract(Resource):
             print('Video',Video)
             CurrentTime = datetime.datetime.now()
             endDate = CurrentTime + datetime.timedelta(days=1 * 365)
-            endDate = endDate.strftime("%m-%d-%Y")
+            endDate = endDate.strftime("%Y-%m-%d")
             sql = "INSERT INTO user (EmployeeId,RoleID,DateOfContract,VehicleCategory,VehicleNo,Maker,Model,ChassisNo,Color,DateofRegd,Name,Mobile,Email,CenterLocation,Po,Ps,District,State,VehiclePhoto,Password,OnDate,DateOfExp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
             val = (EmployeeId, RoleID, DateOfContract, VehicleCategory, VehicleNo, Maker, Model, ChassisNo, Color,
                    DateofRegd, OwnerName, MobileNo, Email, Location, PostOffice, PoliceStation, District, State,

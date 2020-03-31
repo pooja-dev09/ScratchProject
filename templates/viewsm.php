@@ -23,10 +23,9 @@
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -58,10 +57,7 @@
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
-										
-									
-										
-										
+
                                         <thead>
                                             <tr>
                                                 <th>Slno</th>
@@ -75,9 +71,11 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+										{% for r in results %}
+										<center><h5 style = "">Area Manager ID- {{r['Area_EmployeeId']}}</h5>
+										<h5 style = "">District- {{r['Area_District']}}</h5></center>
+										{% endfor %}
 										{% for r in result %}
-										<h5 style = "position:absolute;top:0">Area Manager ID- {{r['Area_EmployeeId']}}</h5>
-										<center><h5 style = "position:absolute;top:20;">District- {{r['Area_District']}}</h5></center>
                                             <tr>
                                                 <td>{{r["Id"]}}</td>
 												<td>{{r["Sales_EmployeeId"]}}</td>

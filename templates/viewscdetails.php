@@ -37,10 +37,10 @@ font-size: 1rem;
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -75,78 +75,78 @@ font-size: 1rem;
 
 									<label for="date">District of authorisation</label>
 									<div class="form-group">
-										<input name="DateOfAuthorize" value= "{{result[0]['DateOfAuthorize']}}" type="text"  placeholder="DateOfAuthorize" class="welcome"  required>
+										<input name="DateOfAuthorize"  value= "{{result[0]['DateOfAuthorize']}}" type="date"  placeholder="DateOfAuthorize" class="welcome"  required>
 									</div>
 
 									<label for="date">Owner Name</label>
 									<div class="form-group">
-										<input name="OwnerName" value= "{{result[0]['OwnerName']}}" type="text" placeholder="OwnerName" class="welcome" required>
+										<input name="OwnerName" style = "text-transform:capitalize;" value= "{{result[0]['OwnerName']}}" type="text" placeholder="OwnerName" class="welcome" required>
 									</div>
 
 									<label for="text">Center Location</label>
 									<div class="form-group">
-										<input name="CenterLocation" value= "{{result[0]['CenterLocation']}}" type="text"  placeholder="CenterLocation" class="welcome" required>
+										<input name="CenterLocation" style = "text-transform:capitalize;" value= "{{result[0]['CenterLocation']}}" type="text"  placeholder="CenterLocation" class="welcome" required>
 									</div>
 
 									<label for="date">Po</label>
 									<div class="form-group">
-										<input name="Po" value= "{{result[0]['Po']}}" type="text" placeholder="Po" class="welcome" required>
+										<input name="Po" style = "text-transform:capitalize;" value= "{{result[0]['Po']}}" type="text" placeholder="Po" class="welcome" required>
 									</div>
 
 									<label for="date">District</label>
 									<div class="form-group">
-										<input name="District" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
+										<input name="District" style = "text-transform:capitalize;" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
 									</div>
                                     <h4 style="font-size:14px; color:#ff001a; text-decoration: underline; text-align:left;">Facilities Available</h4>
 									<label for="date">Denting & Painting</label>
 									<div class="form-group">
 									        {% if result[0]['DentingPainting'] == '0' %}
-										        <input name="DentingPainting" value= "No" type="text" placeholder="DentingPainting" class="welcome" required>
+										        <input name="DentingPainting" value= "No" style = "text-transform:capitalize;" type="text" placeholder="DentingPainting" class="welcome" required>
 										    {% else %}
-										        <input name="DentingPainting" value= "Yes" type="text" placeholder="DentingPainting" class="welcome" required>
+										        <input name="DentingPainting" value= "Yes" style = "text-transform:capitalize;" type="text" placeholder="DentingPainting" class="welcome" required>
 										    {% endif %}
 									</div>
 									<label for="date">WorkingFor</label>
 									<div class="form-group">
 
-									       <input name="WorkingFor" value= "{{result[0]['WorkingFor']}}" type="text" placeholder="WorkingFor" class="welcome" required>
+									       <input name="WorkingFor" style = "text-transform:capitalize;" value= "{{result[0]['WorkingFor']}}" type="text" placeholder="WorkingFor" class="welcome" required>
 
 									</div>
 									<label for="date">Center Name</label>
 									<div class="form-group">
-										<input name="CenterName" value= "{{result[0]['CenterName']}}" type="text" placeholder="CenterName" class="welcome" required>
+										<input name="CenterName" style = "text-transform:capitalize;" value= "{{result[0]['CenterName']}}" type="text" placeholder="CenterName" class="welcome" required>
 									</div>
 
 									<label for="date">Mobile No</label>
 									<div class="form-group">
-										<input name="Mobile" value= "{{result[0]['Mobile']}}" type="text"  class="welcome"placeholder="Mobile" required>
+										<input name="Mobile" value= "{{result[0]['Mobile']}}" type="number"  class="welcome"placeholder="Mobile" required>
 									</div>
 
 									<label for="date">GSTIN  Number</label>
 									<div class="form-group">
-										<input name="GSTINno" value= "{{result[0]['GSTINno']}}" type="text"   class="welcome" placeholder="GSTINno" required>
+										<input name="GSTINno" style = "text-transform:uppercase;" value= "{{result[0]['GSTINno']}}" type="text"   class="welcome" placeholder="GSTINno" required>
 									</div>
 
 									<label for="date">Town</label>
 									<div class="form-group">
-										<input name="Town" value= "{{result[0]['Town']}}" type="text" placeholder="Town" class="welcome" required>
+										<input name="Town" style = "text-transform:capitalize;" value= "{{result[0]['Town']}}" type="text" placeholder="Town" class="welcome" required>
 									</div>
 
 									<label for="date">Ps</label>
 									<div class="form-group">
-										<input name="Ps" value= "{{result[0]['Ps']}}" type="text" placeholder="Ps" class="welcome" required>
+										<input name="Ps" style = "text-transform:capitalize;" value= "{{result[0]['Ps']}}" type="text" placeholder="Ps" class="welcome" required>
 									</div>
 									<label for="date">State</label>
 									<div class="form-group">
-										<input name="State" value= "{{result[0]['State']}}" type="text" placeholder="State" class="welcome" required>
+										<input name="State" style = "text-transform:capitalize;" value= "{{result[0]['State']}}" type="text" placeholder="State" class="welcome" required>
 									</div>
 
 									<label for="date">Mechanical</label>
 									<div class="form-group">
 									    {% if result[0]['Mechanical'] == '0' %}
-										<input name="Mechanical" value= "Yes" type="text" placeholder="Mechanical" class="welcome" required>
+										<input name="Mechanical" value= "Yes" style = "text-transform:capitalize;" type="text" placeholder="Mechanical" class="welcome" required>
 										{% else %}
-										<input name="Mechanical" value= "No" type="text" placeholder="Mechanical" class="welcome" required>
+										<input name="Mechanical" value= "No" style = "text-transform:capitalize;" type="text" placeholder="Mechanical" class="welcome" required>
 										{% endif %}
 									</div>
 

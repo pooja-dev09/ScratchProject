@@ -15,6 +15,15 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='assets/vendor/datatables/css/buttons.bootstrap4.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='assets/vendor/datatables/css/select.bootstrap4.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='assets/vendor/datatables/css/fixedHeader.bootstrap4.css')}}">
+
+    <style type="text/css">
+		@media print {
+			.noprintbtn {
+				display :  none;
+			}
+		}
+	</style>
+
 </head>
 
 <body>
@@ -23,10 +32,10 @@
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -39,7 +48,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">View All Register Customer</h2>
+                            <center><h2 class="pageheader-title">Contract Record</h2></center>
 
 
                         </div>
@@ -53,10 +62,18 @@
                     <!-- basic table  -->
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-                        <div class="card">
-                            <h5 class="card-header">List Of Register Customer</h5>
-                            <div class="card-body">
-                                <div class="table-responsive">
+                        <div class="card" >
+                            <div class="card-body" >
+
+                                <form method="post" action="/seadmin/Registercustomer">
+									<div class="box" style="width:50%; margin-top:10px; margin-bottom:10px;" >
+										<h4>Enter Your Date</h4>
+										<input type="date" id ="start" name="start"/>
+										<input type="date" id ="End" name="End"/>
+										<input type="submit" value = "Submit" name ="submit_button" style="width:100px; ">
+									</div>
+								</form>
+                                <div class="table-responsive" >
                                     <table class="table table-striped table-bordered first">
                                         <thead>
 
@@ -68,9 +85,7 @@
 											    <th>Vehicle Type</th>
                                                 <th>Amount</th>
 												<th>Contract No</th>
-												<th>view all</th>
-
-
+												<th>Money Receipt</th>
 
                                             </tr>
                                         </thead>
@@ -83,12 +98,8 @@
 												<td>{{r["AddedEmployeeId"]}}</td>
                                                 <td>{{r["VehicleCategory"]}}</td>
                                                 <td>{{r["Package"]}}</td>
-                                                 <td>{{r["EmployeeId"]}}</td>
-												<td><a style="color:#ff001a; text-decoration: underline;" href="/contractrecord/{{r.UserID}}">View</a></td>
-
-
-
-
+												<td><a style="color:#ff001a; text-decoration: underline;" href="/contractrecord/{{r.UserID}}">{{r["EmployeeId"]}}</a></td>
+												<td><a href="/seadmin/Moneyreceipt/{{r.UserID}}"><input type="button" value="View"></a></td>
                                             </tr>
 											{% endfor %}
                                         </tbody>
@@ -101,7 +112,7 @@
 											    <th>Vehicle Type</th>
                                                 <th>Amount</th>
 												<th>Contract No</th>
-												<th>view all</th>
+												<th>Money Receipt</th>
 
 
                                             </tr>
@@ -115,6 +126,19 @@
                     <!-- end basic table  -->
                     <!-- ============================================================== -->
                 </div>
+
+                {% for r in results %}
+                    <div class="form-group"  style="padding-left: 350px; padding-top:20px; ">
+                        <label style="width:150px";>Total Amount</label>
+                           <input  value= "{{r['totalamt']}}" class="welcome" readonly required>
+
+                    </div>
+                {% endfor %}
+
+
+
+
+
 
 
 

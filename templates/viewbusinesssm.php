@@ -23,10 +23,10 @@
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -74,9 +74,12 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
+										{% for r in results %}
+                                        <center><h5 style = "">Area Manager ID- {{r['salesemployeeId']}}</h5>
+										    <h5 style = "">District- {{r['District']}}</h5></center>
+										{% endfor %}
 										{% for r in result %}
-                                             <h5 style = "position:absolute;top:0">Area Manager ID- {{r['salesemployeeId']}}</h5>
-										<center><h5 style = "position:absolute;top:20;">District- {{r['salesname']}}</h5></center>
                                             <tr>
                                                 <td>{{r["Id"]}}</td>
                                                 <td>{{r["date"]}}</td>

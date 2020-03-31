@@ -37,68 +37,50 @@
                                         <li class="nav-item">
                                             <a class="nav-link" href="/seadmin/viewam">Area Manager</a>
 											
-											<a class="nav-link" href="/seadmin/viewsc">Sales Manager</a>
+											<a class="nav-link" href="/seadmin/sesm">Sales Manager</a>
                                         
                                     </ul>
                                 </div>
                             </li>
 							 <li class="nav-item ">
-                                <a class="nav-link active" href="/seadmin/Registercustomer"><i class="fa fa-fw fa-user-circle"></i>Contract Record <span class="badge badge-success">6</span></a>
+                                <a class="nav-link" href="/seadmin/Registercustomer"><i class="fa fa-fw fa-user-circle"></i>Contract Record <span class="badge badge-success">6</span></a>
 
                             </li>
 							
 							
                            <li class="nav-item ">
-                                <a class="nav-link active" href="/seadmin/viewservicecenter"><i class="fa fa-fw fa-user-circle"></i>Service Center <span class="badge badge-success">6</span></a>
+                                <a class="nav-link" href="/seadmin/viewservicecenter"><i class="fa fa-fw fa-user-circle"></i>Service Center <span class="badge badge-success">6</span></a>
 
                             </li>
 
 							 <li class="nav-item ">
-                                <a class="nav-link active" href="/newcustomerrequest"><i class="fa fa-fw fa-user-circle"></i>New Customers <span class="badge badge-success">6</span></a>
+                                <a class="nav-link" href="/newcustomerrequest"><i class="fa fa-fw fa-user-circle"></i>New Customers <span class="badge badge-success">6</span></a>
 
                             </li>
 									
 							 <li class="nav-item ">
-                                <a class="nav-link active" href="/claim"><i class="fa fa-fw fa-user-circle"></i>Claim <span class="badge badge-success">6</span></a>
+                                <a class="nav-link" href="/claim"><i class="fa fa-fw fa-user-circle"></i>Claim <span class="badge badge-success">6</span></a>
 
                             </li>
 							
 							<li class="nav-item">
-                                <a class="nav-link" href="/commission" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Commission</a>
+                                <a class="nav-link" href="/commission"><i class="fa fa-fw fa-percent"></i>Commission</a>
                                 <div id="submenu-5" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                                                                    
-										</li>
-                                        
-                                        
-                                    </ul>
+                                   
                                 </div>
                             </li>	
 								
 							<li class="nav-item">
-                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Money Receipt</a>
+                                <a class="nav-link" href="/seadmin/Moneyreceipt" ><i class="fa fa-fw fa-money"></i>Money Receipt</a>
                                 <div id="submenu-5" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                                                                    
-										</li>
-                                        
-                                        
-                                    </ul>
+                                    
                                 </div>
                             </li>
 								
 							<li class="nav-item">
-                                <a class="nav-link" href="" data-toggle="collapse" aria-expanded="false" data-target="#submenu-5" aria-controls="submenu-4"><i class="fa fa-fw fa-rocket"></i>Notifications</a>
+                                <a class="nav-link" href="" ><i class="fa fa-fw fa-bell"></i>Notifications</a>
                                 <div id="submenu-5" class="collapse submenu" style="">
-                                    <ul class="nav flex-column">
-                                        <li class="nav-item">
-                                                                                    
-										</li>
-                                        
-                                        
-                                    </ul>
+                                    
                                 </div>
                             </li>				
 									

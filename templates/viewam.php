@@ -23,10 +23,10 @@
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -59,7 +59,7 @@
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
                                         <thead>
-
+                                        <form method="post" action="/viewamdetails_update">
                                             <tr>
                                                 <th>Slno</th>
 												<th>Emp.ID</th>
@@ -77,13 +77,22 @@
                                                 <td>{{r["Id"]}}</td>
                                                <td>{{r["EmployeeId"]}}</td>
 												<td>{{r["District"]}}</td>
-                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/viewamdetails/{{r.UserID}}">View</a></td>
-                                                <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsm/{{r.UserID}}">View</a></td>
-                                                <td><a style="color:#ff001a;text-decoration: underline;"href="/viewambusiness/{{r.UserID}}">View</a></td>
-												<td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
+                                                
+												{% if r["IsActive"] == 0 %}
+                                                    <td><a style="color:#ff001a; text-decoration: underline;" href="/viewamdetails/{{r.UserID}}">View</a></td>
+
+                                                    <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsm/{{r.UserID}}">View</a></td>
+                                                    <td><a style="color:#ff001a;text-decoration: underline;"href="/viewambusiness/{{r.UserID}}">View</a></td>
+                                                    <td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
+                                                {% else %}
+													<td colspan="4">
+												    <input name="UserID" value="{{ r["UserID"] }}" type="hidden" >
+												    <input type="submit"  name="btn" value="Rejoin">
+													</td>
+												{% endif  %}
 												
                                             </tr>
-											{% endfor %}
+										{% endfor %}
 
                                         </tbody>
                                         <tfoot>
@@ -100,9 +109,11 @@
                                             </tr>
 											
                                         </tfoot>
-										
+									</form>
                                     </table>
-									<button style="float:right;"type="button" onclick="alert('Hello world!')">Click Me!</button>
+                                    <div>
+									<button style="float:right;margin-top: 25px; margin-right: 80px;"type="button" onclick="alert('Hello world!')">Create</button>
+									</div>
                                 </div>
                             </div>
                         </div>

@@ -61,21 +61,7 @@ text-align:center
                         <div class="row">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                                 <div class="section-block" id="basicform">
-									{%with messages = get_flashed_messages(with_categories=true)%}
-									{%if messages%}
-										<ul>
-											{%for category, message in messages%}
-											<div class="alert alert-success mb-3{{ category }}" role="alert">
-											{{ message }}
-											</div>
-
-											{%endfor%}
-										</ul>
-									{%endif%}
-								{%endwith%}
-
-
-
+                                {{result[0]['EmployeeId']}}
 
                                    <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Customer Profile</h4></center>
 
@@ -99,8 +85,10 @@ text-align:center
                                     <div class="card-body" style="width: 650px;">
                                         <form method="POST" action="/viewcontract_update" enctype=multipart/form-data>
 											<div class="form-group"  >
+
 												<label >Date of Contract</label>
-												<input type="Date" name="DateOfContract" value= "{{result[0]['DateOfContract']}}" placeholder="dateofcontract" class="form-control" style = "text-transform:capitalize;"  required />
+
+												<input type="Date" name="DateOfContract" value= "{{result[0]['DateOfContract']}}" placeholder="dateofcontract" class="form-control"  required />
 											</div>
 											<h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Vehicle Information</h4>
 											<div class="form-group" style = "text-transform:capitalize;">
@@ -125,20 +113,20 @@ text-align:center
 
 										   <div class="form-group">
 												<label> Email </label>
-												<input type="text" name="email" value= "{{result[0]['email']}}" class="form-control" placeholder="email" style = "text-transform:uppercase;" required />
+												<input type="text" name="email" value= "{{result[0]['email']}}" class="form-control" placeholder="email" style = "text-transform:lowercase;" required />
 										   </div>
 										  <div class="form-group">
 												<label> Po </label>
-												<input type="text" name="po" value= "{{result[0]['po']}}" class="form-control"  placeholder="po" required />
+												<input type="text" name="po" value= "{{result[0]['po']}}" class="form-control" style = "text-transform:capitalize;" placeholder="po" required />
 										   </div>
 										   <div class="form-group">
 												<label >District</label>
-												<input type="text" name="district" value= "{{result[0]['district']}}" class="form-control" placeholder="district" style = "text-transform:lowercase;" required />
+												<input type="text" name="district" value= "{{result[0]['district']}}" class="form-control" placeholder="district" style = "text-transform:capitalize;" required />
 										   </div>
 
 										   <div class="form-group">
 												<label >Date of Expiry</label>
-												<input type="text" name="dateofexpiry" value= "{{result[0]['dateofexpiry']}}" class="form-control" placeholder="dateofexpiry" style = "text-transform:capitalize;" required />
+												<input type="date" name="dateofexpiry" value= "{{result[0]['dateofexpiry']}}" class="form-control" placeholder="dateofexpiry" required />
 										   </div>
 										   <div class="form-group">
 												<label> Maker</label>
@@ -146,17 +134,17 @@ text-align:center
 										   </div>
 										   <div class="form-group">
 												<label> Chassis No </label>
-												<input type="text" name="chassis" value= "{{result[0]['chassis']}}" class="form-control" placeholder="chassis" style = "text-transform:capitalize;" required />
+												<input type="text" name="chassis" value= "{{result[0]['chassis']}}" class="form-control" placeholder="chassis" style = "text-transform:uppercase;" required />
 										   </div>
 
 										   <div class="form-group">
 												<label >Date of Regd.</label>
-												<input type="text" name="dateofregd" value= "{{result[0]['dateofregd']}}" class="form-control" placeholder="dateofregd" style = "text-transform:capitalize;" required />
+												<input type="date" name="dateofregd" value= "{{result[0]['dateofregd']}}" class="form-control" placeholder="dateofregd"  required />
 										   </div>
 
 										  <div class="form-group">
 											<label > Mobile No </label>
-											<input type="text" name="mobile" value= "{{result[0]['mobile']}}" class="form-control" placeholder="mobileno" style = "text-transform:capitalize;" required />
+											<input type="number" name="mobile" value= "{{result[0]['mobile']}}" class="form-control" placeholder="mobileno"  required />
 										  </div>
 
 										   <div class="form-group">
@@ -169,7 +157,7 @@ text-align:center
 										   </div>
 										   <div class="form-group">
 											<label > State </label>
-											<input type="text" name="state" value= "{{result[0]['state']}}" class="form-control" placeholder="state" required />
+											<input type="text" name="state" value= "{{result[0]['state']}}" class="form-control" placeholder="state" style = "text-transform:capitalize;" required />
 										   </div>
 
 										   <div class="form-group">

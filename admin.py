@@ -32,14 +32,13 @@ def createareamanager():
         return render_template('login.html')
     else:
         if (request.method == 'POST'):
-            Districtallocation = str(request.form.get('Districtallocation')).capitalize()
+            Districtallocation = str(request.form.get('Districtallocation').upper())
             DateOfJoining = str(request.form.get('DateOfJoining'))
             Name = str(request.form.get('Name')).title()
             DOB = str(request.form.get('DOB'))
             Qualification = str(request.form.get('Qualification').capitalize())
             AdharNo = str(request.form.get('AdharNo'))
             Pancard = str(request.form.get('Pancard').upper())
-            print(type(Pancard))
             EmailId = str(request.form.get('Email').lower())
             MobileNo = str(request.form.get('Mobile'))
             Yearofexperience = str(request.form.get('Yearofexperience').title())
@@ -51,7 +50,7 @@ def createareamanager():
             District = str(request.form.get('District').title())
             State = str(request.form.get('State').title())
             Pincode = str(request.form.get('Pincode'))
-            BankName = str(request.form.get('BankName').title())
+            BankName = str(request.form.get('BankName').upper())
             BankAccountNo = str(request.form.get('BankAccountNo'))
             IFSC = str(request.form.get('IFSC').upper())
             file = request.files['inputfile']
@@ -62,7 +61,7 @@ def createareamanager():
             mydb = mycus()
             mycursor = mydb.cursor()
             mycursor.execute(
-                "SELECT EmployeeId FROM `user` WHERE RoleID = 4 and EmployeeId LIKE 'SEAM%' ORDER BY UserID DESC LIMIT 1")
+                "SELECT EmployeeId FROM user WHERE RoleID = 4 and EmployeeId LIKE 'SEAM%' ORDER BY UserID DESC LIMIT 1")
             rowcursor = mycursor.fetchall()
             if len(rowcursor) > 0:
                 for i in rowcursor:
@@ -112,7 +111,7 @@ def createareamanager():
                                             SMS_Integration(msg, MobileNo)
                                             flash('Area Manager Register Successfully')
                                         else:
-                                            flash('Something went wrong')
+                                            flash('Something went wrong'+str(EmployeeId))
                                     else:
                                         flash('IFSC code invalid')
                                 else:
@@ -139,16 +138,17 @@ def viewam():
         count = 0
         mydb = mycus()
         mycursor = mydb.cursor()
-        mycursor.execute("SELECT EmployeeId,District,UserID from areamanager")
+        mycursor.execute("SELECT EmployeeId,District,UserID,IsActive from areamanager")
         row = mycursor.fetchall()
         mydb.close()
         for i in row:
             EmployeeId = i[0]
             District = i[1]
             UserID = i[2]
+            IsActive = i[3]
 
             count = count + 1
-            data = {'Id': count, 'EmployeeId': EmployeeId, 'District': District, 'UserID': UserID}
+            data = {'Id': count, 'EmployeeId': EmployeeId, 'District': District, 'UserID': UserID,'IsActive':IsActive}
             new.append(data)
 
         return render_template('viewam.php', result=new)
@@ -208,56 +208,75 @@ def viewamdetails_update():
         return render_template('login.html')
     else:
         if (request.method == 'POST'):
-            Districtallocation = str(request.form.get('Districtallocation'))
-            DateOfJoining = str(request.form.get('DateOfJoining'))
-            DOB = str(request.form.get('DOB'))
-            Qualification = str(request.form.get('Qualification'))
-            AdharNo = str(request.form.get('AdharNo'))
-            Pancard = str(request.form.get('Pancard'))
-            EmailId = str(request.form.get('Email'))
-            MobileNo = str(request.form.get('Mobile'))
-            Yearofexperience = str(request.form.get('YrsOfExp'))
-            ExperienceSector = str(request.form.get('ExpSector'))
-            PresentlyWorking = str(request.form.get('PresentlyWorking'))
-            StreetVillage = str(request.form.get('StreetVillage'))
-            PostOffice = str(request.form.get('Po'))
-            PoliceStation = str(request.form.get('Ps'))
-            District = str(request.form.get('Dist'))
-            State = str(request.form.get('state'))
-            Pincode = str(request.form.get('pincode'))
-            BankName = str(request.form.get('BankName'))
-            BankAccountNo = str(request.form.get('BankAccountNo'))
-            IFSC = str(request.form.get('IFSC'))
-            UserID = str(request.form.get('UserID'))
+            if request.form['btn'] == 'Submit':
+                Districtallocation = str(request.form.get('Districtallocation').upper())
+                DateOfJoining = str(request.form.get('Dateofjoining'))
+                DOB = str(request.form.get('DOB'))
+                Qualification = str(request.form.get('Qualification')).title()
+                AdharNo = str(request.form.get('Adhar'))
+                Pancard = str(request.form.get('Pancard').upper())
+                EmailId = str(request.form.get('Email').lower())
+                MobileNo = str(request.form.get('Mobile'))
+                Yearofexperience = str(request.form.get('YrsOfExp')).title()
+                ExperienceSector = str(request.form.get('ExpSector')).title()
+                PresentlyWorking = str(request.form.get('PresentlyWorking')).title()
+                StreetVillage = str(request.form.get('StreetVillage').title())
+                PostOffice = str(request.form.get('Po').title())
+                PoliceStation = str(request.form.get('Ps').title())
+                District = str(request.form.get('Dist').title())
+                State = str(request.form.get('state').title())
+                Pincode = str(request.form.get('pincode'))
+                BankName = str(request.form.get('BankName').upper())
+                BankAccountNo = str(request.form.get('BankAccountNo'))
+                IFSC = str(request.form.get('IFSC').upper())
+                UserID = str(request.form.get('UserID'))
 
-            mydb = mycus()
-            mycursor = mydb.cursor()
-            sql = "UPDATE areamanager SET Districtallocation = '" + str(
-                Districtallocation) + "',DateOfJoining = '" + str(DateOfJoining) + "',DOB = '" + str(
-                DOB) + "',Qualification = '" + str(Qualification) + "',AdharNo = '" + str(
-                AdharNo) + "',Pancard = '" + str(Pancard) + "', EmailId = '" + str(EmailId) + "',MobileNo = '" + str(
-                MobileNo) + "', Yearofexperience = '" + str(Yearofexperience) + "',ExperienceSector = '" + str(
-                ExperienceSector) + "',PresentlyWorking = '" + str(PresentlyWorking) + "',StreetVillage = '" + str(
-                StreetVillage) + "',Po ='" + str(PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
-                District) + "',State = '" + str(State) + "',Pincode = '" + str(Pincode) + "',BankName = '" + str(
-                BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
-                IFSC) + "' WHERE UserID = '" + str(UserID) + "'"
-            result = mycursor.execute(sql)
-            mydb.commit()
-
-            mycursor.execute(
-                "UPDATE user SET Districtallocation = '" + str(Districtallocation) + "',DateOfJoining = '" + str(
-                    DateOfJoining) + "',DOB = '" + str(DOB) + "',Qualification = '" + str(
-                    Qualification) + "',AdharNo = '" + str(AdharNo) + "',Pancard = '" + str(
-                    Pancard) + "',Email = '" + str(EmailId) + "',Mobile = '" + str(MobileNo) + "', YrsOfExp = '" + str(
-                    Yearofexperience) + "',ExpSector = '" + str(ExperienceSector) + "',PresentlyWorking = '" + str(
-                    PresentlyWorking) + "',Town = '" + str(StreetVillage) + "',Po ='" + str(
-                    PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql = "UPDATE areamanager SET Districtallocation = '" + str(
+                    Districtallocation) + "',DateOfJoining = '" + str(DateOfJoining) + "',DOB = '" + str(
+                    DOB) + "',Qualification = '" + str(Qualification) + "',AdharNo = '" + str(
+                    AdharNo) + "',Pancard = '" + str(Pancard) + "', EmailId = '" + str(EmailId) + "',MobileNo = '" + str(
+                    MobileNo) + "', Yearofexperience = '" + str(Yearofexperience) + "',ExperienceSector = '" + str(
+                    ExperienceSector) + "',PresentlyWorking = '" + str(PresentlyWorking) + "',StreetVillage = '" + str(
+                    StreetVillage) + "',Po ='" + str(PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
                     District) + "',State = '" + str(State) + "',Pincode = '" + str(Pincode) + "',BankName = '" + str(
                     BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
-                    IFSC) + "' WHERE UserID = '" + str(UserID) + "'")
-            mydb.commit()
-            mydb.close()
+                    IFSC) + "' WHERE UserID = '" + str(UserID) + "'"
+                result = mycursor.execute(sql)
+                mydb.commit()
+
+                mycursor.execute(
+                    "UPDATE user SET Districtallocation = '" + str(Districtallocation) + "',DateOfJoining = '" + str(
+                        DateOfJoining) + "',DOB = '" + str(DOB) + "',Qualification = '" + str(
+                        Qualification) + "',AdharNo = '" + str(AdharNo) + "',Pancard = '" + str(
+                        Pancard) + "',Email = '" + str(EmailId) + "',Mobile = '" + str(MobileNo) + "', YrsOfExp = '" + str(
+                        Yearofexperience) + "',ExpSector = '" + str(ExperienceSector) + "',PresentlyWorking = '" + str(
+                        PresentlyWorking) + "',Town = '" + str(StreetVillage) + "',Po ='" + str(
+                        PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
+                        District) + "',State = '" + str(State) + "',Pincode = '" + str(Pincode) + "',BankName = '" + str(
+                        BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
+                        IFSC) + "' WHERE UserID = '" + str(UserID) + "'")
+                mydb.commit()
+                mydb.close()
+            if request.form['btn'] == 'Dismiss':
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                UserID = str(request.form.get('UserID'))
+                mycursor.execute(" UPDATE user, areamanager SET user.IsActive = 1, areamanager.IsActive = 1 where user.UserID= areamanager.UserID and areamanager.UserID='"+str(UserID)+"'")
+                mydb.commit()
+                mydb.close()
+
+            if request.form['btn'] == 'Rejoin':
+                print('jihcohcdiocodjc')
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                UserID = str(request.form.get('UserID'))
+                print(UserID)
+                mycursor.execute(" UPDATE user, areamanager SET user.IsActive = 0, areamanager.IsActive = 0 where user.UserID= areamanager.UserID and areamanager.UserID='"+str(UserID)+"'")
+                mydb.commit()
+                mydb.close()
+
         return redirect(url_for('viewam'))
 
 
@@ -291,14 +310,15 @@ def viewsm(UserID):
         return render_template('login.html')
     else:
         new = []
+        newsales = []
         count = 0
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute(
-            "SELECT salesmanager.UserID,salesmanager.EmployeeId,salesmanager.Ps,salesmanager.CenterBrand,areamanager.EmployeeId,areamanager.District FROM areamanager LEFT JOIN salesmanager ON areamanager.UserID=salesmanager.AddedBy WHERE salesmanager.AddedBy = '" + str(
+            "SELECT salesmanager.UserID,salesmanager.EmployeeId,salesmanager.Ps,salesmanager.CenterBrand,areamanager.EmployeeId,areamanager.District FROM areamanager LEFT JOIN salesmanager ON areamanager.UserID=salesmanager.AddedBy WHERE salesmanager.IsActive=0 and salesmanager.AddedBy = '" + str(
                 UserID) + "'")
         row = mycursor.fetchall()
-        print(row)
+
         for i in row:
             Sales_UserId = i[0]
             Sales_EmployeeId = i[1]
@@ -308,11 +328,12 @@ def viewsm(UserID):
             Area_District = i[5]
             count = count + 1
             data = {'Id': count, 'Sales_EmployeeId': Sales_EmployeeId, 'Sales_Ps': Sales_Ps,
-                    'Sales_CenterBrand': Sales_CenterBrand, 'Area_EmployeeId': Area_EmployeeId,
-                    'Area_District': Area_District, 'UserID': UserID, 'Sales_UserId': Sales_UserId}
+                    'Sales_CenterBrand': Sales_CenterBrand,
+                     'UserID': UserID, 'Sales_UserId': Sales_UserId}
             new.append(data)
-
-        return render_template('viewsm.php', result=new)
+            datasales = {'Area_EmployeeId': Area_EmployeeId,'Area_District': Area_District}
+        newsales.append(datasales)
+        return render_template('viewsm.php', result=new, results= newsales)
 
 
 # view SM DETAILS
@@ -371,57 +392,55 @@ def viewsmdetails_update():
         return render_template('login.html')
     else:
         if (request.method == 'POST'):
-            Districtallocation = str(request.form.get('Districtallocation'))
-            DateOfJoining = str(request.form.get('DateOfJoining'))
-            DOB = str(request.form.get('DOB'))
-            Qualification = str(request.form.get('Qualification'))
-            AdharNo = str(request.form.get('AdharNo'))
-            EmailId = str(request.form.get('Email'))
-            MobileNo = str(request.form.get('Mobile'))
-            PresentlyWorking = str(request.form.get('PresentlyWorking'))
-            AppointCenter = str(request.form.get('AppointCenter'))
-            NameCenter = str(request.form.get('NameCenter'))
-            CenterBrand = str(request.form.get('CenterBrand'))
-            CenterFor = str(request.form.get('CenterFor'))
-            CenterLocation = str(request.form.get('CenterLocation'))
-            PostOffice = str(request.form.get('Po'))
-            PoliceStation = str(request.form.get('Ps'))
-            District = str(request.form.get('Dist'))
-            State = str(request.form.get('State'))
-            Pincode = str(request.form.get('pincode'))
-            BankName = str(request.form.get('BankName'))
-            BankAccountNo = str(request.form.get('BankAccountNo'))
-            IFSC = str(request.form.get('IFSC'))
-            UserID = str(request.form.get('UserID'))
+            if request.form['btn'] == 'Submit':
+                DateOfJoining = str(request.form.get('Dateofjoining'))
+                DOB = str(request.form.get('DOB'))
+                Qualification = str(request.form.get('Qualification')).title()
+                AdharNo = str(request.form.get('Adhar'))
+                EmailId = str(request.form.get('Email')).lower()
+                MobileNo = str(request.form.get('Mobile'))
+                PresentlyWorking = str(request.form.get('PresentlyWorking')).title()
+                AppointCenter = str(request.form.get('AppointCenter')).title()
+                NameCenter = str(request.form.get('NameCenter')).title()
+                CenterBrand = str(request.form.get('CenterBrand')).title()
+                CenterFor = str(request.form.get('CenterFor')).title()
+                CenterLocation = str(request.form.get('CenterLocation')).title()
+                PostOffice = str(request.form.get('Po')).title()
+                PoliceStation = str(request.form.get('Ps')).title()
+                District = str(request.form.get('Dist')).title()
+                State = str(request.form.get('state')).title()
+                print('State',State)
+                BankName = str(request.form.get('BankName')).upper()
+                BankAccountNo = str(request.form.get('BankAccountNo'))
+                IFSC = str(request.form.get('IFSC')).upper()
+                CenterContctNo = str(request.form.get('CenterContctNo'))
+                UserID = str(request.form.get('UserID'))
 
-            mydb = mycus()
-            mycursor = mydb.cursor()
-            sql = "UPDATE areamanager SET Districtallocation = '" + str(
-                Districtallocation) + "',DateOfJoining = '" + str(DateOfJoining) + "',DOB = '" + str(
-                DOB) + "',Qualification = '" + str(Qualification) + "',AdharNo = '" + str(
-                AdharNo) + "',Pancard = '" + str(Pancard) + "', EmailId = '" + str(EmailId) + "',MobileNo = '" + str(
-                MobileNo) + "', Yearofexperience = '" + str(Yearofexperience) + "',ExperienceSector = '" + str(
-                ExperienceSector) + "',PresentlyWorking = '" + str(PresentlyWorking) + "',StreetVillage = '" + str(
-                StreetVillage) + "',Po ='" + str(PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
-                District) + "',State = '" + str(State) + "',Pincode = '" + str(Pincode) + "',BankName = '" + str(
-                BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
-                IFSC) + "' WHERE UserID = '" + str(UserID) + "'"
-            result = mycursor.execute(sql)
-            mydb.commit()
-
-            mycursor.execute(
-                "UPDATE user SET Districtallocation = '" + str(Districtallocation) + "',DateOfJoining = '" + str(
-                    DateOfJoining) + "',DOB = '" + str(DOB) + "',Qualification = '" + str(
-                    Qualification) + "',AdharNo = '" + str(AdharNo) + "',Pancard = '" + str(
-                    Pancard) + "',Email = '" + str(EmailId) + "',Mobile = '" + str(MobileNo) + "', YrsOfExp = '" + str(
-                    Yearofexperience) + "',ExpSector = '" + str(ExperienceSector) + "',PresentlyWorking = '" + str(
-                    PresentlyWorking) + "',Town = '" + str(StreetVillage) + "',Po ='" + str(
-                    PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
-                    District) + "',State = '" + str(State) + "',Pincode = '" + str(Pincode) + "',BankName = '" + str(
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql = "UPDATE salesmanager SET DateOfJoining = '" + str(DateOfJoining) + "',DOB = '" + str(
+                    DOB) + "',Qualification = '" + str(Qualification) + "',AdharNo = '" + str(
+                    AdharNo) + "', EmailId = '" + str(EmailId) + "',MobileNo = '" + str(
+                    MobileNo) + "', AppointCenter = '" + str(AppointCenter) + "',NameCenter = '" + str(
+                    NameCenter) + "',CenterBrand = '" + str(CenterBrand) + "',Po ='" + str(PostOffice) + "',Sale_ScFor = '" + str(CenterFor) + "',CenterLocation = '" + str(
+                    CenterLocation) + "',State = '" + str(State) + "',Ps ='" + str(PoliceStation) + "',BankName = '" + str(
                     BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
-                    IFSC) + "' WHERE UserID = '" + str(UserID) + "'")
-            mydb.commit()
-            mydb.close()
+                    IFSC) + "' ,CenterContctNo='"+str(CenterContctNo)+"' WHERE UserID = '" + str(UserID) + "'"
+                result = mycursor.execute(sql)
+                mydb.commit()
+
+                mycursor.execute(
+                    "UPDATE user SET DateOfJoining = '" + str(
+                        DateOfJoining) + "',DOB = '" + str(DOB) + "',Qualification = '" + str(
+                        Qualification) + "',AdharNo = '" + str(AdharNo) + "',Email = '" + str(EmailId) + "',Mobile = '" + str(MobileNo) + "', PresentlyWorking = '" + str(
+                        PresentlyWorking) + "',AppointCenter = '" + str(AppointCenter) + "',NameCenter = '" + str(
+                        NameCenter) + "',CenterBrand = '" + str(CenterBrand) + "',CenterFor='"+str(CenterFor)+"',CenterLocation='"+str(CenterLocation)+"',Po ='" + str(
+                        PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
+                        District) + "',State = '" + str(State) + "',BankName = '" + str(
+                        BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
+                        IFSC) + "', CenterContctNo='"+str(CenterContctNo)+"' WHERE UserID = '" + str(UserID) + "'")
+                mydb.commit()
+
         return redirect(url_for('viewam'))
 
 
@@ -431,30 +450,224 @@ def viewsmbusiness(UserID):
         return render_template('login.html')
     else:
         new = []
+        newsm = []
         count = 0
         mydb = mycus()
         mycursor = mydb.cursor()
-        sql = 'SELECT salesmanager.EmployeeId,salesmanager.Name,vehiclecontract.EmployeeId,vehiclecontract.Package,vehiclecontract.VehicleNo,vehiclecontract.OnDate FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID and salesmanager.UserID =' + UserID + ''
+        sql = 'SELECT salesmanager.EmployeeId,salesmanager.District,vehiclecontract.EmployeeId,vehiclecontract.Package,vehiclecontract.VehicleNo,vehiclecontract.OnDate FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID and salesmanager.UserID =' + UserID + ''
         print(sql)
         result = mycursor.execute(sql)
         row = mycursor.fetchall()
-        print(row)
         for i in row:
             salesemployeeId = i[0]
-            salesname = i[1]
+            District = i[1]
             vehicleemployeeId = i[2]
             package = i[3]
             vehicleno = i[4]
             date = i[5]
             count = count + 1
-            data = {'Id': count, 'salesemployeeId': salesemployeeId, 'salesname': salesname,
-                    'vehicleemployeeId': vehicleemployeeId, 'package': package, 'vehicleno': vehicleno, 'date': date,
-                    'UserID': UserID}
+            data = {'Id': count,'vehicleemployeeId': vehicleemployeeId, 'package': package, 'vehicleno': vehicleno, 'date': date,'UserID': UserID}
+            datasm = {'salesemployeeId': salesemployeeId, 'District': District}
+
+            new.append(data)
+        newsm.append(datasm)
+
+        return render_template('viewbusinesssm.php', result=new,results =newsm)
+
+#----------------------------AM END-----------------------------------------------------------------------------
+#---------------------------SM START-----------------------------------------------------------------------------
+@app.route('/seadmin/sesm')
+def seadminviewsesm():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT EmployeeId,District,Ps,UserID,IsActive from salesmanager")
+        row = mycursor.fetchall()
+        mydb.close()
+        for i in row:
+            EmployeeId = i[0]
+            District = i[1]
+            Ps = i[2]
+            UserID = i[3]
+            IsActive = i[4]
+
+
+            count = count + 1
+            data = {'Id': count, 'EmployeeId': EmployeeId, 'District': District, 'Ps':Ps,'UserID': UserID,'IsActive':IsActive}
             new.append(data)
 
-        return render_template('viewbusinesssm.php', result=new)
+        return render_template('viewsesm.php', result=new)
+
+@app.route('/viewsesmdetails/<string:UserID>')
+def viewsesmdetails(UserID):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT * FROM salesmanager WHERE UserID= %s", [UserID])
+        row = mycursor.fetchall()
+        mydb.close()
+        for i in row:
+            EmployeeId = i[3]
+            Dateofjoining = i[4]
+            Name = i[5]
+            DOB = i[6]
+            Qualification = i[7]
+            Adhar = i[8]
+            Mobile = i[9]
+            Email = i[10]
+            BankAccountNo = i[11]
+            IFSC = i[12]
+            BankName = i[13]
+            PresentlyWorking = i[14]
+            AppointCenter = i[15]
+            NameCenter = i[16]
+            CenterBrand = i[17]
+            CenterFor = i[28]
+            CenterLocation = i[19]
+            Po = i[19]
+            Ps = i[20]
+            Dist = i[21]
+            state = i[22]
+            CenterContactNo = i[23]
+            IdproofPhoto = i[24]
+            count = count + 1
+            data = {'Id': count, 'EmployeeId': EmployeeId, 'Dateofjoining': Dateofjoining, 'Name': Name, 'DOB': DOB,
+                    'Qualification': Qualification, 'Adhar': Adhar, 'Mobile': Mobile, 'Email': Email,
+                    'BankAccountNo': BankAccountNo, 'IFSC': IFSC, 'BankName': BankName,
+                    'PresentlyWorking': PresentlyWorking, 'AppointCenter': AppointCenter, 'NameCenter': NameCenter,
+                    'CenterBrand': CenterBrand, 'Po': Po, 'Ps': Ps, 'Dist': Dist, 'state': state,
+                    'CenterFor': CenterFor, 'CenterLocation': CenterLocation, 'CenterContactNo': CenterContactNo,
+                    'IdproofPhoto': IdproofPhoto, 'UserID': UserID}
+            new.append(data)
+
+    return render_template('viewsesmdetails.php', result=new)
+
+@app.route('/viewsesmdetails_update', methods=['POST'])
+def viewsesmdetails_update():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        if (request.method == 'POST'):
+            if request.form['btn'] == 'Submit':
+                DateOfJoining = str(request.form.get('Dateofjoining'))
+                DOB = str(request.form.get('DOB'))
+                Qualification = str(request.form.get('Qualification')).title()
+                AdharNo = str(request.form.get('Adhar'))
+                EmailId = str(request.form.get('Email')).lower()
+                MobileNo = str(request.form.get('Mobile'))
+                PresentlyWorking = str(request.form.get('PresentlyWorking')).title()
+                AppointCenter = str(request.form.get('AppointCenter')).title()
+                NameCenter = str(request.form.get('NameCenter')).title()
+                CenterBrand = str(request.form.get('CenterBrand')).title()
+                CenterFor = str(request.form.get('CenterFor')).title()
+                CenterLocation = str(request.form.get('CenterLocation')).title()
+                PostOffice = str(request.form.get('Po')).title()
+                PoliceStation = str(request.form.get('Ps')).title()
+                District = str(request.form.get('Dist')).title()
+                State = str(request.form.get('state')).title()
+                print('State', State)
+                BankName = str(request.form.get('BankName')).upper()
+                BankAccountNo = str(request.form.get('BankAccountNo'))
+                IFSC = str(request.form.get('IFSC')).upper()
+                CenterContctNo = str(request.form.get('CenterContctNo'))
+                UserID = str(request.form.get('UserID'))
+
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql = "UPDATE salesmanager SET DateOfJoining = '" + str(DateOfJoining) + "',DOB = '" + str(
+                    DOB) + "',Qualification = '" + str(Qualification) + "',AdharNo = '" + str(
+                    AdharNo) + "', EmailId = '" + str(EmailId) + "',MobileNo = '" + str(
+                    MobileNo) + "', AppointCenter = '" + str(AppointCenter) + "',NameCenter = '" + str(
+                    NameCenter) + "',CenterBrand = '" + str(CenterBrand) + "',Po ='" + str(
+                    PostOffice) + "',Sale_ScFor = '" + str(CenterFor) + "',CenterLocation = '" + str(
+                    CenterLocation) + "',State = '" + str(State) + "',Ps ='" + str(
+                    PoliceStation) + "',BankName = '" + str(
+                    BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
+                    IFSC) + "' ,CenterContctNo='" + str(CenterContctNo) + "' WHERE UserID = '" + str(UserID) + "'"
+                result = mycursor.execute(sql)
+                mydb.commit()
+
+                mycursor.execute(
+                "UPDATE user SET DateOfJoining = '" + str(
+                DateOfJoining) + "',DOB = '" + str(DOB) + "',Qualification = '" + str(
+                Qualification) + "',AdharNo = '" + str(AdharNo) + "',Email = '" + str(
+                EmailId) + "',Mobile = '" + str(MobileNo) + "', PresentlyWorking = '" + str(
+                PresentlyWorking) + "',AppointCenter = '" + str(AppointCenter) + "',NameCenter = '" + str(
+                NameCenter) + "',CenterBrand = '" + str(CenterBrand) + "',CenterFor='" + str(
+                CenterFor) + "',CenterLocation='" + str(CenterLocation) + "',Po ='" + str(
+                PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
+                District) + "',State = '" + str(State) + "',BankName = '" + str(
+                BankName) + "',BankAccountNo = '" + str(BankAccountNo) + "',IFSC = '" + str(
+                IFSC) + "', CenterContctNo='" + str(CenterContctNo) + "' WHERE UserID = '" + str(UserID) + "'")
+
+                mydb.commit()
+                mydb.close()
+            if request.form['btn'] == 'Dismiss':
+                print('helllooo')
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                UserID = str(request.form.get('UserID'))
+                mycursor.execute(" UPDATE user, salesmanager SET user.IsActive = 1, salesmanager.IsActive = 1 where user.UserID= salesmanager.UserID and salesmanager.UserID='"+str(UserID)+"'")
+                mydb.commit()
+                mydb.close()
+
+            if request.form['btn'] == 'Rejoin':
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                UserID = str(request.form.get('UserID'))
+                print(UserID)
+                mycursor.execute(" UPDATE user, salesmanager SET user.IsActive = 0, salesmanager.IsActive = 0 where user.UserID= salesmanager.UserID and salesmanager.UserID='"+str(UserID)+"'")
+                mydb.commit()
+                mydb.close()
+
+        return redirect(url_for('seadminviewsesm'))
 
 
+@app.route('/viewsesmbusiness/<string:UserID>')
+def viewsesmbusiness(UserID):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        newsales = []
+        newamt = []
+        count = 0
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        sql = 'SELECT salesmanager.EmployeeId,salesmanager.District,vehiclecontract.EmployeeId,vehiclecontract.Package,vehiclecontract.VehicleNo,vehiclecontract.OnDate FROM vehiclecontract LEFT JOIN salesmanager ON vehiclecontract.AddedBy=salesmanager.UserID WHERE vehiclecontract.AddedBy=salesmanager.UserID and salesmanager.UserID =' + UserID + ''
+        result = mycursor.execute(sql)
+        row = mycursor.fetchall()
+        totalamt = 0
+        for i in row:
+            salesemployeeId = i[0]
+            District = i[1]
+            vehicleemployeeId = i[2]
+            package = i[3]
+            vehicleno = i[4]
+            date = i[5]
+            date=date.strftime('%d/%m/%Y')
+            count = count + 1
+            totalamt = totalamt + package
+            data = {'Id': count, 'vehicleemployeeId': vehicleemployeeId, 'package': package, 'vehicleno': vehicleno, 'date': date,'UserID': UserID}
+            new.append(data)
+            datasales={'salesemployeeId': salesemployeeId, 'District': District}
+        newsales.append(datasales)
+
+        dataamt ={'totalamt':totalamt}
+        newamt.append(dataamt)
+
+        return render_template('viewbusinesssmse.php', result=new,results =newamt,salesres =newsales )
+
+
+#---------------------------SM END--------------------------------------------------------------------------------
 # 	--------------------SERVICE CENTER AUTHORIZATION------------------------------------------------------------
 @app.route('/seadmin/viewservicecenter')
 def viewservicecenter():
@@ -482,7 +695,7 @@ def viewservicecenter():
                     'MobileNo': MobileNo, 'EmployeeId': EmployeeId, 'addedbyemployeeid': addedbyemployeeid,
                     'workingfor': workingfor}
             new.append(data)
-
+            mydb.close()
         return render_template('viewservicecenter.php', result=new)
 
 
@@ -533,19 +746,19 @@ def viewscdetails_update():
     else:
         if (request.method == 'POST'):
             DateOfAuthorize = str(request.form.get('DateOfAuthorize'))
-            OwnerName = str(request.form.get('OwnerName'))
-            CenterLocation = str(request.form.get('CenterLocation'))
-            Po = str(request.form.get('Po'))
-            District = str(request.form.get('District'))
-            DentingPainting = str(request.form.get('DentingPainting'))
-            WorkingFor = str(request.form.get('WorkingFor'))
-            CenterName = str(request.form.get('CenterName'))
+            OwnerName = str(request.form.get('OwnerName')).title()
+            CenterLocation = str(request.form.get('CenterLocation')).title()
+            Po = str(request.form.get('Po')).title()
+            District = str(request.form.get('District')).title()
+            DentingPainting = str(request.form.get('DentingPainting')).title()
+            WorkingFor = str(request.form.get('WorkingFor')).title()
+            CenterName = str(request.form.get('CenterName')).title()
             Mobile = str(request.form.get('Mobile'))
-            GSTINno = str(request.form.get('GSTINno'))
-            Town = str(request.form.get('Town'))
-            Ps = str(request.form.get('Ps'))
-            State = str(request.form.get('State'))
-            Mechanical = str(request.form.get('Mechanical'))
+            GSTINno = str(request.form.get('GSTINno')).upper()
+            Town = str(request.form.get('Town')).title()
+            Ps = str(request.form.get('Ps')).title()
+            State = str(request.form.get('State')).title()
+            Mechanical = str(request.form.get('Mechanical')).title()
             UserID = str(request.form.get('UserID'))
 
             mydb = mycus()
@@ -595,6 +808,7 @@ def claim():
                 ClaimID = i[0]
                 VcID = i[1]
                 DateOfClaim = i[2]
+
                 ClaimNo = i[3]
                 Photo = i[4]
                 InspectBy = i[5]
@@ -738,40 +952,53 @@ def commission():
 
 #------------------------------------------------------------end claim section----------------------------------------------------------------------------------------
 # -----------------------------------------------------------Register Customer-----------------------------------------------------------------------------------------
-@app.route('/seadmin/Registercustomer')
+@app.route('/seadmin/Registercustomer',methods = ['GET','POST'])
 def Registercustomer():
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
-        new = []
-        count = 0
-        mydb = mycus()
-        mycursor = mydb.cursor()
-        sql = "SELECT vehiclecontract.UserID,vehiclecontract.VehicleCategory, vehiclecontract.Package, vehiclecontract.EmployeeId, vehiclecontract.DateOfExp,vehiclecontract.OnDate,user.EmployeeId FROM vehiclecontract LEFT JOIN user ON vehiclecontract.AddedBy = user.UserID GROUP by UserID"
-        mycursor.execute(sql)
-        rowcursor = mycursor.fetchall()
-        if len(rowcursor) > 0:
-            for i in rowcursor:
-                UserID = i[0]
-                VehicleCategory = i[1]
-                Package = i[2]
-                EmployeeId = i[3]
-                DateOfExp = i[4]
-                OnDate = i[5]
-                AddedEmployeeId = i[6]
-                count = count + 1
-                # sql='SELECT SUM('+str(Package)+') as totalamount FROM vehiclecontract'
-                # print(sql)
-                # mycursor.execute(sql)
-                # row = mycursor.fetchall()
-                # for i in row:
-                # 	totalamount = i[0]
-                data = {'UserID': UserID, 'count': count, 'VehicleCategory': VehicleCategory, 'Package': Package,
-                        'EmployeeId': EmployeeId, 'DateOfExp': DateOfExp, 'OnDate': OnDate,
-                        'AddedEmployeeId': AddedEmployeeId}
-                new.append(data)
-            mydb.close()
-        return render_template('registercustomer.php', result=new)
+        if (request.method == 'POST'):
+            new = []
+            newamt = []
+            count = 0
+            if request.form['submit_button'] == 'Submit':
+                start_dates = request.form.get('start')
+                start_ends = request.form.get('End')
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                sql = "SELECT vehiclecontract.UserID,vehiclecontract.VehicleCategory, vehiclecontract.Package, vehiclecontract.EmployeeId, vehiclecontract.DateOfExp,vehiclecontract.OnDate,user.EmployeeId FROM vehiclecontract LEFT JOIN user ON vehiclecontract.AddedBy = user.UserID "
+                if start_dates is not None and start_ends is not None:
+                    sql = sql + " WHERE vehiclecontract.OnDate >= '" + str(start_dates) + "' AND  vehiclecontract.OnDate <= '"+str(start_ends)+"' GROUP by vehiclecontract.UserID"
+                    mycursor.execute(sql)
+                    rowcursor = mycursor.fetchall()
+                    if len(rowcursor) > 0:
+                        totalamt = 0
+                        for i in rowcursor:
+                            UserID = i[0]
+                            VehicleCategory = i[1]
+                            Package = i[2]
+                            EmployeeId = i[3]
+                            DateOfExp = i[4]
+                            DateOfExp = DateOfExp.strftime('%d/%m/%Y')
+                            OnDate = i[5]
+                            OnDate= OnDate.strftime('%d/%m/%Y')
+                            AddedEmployeeId = i[6]
+                            count = count + 1
+                            totalamt = totalamt + Package
+
+                            data = {'UserID': UserID, 'count': count, 'VehicleCategory': VehicleCategory, 'Package': Package,
+                                    'EmployeeId': EmployeeId, 'DateOfExp': DateOfExp, 'OnDate': OnDate,
+                                    'AddedEmployeeId': AddedEmployeeId}
+                            new.append(data)
+
+                        dataamt= {'totalamt':totalamt}
+                        newamt.append(dataamt)
+                        mydb.close()
+                else:
+                    return render_template('registercustomer.php')
+
+            return render_template('registercustomer.php', result=new, results=newamt)
+        return render_template('registercustomer.php')
 
 
 @app.route('/contractrecord/<string:UserID>')
@@ -910,12 +1137,10 @@ def viewnewrequest(UserID):
     else:
         count = 0
         new = []
-        print('UserID', UserID)
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute("SELECT * FROM customerrequest WHERE UserID= %s", [UserID])
         rowcursor = mycursor.fetchall()
-        print('rowcursor', rowcursor)
         for i in rowcursor:
             EmployeeId = i[1]
             Name = i[2]
@@ -963,6 +1188,37 @@ def viewrequest_update():
 
 
 #---------------------------------------------------------------------------------------- end request customer ----------------------------------
+#---------------------------------------------------------------------------------------- money receipt start -----------------------------------
+@app.route('/seadmin/Moneyreceipt/<string:UserID>')
+def Moneyreceipt(UserID):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT VehicleNo,OwnerName,DateOfContract,Package,VcID,EmployeeId FROM vehiclecontract WHERE UserID= %s", [UserID])
+        rowcursor = mycursor.fetchall()
+        for i in rowcursor:
+            VehicleNo = i[0]
+            OwnerName = i[1]
+            DateOfContract = i[2]
+            Package = i[3]
+            stategst = (Package * 9)/100
+            centralgst = (Package * 9)/100
+            totalamt = Package + stategst + centralgst
+            VcID = i[4]
+            slno ='SL'+ str(VcID)
+            EmployeeId = i[5]
+
+            data ={'VehicleNo':VehicleNo,'OwnerName':OwnerName,'DateOfContract':DateOfContract,'Package':Package,'totalamt':totalamt,'slno':slno,'EmployeeId':EmployeeId
+                   ,'stategst':stategst,'centralgst':centralgst}
+            new.append(data)
+        return render_template('moneyreceipt.php',result = new)
+
+
+
+#----------------------------------------------------------------------------------------money receipt end ----------------------------------------
 @app.route('/seadmin/Vehiclereport')
 def Vehiclereport():
     if not session.get('logged_in'):

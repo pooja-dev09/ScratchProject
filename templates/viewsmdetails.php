@@ -37,10 +37,10 @@ font-size: 1rem;
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -82,116 +82,108 @@ font-size: 1rem;
 										<center><h5><label for="date">Employee ID- {{result[0]['EmployeeId']}}</label></h5></center>
 										
 									</div>
-									
+
+									<label>Date Of Joining</label>
+									<div class="form-group">
+										<input name="Dateofjoining" value= "{{result[0]['Dateofjoining']}}" type="date" placeholder="Dateofjoining" class="welcome" required>
+									</div>
 								
 									<h4 style="font-size:14px; color:#ff001a; text-decoration: underline; text-align:left;">Basic Details</h4>
-									<label for="date">District Allocate</label>
+
+									<label>D.O.B</label>
 									<div class="form-group">
-										<input name="Districtallocation" value= "{{result[0]['Districtallocation']}}" type="text"  placeholder="Districtallocation" class="welcome"  required>
+										<input name="DOB" value= "{{result[0]['DOB']}}"  type="date"  placeholder="Name" class="welcome" required>
 									</div>
+
 									
-									<label for="date">Date Of Joining</label>
-									<div class="form-group">
-										<input name="Dateofjoining" value= "{{result[0]['Dateofjoining']}}" type="text" placeholder="Dateofjoining" class="welcome" required>
-									</div>
-									
-									<label for="text">Name of Candidate</label>
-									<div class="form-group">
-										<input name="Name" value= "{{result[0]['Name']}}" type="text"  placeholder="Name" class="welcome" required>
-									</div>
-									
-									<label for="date">Date of Birth</label>
-									<div class="form-group">
-										<input name="DOB" value= "{{result[0]['DOB']}}" type="text" placeholder="DOB" class="welcome" required>
-									</div>
-									
-									<label for="date">Qualification</label>
+									<label>Qualification</label>
 									<div class="form-group">				
-										<input name="Qualification" value= "{{result[0]['Qualification']}}" type="text"  placeholder="Qualification" class="welcome" required>
+										<input name="Qualification" value= "{{result[0]['Qualification']}}"  style = "text-transform:capitalize;" type="text"  placeholder="Qualification" class="welcome" required>
 									</div>
 									
-									<label for="date">Adhar Card No</label>
+									<label>AADHAR NO</label>
 									<div class="form-group">										
-										<input name="Adhar" value= "{{result[0]['Adhar']}}" type="text"  class="welcome"placeholder="Adhar" required>
+										<input name="Adhar" value= "{{result[0]['Adhar']}}" type="number"  class="welcome"placeholder="Aadhar" required>
 									</div>
 									
-									<label for="date">Mobile Number</label>
+									<label>Mobile Number</label>
 									<div class="form-group">										
-										<input name="Mobile" value= "{{result[0]['Mobile']}}" type="text"   class="welcome" placeholder="Mobile" required>
+										<input name="Mobile" value= "{{result[0]['Mobile']}}" type="number"   class="welcome" placeholder="Mobile" required>
 									</div>
 									
-									<label for="date">E-mail Id</label>
+									<label>E-mail Id</label>
 									<div class="form-group">										
-										<input name="Email" value= "{{result[0]['Email']}}" type="text" placeholder="Email" class="welcome" required>
+										<input name="Email" value= "{{result[0]['Email']}}" type="text" style = "text-transform:lowercase;" placeholder="Email" class="welcome" required>
 									</div>
 									
 									<label for="date">Bank A/C Number</label>
 									<div class="form-group">
-										<input name="BankAccountNo" value= "{{result[0]['BankAccountNo']}}" type="text" placeholder="A/C Number" class="welcome" required>
+										<input name="BankAccountNo" value= "{{result[0]['BankAccountNo']}}" type="number" placeholder="A/C Number" class="welcome" required>
 									</div>
 									
 									<label for="date">IFSC Code</label>
 									<div class="form-group">
-										<input name="IFSC" value= "{{result[0]['IFSC']}}" type="text" placeholder="IFSC" class="welcome" required>
+										<input name="IFSC" value= "{{result[0]['IFSC']}}" type="text" placeholder="IFSC" style = "text-transform:uppercase;" class="welcome" required>
 									</div>
 									
 									<label for="date">Bank Name</label>
 									<div class="form-group">
-										<input name="BankName" value= "{{result[0]['BankName']}}" type="text" placeholder="BankName" class="welcome" required>
+										<input name="BankName" value= "{{result[0]['BankName']}}" type="text" placeholder="BankName" style = "text-transform:uppercase;" class="welcome" required>
 									</div>
 									
 									<label for="date">Presently  working as</label>
 									<div class="form-group">
-										<input name="PresentlyWorking" value= "{{result[0]['PresentlyWorking']}}" type="text" placeholder="PresentlyWorking" class="welcome" required>
+										<input name="PresentlyWorking" value= "{{result[0]['PresentlyWorking']}}"  style = "text-transform:capitalize;" type="text" placeholder="PresentlyWorking" class="welcome" required>
 									</div>
 									<label for="date">Appoint for center</label>
 									<div class="form-group">
-										<input name="AppointCenter" value= "{{result[0]['AppointCenter']}}" type="text" placeholder="AppointCenter" class="welcome" required>
+										<input name="AppointCenter" value= "{{result[0]['AppointCenter']}}"  style = "text-transform:capitalize;" type="text" placeholder="AppointCenter" class="welcome" required>
 									</div>
 									
 									<label for="date">Name of Center</label>
 									<div class="form-group">
-										<input name="NameCenter" value= "{{result[0]['NameCenter']}}" type="text" placeholder="Name of Center" class="welcome" required>
+										<input name="NameCenter" value= "{{result[0]['NameCenter']}}"  style = "text-transform:capitalize;" type="text" placeholder="Name of Center" class="welcome" required>
 									</div>
 									
 									<label for="date">Center Brand</label>
 									<div class="form-group">
-										<input name="CenterBrand" value= "{{result[0]['CenterBrand']}}" type="text" placeholder="Center Brand" class="welcome" required>
+										<input name="CenterBrand" value= "{{result[0]['CenterBrand']}}"  style = "text-transform:capitalize;" type="text" placeholder="Center Brand" class="welcome" required>
 									</div>
 									<label for="date">This Center for</label>
 									<div class="form-group">
-										<input name="CenterFor" value= "{{result[0]['CenterFor']}}" type="text" placeholder="This Center for" class="welcome" required>
+										<input name="CenterFor" value= "{{result[0]['CenterFor']}}"  style = "text-transform:capitalize;" type="text" placeholder="This Center for" class="welcome" required>
 									</div>
 									<label for="date">Center Location</label>
 									<div class="form-group">
-										<input name="CenterLocation" value= "{{result[0]['CenterLocation']}}" type="text" placeholder="Center Location" class="welcome" required>
+										<input name="CenterLocation" value= "{{result[0]['CenterLocation']}}" style = "text-transform:capitalize;" type="text" placeholder="Center Location" class="welcome" required>
 									</div>
 									
 									<label for="date">Police Office</label>
 									<div class="form-group">
-										<input name="Po" value= "{{result[0]['Po']}}" type="text" placeholder="Police Station" class="welcome" required>
+										<input name="Po" value= "{{result[0]['Po']}}" type="text" style = "text-transform:capitalize;" placeholder="Police Station" class="welcome" required>
 									</div>
 									
 									<label for="date">Police Station</label>
 									<div class="form-group">
-										<input name="Ps" value= "{{result[0]['Ps']}}" type="text" placeholder="Police Station" class="welcome" required>
+										<input name="Ps" value= "{{result[0]['Ps']}}" type="text" style = "text-transform:capitalize;" placeholder="Police Station" class="welcome" required>
 									</div>
 									<label for="date">District</label>
 									<div class="form-group">
-										<input name="Dist" value= "{{result[0]['Dist']}}" type="text" placeholder="District" class="welcome" required>
+										<input name="Dist" value= "{{result[0]['Dist']}}" type="text" style = "text-transform:capitalize;" placeholder="District" class="welcome" required>
 									</div>
 									<label for="date">State</label>
 									<div class="form-group">
-										<input name="state" value= "{{result[0]['state']}}" type="text" placeholder="District" class="welcome" required>
+										<input name="state" value= "{{result[0]['state']}}" type="text" style = "text-transform:capitalize;" placeholder="District" class="welcome" required>
 									</div>
 									<label for="date">CenterContctNo</label>
 										<div class="form-group">
-											<input name="CenterContctNo" value= "{{result[0]['CenterContactNo']}}" type="text" placeholder="Center Contct No" class="welcome" required>
+											<input name="CenterContctNo" value= "{{result[0]['CenterContactNo']}}" type="number" placeholder="Center Contct No" class="welcome" required>
 										</div>
 								
 								
 									<input name="UserID" value="{{ result[0]['UserID'] }}" type="hidden">
-									<input type="submit"  value="Submit">
+									<input type="submit"  name="btn" value="Submit">
+
 								
 
 							</form>
