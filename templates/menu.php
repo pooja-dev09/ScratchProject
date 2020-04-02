@@ -70,12 +70,7 @@
                                 </div>
                             </li>	
 								
-							<li class="nav-item">
-                                <a class="nav-link" href="/seadmin/Moneyreceipt" ><i class="fa fa-fw fa-money"></i>Money Receipt</a>
-                                <div id="submenu-5" class="collapse submenu" style="">
-                                    
-                                </div>
-                            </li>
+
 								
 							<li class="nav-item">
                                 <a class="nav-link" href="" ><i class="fa fa-fw fa-bell"></i>Notifications</a>

@@ -52,7 +52,6 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
@@ -109,12 +108,8 @@
                                                 <th>View SM Profile</th>
                                                 <th>View Business</th>
 												<th>Send Notification To All</th>
-
-
                                             </tr>
-
                                         </tfoot>
-									</form>
                                     </table>
                                     <div>
 									<button style="float:right;margin-top: 25px; margin-right: 80px;"type="button" onclick="alert('Hello world!')">Create</button>
@@ -123,13 +118,12 @@
                             </div>
                         </div>
                     </div>
+                </form>
+
                     <!-- ============================================================== -->
                     <!-- end basic table  -->
                     <!-- ============================================================== -->
                 </div>
-
-
-
 
             </div>
             <!-- ============================================================== -->

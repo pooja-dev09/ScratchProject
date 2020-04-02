@@ -30,17 +30,17 @@
     opacity: 0;
     filter: alpha(opacity=0);
 }
-</style> 
+</style>
 
 <body>
     <!-- ============================================================== -->
     <!-- main wrapper -->
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
-       /*  <?php include_once('header.php')?> */
+
 	   {% include 'header.php' %}
         <!-- ============================================================== -->
-      /*  <?php include_once('menu.php')?> */
+
 	  {% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- ============================================================== -->
@@ -87,7 +87,7 @@
 											</div>
 											<div class="form-group" style = "text-transform:capitalize;">
 												<label for="date">Date Of Joining</label>
-												<input type="date" name="DateOfJoining" class="form-control"   required />
+												<input type="date" name="DateOfJoining" class="form-control"  required  />
 											</div>
 
 											 <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Basic Details</h4>
@@ -306,7 +306,7 @@
     readURL(this);
   });
 	</script>
-	
+
 </body>
  
 </html>

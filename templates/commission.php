@@ -23,10 +23,10 @@
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">View All Service Center Authorise</h2>
+                            <h2 class="pageheader-title">View All Commission Report</h2>
 
 
                         </div>
@@ -54,16 +54,16 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">List Of Service Center Authorise Details</h5>
+                            <h5 class="card-header">Commission Report</h5>
                             <div class="card-body">
-							<form method="post" action="/commission">
+							<form method="POST" action="/commission">
 									<div class="box" style="width:50%; margin-top:10px;">
 										<h4>Enter Your Date</h4>
 										<input type="date"  name="start"/>
 										<input type="date"  name="End"/>
-										<input type="submit" value = "Submit" name ="submit_button" style="width:100px; ">
+										<input type="submit" value = "Submit" name ="btn" style="width:100px; ">
 									</div>
-								</form>
+
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
                                         <thead>
@@ -77,12 +77,21 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+
 										{% for r in result %}
                                             <tr>
                                                 <td>{{r["count"]}}</td>
                                                 <td>{{r["employeeid"]}}</td>
                                                 <td>{{r["package"]}}</td>
                                                 <td>{{r["commissionrate"]}}</td>
+                                                <td>
+                                                    {% if r['PaymentStatus'] == 0 %}
+
+                                                        <input name="AddedBy" value="{{ r["AddedBy"] }}" type="hidden"  >
+												        <input type="submit" style="color:#ff001a; text-decoration: underline;" name="btn" value="Due payment">
+
+                                                    {% endif %}
+                                                </td>
                                             </tr>
 											{% endfor %}
 
@@ -101,6 +110,7 @@
                             </div>
                         </div>
                     </div>
+                    </form>
                     <!-- ============================================================== -->
                     <!-- end basic table  -->
                     <!-- ============================================================== -->

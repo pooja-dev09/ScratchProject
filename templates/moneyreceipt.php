@@ -133,7 +133,7 @@
 													<tr>
 														<td colspan="3">Payment With Cash / Cheq / Online </td>
 														<td>Total</td>
-														<td colspan="2"></td>
+														<td colspan="2">{{result[0]['Package']}}</td>
 														
 													</tr>
 													<tr>
@@ -156,7 +156,7 @@
 													<tr>
 														<td colspan="3"> </td>
 														<td>Ground Total</td>
-														<td colspan="2">{{result[0]['totalamt']}}</td>
+														<td colspan="2">{{result[0]['grandamt']}}</td>
 														
 													</tr>
 													<tr>
@@ -169,7 +169,7 @@
 											<div class="form-group" style="margin-top:15px;">
 
 
-												<a class="btn btn-primary" class = "noprintbtn" onClick="printdiv('div_print')" href="#">Print</a>
+												<a class="btn btn-primary noprintbtn"  onClick="printdiv('div_print')" href="">Print</a>
 
 											</div>
                                         </form>

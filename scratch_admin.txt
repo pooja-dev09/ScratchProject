@@ -4240,3 +4240,161 @@ OSError: [Errno 98] Address already in use
 157.41.106.47 - - [25/Mar/2020 04:54:23] "GET /static/assets/vendor/charts/sparkline/jquery.sparkline.js HTTP/1.1" 200 -
 157.41.106.47 - - [25/Mar/2020 04:54:23] "GET /static/assets/vendor/charts/sparkline/spark-js.js HTTP/1.1" 200 -
 157.41.106.47 - - [25/Mar/2020 04:54:23] "GET /static/assets/libs/js/dashboard-sales.js HTTP/1.1" 200 -
+ * Serving Flask app "admin" (lazy loading)
+ * Environment: production
+   WARNING: This is a development server. Do not use it in a production deployment.
+   Use a production WSGI server instead.
+ * Debug mode: on
+ * Running on http://0.0.0.0:7000/ (Press CTRL+C to quit)
+ * Restarting with stat
+ * Debugger is active!
+ * Debugger PIN: 195-690-739
+64.233.172.73 - - [01/Apr/2020 17:40:15] "GET /login HTTP/1.1" 200 -
+64.233.172.75 - - [01/Apr/2020 17:40:15] "GET /favicon.ico HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:41:43] "GET /login HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:43] "GET /static/assets/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:43] "GET /static/assets/vendor/fonts/circular-std/style.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:45] "GET /static/assets/libs/css/style.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:45] "GET /static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:46] "GET /static/assets/vendor/datatables/css/dataTables.bootstrap4.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:46] "GET /static/assets/vendor/datatables/css/buttons.bootstrap4.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:47] "GET /static/assets/vendor/datatables/css/select.bootstrap4.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:48] "GET /static/assets/vendor/datatables/css/fixedHeader.bootstrap4.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:49] "GET /static/assets/vendor/jquery/jquery-3.3.1.min.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:49] "GET /static/assets/images/logo.png HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:53] "GET /static/assets/vendor/bootstrap/js/bootstrap.bundle.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:54] "GET /static/assets/vendor/slimscroll/jquery.slimscroll.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:55] "GET /static/assets/vendor/multi-select/js/jquery.multi-select.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:57] "GET /static/assets/libs/js/main-js.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:57] "GET /static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:57] "GET /static/assets/vendor/datatables/js/buttons.bootstrap4.min.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:41:59] "GET /static/assets/vendor/datatables/js/data-table.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:42:28] "GET /favicon.ico HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:03] "POST /login HTTP/1.1" 302 -
+157.41.124.92 - - [01/Apr/2020 17:43:04] "GET /seadmin/index HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:05] "GET /static/assets/vendor/vector-map/jqvmap.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:05] "GET /static/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:06] "GET /static/assets/vendor/fonts/flag-icon-css/flag-icon.min.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:06] "GET /static/assets/vendor/charts/charts-bundle/Chart.bundle.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:06] "GET /static/assets/vendor/charts/charts-bundle/chartjs.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:06] "GET /static/assets/vendor/jvectormap/jquery-jvectormap-2.0.2.min.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:06] "GET /static/assets/vendor/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:07] "GET /static/assets/images/avatar-1.jpg HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:10] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:10] "GET /static/assets/vendor/charts/sparkline/jquery.sparkline.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:10] "GET /static/assets/vendor/charts/sparkline/spark-js.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:11] "GET /static/assets/libs/js/dashboard-sales.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:12] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:13] "GET /seadmin/assets/images/product-pic.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:15] "GET /seadmin/assets/images/product-pic-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:18] "GET /seadmin/assets/images/product-pic-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:19] "GET /seadmin/assets/images/product-pic-4.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:43:19] "GET /static/assets/vendor/fonts/circular-std/CircularStd-Book.woff HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:19] "GET /static/assets/vendor/fonts/fontawesome/webfonts/fa-solid-900.html HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:19] "GET /static/assets/vendor/fonts/circular-std/CircularStd-Medium.woff HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:43:59] "GET /seadmin/createareamanager HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:44:00] "GET /static/assets/vendor/datepicker/tempusdominus-bootstrap-4.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:44:00] "GET /static/assets/vendor/inputmask/css/inputmask.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:44:00] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:44:01] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:44:02] "GET /static/assets/vendor/inputmask/js/jquery.inputmask.bundle.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:54:39] "GET /seadmin/viewam HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:54:41] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:54:44] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:55:24] "GET /seadmin/viewam HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:55:24] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:55:25] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 17:58:28] "GET /viewsm/75 HTTP/1.1" 500 -
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 2463, in __call__
+    return self.wsgi_app(environ, start_response)
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 2449, in wsgi_app
+    response = self.handle_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/usr/local/lib/python3.5/dist-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1866, in handle_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 2446, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1951, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/usr/local/lib/python3.5/dist-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/usr/local/lib/python3.5/dist-packages/flask_cors/extension.py", line 161, in wrapped_function
+    return cors_after_request(app.make_response(f(*args, **kwargs)))
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1820, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/usr/local/lib/python3.5/dist-packages/flask/_compat.py", line 39, in reraise
+    raise value
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1949, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/usr/local/lib/python3.5/dist-packages/flask/app.py", line 1935, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/scripts/dbms/scrach_Exponent/admin.py", line 335, in viewsm
+    newsales.append(datasales)
+UnboundLocalError: local variable 'datasales' referenced before assignment
+157.41.124.92 - - [01/Apr/2020 17:58:28] "GET /viewsm/75?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:58:28] "GET /viewsm/75?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:58:29] "GET /viewsm/75?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:58:37] "GET /viewsm/75?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:58:37] "GET /viewsm/75?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 17:58:48] "GET /viewsm/75?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:00:56] "POST /viewamdetails_update HTTP/1.1" 302 -
+157.41.124.92 - - [01/Apr/2020 18:00:57] "GET /seadmin/viewam HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:00:57] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:00:59] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:01:07] "GET /images/down-arrow.png HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:03:13] "GET /seadmin/Registercustomer HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:03:13] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:03:14] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:03:15] "GET /images/down-arrow.png HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:16] "GET /seadmin/index HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /static/assets/vendor/charts/charts-bundle/Chart.bundle.js HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /seadmin/assets/images/product-pic.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /seadmin/assets/images/product-pic-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /seadmin/assets/images/product-pic-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:17] "GET /seadmin/assets/images/product-pic-4.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:27] "GET /seadmin/createareamanager HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:04:28] "GET /seadmin/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:04:28] "GET /seadmin/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:06:43] "GET /newcustomerrequest HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:06:44] "GET /assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:06:44] "GET /assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:06:46] "GET /images/down-arrow.png HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:07:02] "GET /viewnewrequest/22 HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:07:03] "GET /viewnewrequest/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:07:03] "GET /viewnewrequest/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:08:52] "GET /viewnewrequest/23 HTTP/1.1" 200 -
+157.41.124.92 - - [01/Apr/2020 18:08:54] "GET /viewnewrequest/assets/images/avatar-2.jpg HTTP/1.1" 404 -
+157.41.124.92 - - [01/Apr/2020 18:08:54] "GET /viewnewrequest/assets/images/avatar-3.jpg HTTP/1.1" 404 -
+157.41.214.199 - - [02/Apr/2020 04:43:21] "GET /login HTTP/1.1" 200 -
+157.41.186.68 - - [02/Apr/2020 04:43:22] "GET /favicon.ico HTTP/1.1" 404 -
+157.41.186.68 - - [02/Apr/2020 04:43:38] "GET /static/assets/vendor/bootstrap/css/bootstrap.min.css HTTP/1.1" 304 -
+157.41.214.199 - - [02/Apr/2020 04:43:38] "GET /static/assets/vendor/fonts/fontawesome/css/fontawesome-all.css HTTP/1.1" 304 -
+157.41.214.199 - - [02/Apr/2020 04:43:38] "GET /static/assets/libs/css/style.css HTTP/1.1" 304 -
+157.41.214.199 - - [02/Apr/2020 04:43:38] "GET /static/assets/vendor/fonts/circular-std/style.css HTTP/1.1" 304 -
+157.41.214.199 - - [02/Apr/2020 04:43:38] "GET /static/assets/vendor/datatables/css/dataTables.bootstrap4.css HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:38] "GET /static/assets/vendor/datatables/css/buttons.bootstrap4.css HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:39] "GET /static/assets/vendor/datatables/css/select.bootstrap4.css HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:39] "GET /static/assets/vendor/datatables/css/fixedHeader.bootstrap4.css HTTP/1.1" 304 -
+157.41.214.199 - - [02/Apr/2020 04:43:39] "GET /static/assets/vendor/jquery/jquery-3.3.1.min.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/images/logo.png HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/vendor/bootstrap/js/bootstrap.bundle.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/vendor/slimscroll/jquery.slimscroll.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/libs/js/main-js.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/vendor/datatables/js/dataTables.bootstrap4.min.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/vendor/multi-select/js/jquery.multi-select.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/vendor/datatables/js/buttons.bootstrap4.min.js HTTP/1.1" 304 -
+157.41.186.68 - - [02/Apr/2020 04:43:40] "GET /static/assets/vendor/datatables/js/data-table.js HTTP/1.1" 200 -
+157.41.214.199 - - [02/Apr/2020 04:43:41] "GET /favicon.ico HTTP/1.1" 404 -
+157.41.186.68 - - [02/Apr/2020 04:43:42] "GET /favicon.ico HTTP/1.1" 404 -
+64.233.172.75 - - [02/Apr/2020 06:01:02] "GET /login HTTP/1.1" 200 -
+64.233.172.73 - - [02/Apr/2020 06:01:02] "GET /favicon.ico HTTP/1.1" 404 -
+64.233.172.73 - - [02/Apr/2020 07:21:30] "GET /favicon.ico HTTP/1.1" 404 -
+64.233.172.73 - - [02/Apr/2020 07:21:30] "GET /seadmin/createareamanager HTTP/1.1" 500 -

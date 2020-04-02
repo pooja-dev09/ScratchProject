@@ -37,10 +37,10 @@ font-size: 1rem;
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -75,40 +75,39 @@ font-size: 1rem;
 
 									<label >Name</label>
 									<div class="form-group">
-										<input name="Name" value= "{{result[0]['Name']}}" type="text" placeholder="Name" class="welcome" required>
+										<input name="Name" style = "text-transform:capitalize;" value= "{{result[0]['Name']}}" type="text" placeholder="Name" class="welcome" required>
 									</div>
 
 									<label >Vehicle Category</label>
 									<div class="form-group">
-										<input name="VehicleCategory" value= "{{result[0]['VehicleCategory']}}" type="text"  placeholder="VehicleCategory" class="welcome" required>
+										<input name="VehicleCategory" style = "text-transform:capitalize;" value= "{{result[0]['VehicleCategory']}}" type="text"  placeholder="VehicleCategory" class="welcome" required>
 									</div>
 
 									<label >Date of purchase</label>
 									<div class="form-group">
-										<input name="DateOfPurchase" value= "{{result[0]['DateOfPurchase']}}" type="date" placeholder="DateOfPurchase" class="welcome" required>
+										<input name="DateOfPurchase"  value= "{{result[0]['DateOfPurchase']}}" type="date" placeholder="DateOfPurchase" class="welcome" required>
 									</div>
 
 									<label >District</label>
 									<div class="form-group">
-										<input name="District" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
+										<input name="District" style = "text-transform:capitalize;" value= "{{result[0]['District']}}" type="text"  placeholder="District" class="welcome" required>
 									</div>
 
 
 									<label >Mobile Number</label>
 									<div class="form-group">
-
-									       <input name="Mobile" value= "{{result[0]['Mobile']}}" type="text" placeholder="Mobile" class="welcome" required>
+                                       <input name="Mobile"  value= "{{result[0]['Mobile']}}" type="number" placeholder="Mobile" class="welcome" required>
 									</div>
 
 									<label>Ps</label>
 									<div class="form-group">
-										<input name="PoliceStation" value= "{{result[0]['PoliceStation']}}" type="text" placeholder="CenterName" class="welcome" required>
+										<input name="PoliceStation" value= "{{result[0]['policestation']}}" type="text"  style = "text-transform:capitalize;" placeholder="policestation" class="welcome" required>
 									</div>
 
 
 									<label >State</label>
 									<div class="form-group">
-										<input name="state" value= "{{result[0]['state']}}" type="text" placeholder="State" class="welcome" required>
+										<input name="state" style = "text-transform:capitalize;" value= "{{result[0]['state']}}" type="text" placeholder="State" class="welcome" required>
 									</div>
 
 

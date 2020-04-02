@@ -37,10 +37,10 @@ font-size: 1rem;
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -63,7 +63,7 @@ font-size: 1rem;
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Authorized Service Center</h4></center>
+                            <center><h4 style="margin-top:10px; text-decoration: underline;" class="pageheader-title">Claim Report</h4></center>
 							<form method="post" action="/claimreportview">
 
 									<center><div class="form-group">
@@ -99,7 +99,11 @@ font-size: 1rem;
 									<div class="form-group">
 										<input name="PoliceStation" value= "{{result[0]['District']}}" type="text" placeholder="CenterName" class="welcome" readonly>
 									</div>
-
+                                    <div class="form-group">
+									    <video width="300" height="240" controls>
+                                        <source src="../static/video/{{result[0]['VehiclesaffectedAreaVideo']}}" type="video/mp4"></source>
+                                        </video>
+                                     </div>
 
     								<input name="UserID" value="{{ result[0]['UserID'] }}" type="hidden">
 									<input type="submit"   value="Submit">

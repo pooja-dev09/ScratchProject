@@ -23,10 +23,10 @@
     <!-- ============================================================== -->
     <div class="dashboard-main-wrapper">
          <!-- ============================================================== -->
-      /* <?php include_once('header.php')?> */
+
 	  {% include 'header.php' %}
         <!-- ============================================================== -->
-        /* <?php include_once('menu.php')?> */
+
 		{% include 'menu.php' %}
         <!-- ============================================================== -->
         <!-- wrapper  -->
@@ -39,7 +39,7 @@
                 <div class="row">
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="page-header">
-                            <h2 class="pageheader-title">View All Vehicle Report</h2>
+                            <h2 class="pageheader-title">Area Manager Business</h2>
                             
                            
                         </div>
@@ -54,7 +54,7 @@
                     <!-- ============================================================== -->
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                         <div class="card">
-                            <h5 class="card-header">List Of Vehicle Report</h5>
+                            <h5 class="card-header"></h5>
                             <div class="card-body">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered first">
@@ -63,20 +63,22 @@
                                             <tr>
                                                 <th>Slno</th>
 												<th>Date</th>
-												<th>Car</th>
-											    <th>Motorcycle</th>
-											   
-												
-												
+												<th>Contract By</th>
+											    <th>Employee ID</th>
+											    <th>Vehicle Type</th>
+											    <th>Amount(Rs)</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
 										{% for r in result %}
                                             <tr>
                                                 <td>{{r["count"]}}</td>
-                                                <td>{{r["date"]}}</td>
-												<td>{{r["car"]}}</td>
-												<td>{{r["motorcycle"]}}</td>
+                                                <td>{{r["OnDate"]}}</td>
+												<td>{{r["contractid"]}}</td>
+												<td>{{r["EmployeeId"]}}</td>
+												<td>{{r["VehicleCategory"]}}</td>
+												<td>{{r["package"]}}</td>
 												
 											
 										
@@ -88,8 +90,10 @@
                                             <tr>
                                                 <th>Slno</th>
 												<th>Date</th>
-												<th>Car</th>
-											    <th>Motorcycle</th>
+												<th>Contract By</th>
+											    <th>Employee ID</th>
+											    <th>Vehicle Type</th>
+											    <th>Amount(Rs)</th>
 												
 												
                                             </tr>

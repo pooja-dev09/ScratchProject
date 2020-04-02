@@ -280,28 +280,30 @@ def viewamdetails_update():
         return redirect(url_for('viewam'))
 
 
-# @app.route('/viewambusiness/<string:UserID>')
-# def viewambusiness(UserID):
-# 	if not session.get('logged_in'):
-# 		return render_template('login.html')
-# 	else:
-# 		# if (request.method == 'POST'):
-# 		new = []
-# 		count = 0
-# 		print(UserID)
-# 		mydb = mycus()
-# 		mycursor = mydb.cursor()
-# 		sql='SELECT * FROM vehiclecontract WHERE AddedBy in (SELECT UserID FROM salesmanager where AddedBy='+str(158)+') or AddedBy='+str(158)+' ORDER BY VcID ASC'
-# 		print(sql)
-# 		result = mycursor.execute(sql)
-# 		row = mycursor.fetchall()
-# 		print(row)
-# 		for i in row:
-# 			AddedBy=row[AddedBy]
-# 			print('ghej',AddedBy)
-#
-#
-# 		return render_template('viewbusinessam.php')
+@app.route('/viewambusiness/<string:UserID>')
+def viewambusiness(UserID):
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        new = []
+        count = 0
+        print(UserID)
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute("SELECT u.EmployeeId,vc.OnDate,vc.EmployeeId,vc.VehicleCategory,vc.Package FROM vehiclecontract as vc LEFT JOIN user as u on u.UserID=vc.AddedBy WHERE vc.AddedBy in (SELECT UserID FROM salesmanager where AddedBy='"+(UserID)+"') or vc.AddedBy='"+(UserID)+"' ORDER BY vc.VcID ASC")
+        row = mycursor.fetchall()
+
+        for i in row:
+            EmployeeId= i[0]
+            OnDate = i[1]
+            OnDate = OnDate.strftime(('%d/%m/%Y'))
+            contractid = i[2]
+            VehicleCategory = i[3]
+            package = i[4]
+            count = count + 1
+            data = {'count':count,'EmployeeId':EmployeeId,'OnDate':OnDate,'contractid':contractid,'VehicleCategory':VehicleCategory,'package':package}
+            new.append(data)
+    return render_template('viewbusinessam.php',result = new)
 
 
 @app.route('/viewsm/<string:UserID>')
@@ -600,7 +602,7 @@ def viewsesmdetails_update():
                 DateOfJoining) + "',DOB = '" + str(DOB) + "',Qualification = '" + str(
                 Qualification) + "',AdharNo = '" + str(AdharNo) + "',Email = '" + str(
                 EmailId) + "',Mobile = '" + str(MobileNo) + "', PresentlyWorking = '" + str(
-                PresentlyWorking) + "',AppointCenter = '" + str(AppointCenter) + "',NameCenter = '" + str(
+                    PresentlyWorking) + "',AppointCenter = '" + str(AppointCenter) + "',NameCenter = '" + str(
                 NameCenter) + "',CenterBrand = '" + str(CenterBrand) + "',CenterFor='" + str(
                 CenterFor) + "',CenterLocation='" + str(CenterLocation) + "',Po ='" + str(
                 PostOffice) + "',Ps = '" + str(PoliceStation) + "',District = '" + str(
@@ -808,7 +810,7 @@ def claim():
                 ClaimID = i[0]
                 VcID = i[1]
                 DateOfClaim = i[2]
-
+                # DateOfClaim = DateOfClaim.strftime('%d/%m/%Y')
                 ClaimNo = i[3]
                 Photo = i[4]
                 InspectBy = i[5]
@@ -837,10 +839,11 @@ def claimreportview(VcID):
         mycursor = mydb.cursor()
         mycursor.execute("SELECT cl.DateOfClaim,cl.DateOfIncident,v.VehicleCategory,cl.Ps,cl.District,cl.VehiclesaffectedAreaVideo,cl.claimNo from claim cl LEFT JOIN vehiclecontract v on cl.VcID = v.VcID WHERE cl.VcID= %s", [VcID])
         row = mycursor.fetchall()
-        print('row',row)
         for i in row:
             DateOfClaim = i[0]
+            DateOfClaim = DateOfClaim.strftime('%d/%m/%Y')
             DateOfIncident = i[1]
+            DateOfIncident = DateOfIncident.strftime('%d/%m/%Y')
             VehicleCategory = i[2]
             Ps = i[3]
             District = i[4]
@@ -924,7 +927,7 @@ def commission():
         new = []
         count = 0
         if (request.method == 'POST'):
-            if request.form['submit_button'] == 'Submit':
+            if request.form['btn'] == 'Submit':
                 start_dates = str(request.form.get('start'))
                 print('start_dates',start_dates)
                 start_ends = str(request.form.get('End'))
@@ -932,8 +935,7 @@ def commission():
                 mydb = mycus()
                 mycursor = mydb.cursor()
                 if start_dates is not None and start_ends is not None:
-                    sql="select sum(Package),u.EmployeeId,v.EmployeeId from vehiclecontract v ,user u where v.OnDate BETWEEN '"+str(start_dates)+"' and '"+str(start_ends)+"' and u.UserID=v.AddedBy GROUP BY v.AddedBy"
-                    print('sql',sql)
+                    sql="select sum(Package),u.EmployeeId,v.EmployeeId,v.PaymentStatus,v.AddedBy from vehiclecontract v ,user u where v.OnDate >='"+str(start_dates)+"' and v.OnDate <= '"+str(start_ends)+"' and u.UserID=v.AddedBy and v.PaymentStatus = 0 GROUP BY v.AddedBy"
                     mycursor.execute(sql)
                     row = mycursor.fetchall()
                     print(row)
@@ -941,12 +943,35 @@ def commission():
                         package = i[0]
                         commissionrate = (package*10)/100
                         employeeid = i[1]
+                        userEmployeeId=i[2]
+                        PaymentStatus = i[3]
+                        AddedBy = i[4]
                         count = count + 1
-                        data = {'package':package,'employeeid':employeeid,'count':count,'commissionrate':commissionrate}
+                        data = {'AddedBy':AddedBy,'package':package,'employeeid':employeeid,'userEmployeeId':userEmployeeId,'PaymentStatus':PaymentStatus,'count':count,'commissionrate':commissionrate}
                         new.append(data)
                         mydb.close()
 
+            if request.form['btn'] == 'Due payment':
+                print('sjhguguigsd')
+                mydb = mycus()
+                mycursor = mydb.cursor()
+                AddedBy = str(request.form.get('AddedBy'))
+
+                mycursor.execute(
+                    " UPDATE vehiclecontract SET PaymentStatus = 1 where AddedBy='" + str(
+                        AddedBy) + "'")
+                mydb.commit()
+                sql = "INSERT INTO  Transaction (EmployeeID,Amount) VALUES (%s,%s)"
+                val = (employeeid,package)
+                result = mycursor.execute(sql, val)
+                mydb.commit()
+                mydb.close()
+
+
     return render_template('commission.php', result=new)
+
+
+
 
 
 
@@ -1116,6 +1141,7 @@ def newcustomer():
         for i in rowcursor:
             UserID = i[0]
             date = i[1]
+            date = date.strftime('%d/%m/%Y')
             vehiclecategory = i[2]
             district = i[3]
             policestation = i[4]
@@ -1148,12 +1174,12 @@ def viewnewrequest(UserID):
             DateOfPurchase = i[6]
             District = i[8]
             Mobile = i[4]
-            PoliceStation = i[7]
+            policestation = i[7]
             state = i[9]
             count = count + 1
             data = {'count': count, 'EmployeeId': EmployeeId, 'Name': Name,
                     'VehicleCategory': VehicleCategory, 'DateOfPurchase': DateOfPurchase, 'District': District,
-                    'Mobile': Mobile,'state':state, 'PoliceStation': PoliceStation,'UserID': UserID}
+                    'Mobile': Mobile,'state':state, 'policestation': policestation,'UserID': UserID}
             new.append(data)
         return render_template('viewrequestdetails.php', result=new)
 
@@ -1163,15 +1189,15 @@ def viewrequest_update():
         return render_template('login.html')
     else:
         if (request.method == 'POST'):
-            Name = str(request.form.get('Name'))
-            VehicleCategory = str(request.form.get('VehicleCategory'))
+            Name = str(request.form.get('Name')).title()
+            VehicleCategory = str(request.form.get('VehicleCategory')).title()
             DateOfPurchase = str(request.form.get('DateOfPurchase'))
-            District = str(request.form.get('District'))
+            District = str(request.form.get('District')).title()
             Mobile = str(request.form.get('Mobile'))
-            PoliceStation = str(request.form.get('PoliceStation'))
-            state = str(request.form.get('state'))
+            PoliceStation = str(request.form.get('PoliceStation')).title()
+            print(PoliceStation)
+            state = str(request.form.get('state')).title()
             UserID = str(request.form.get('UserID'))
-            print('UserID',UserID)
 
             mydb = mycus()
             mycursor = mydb.cursor()
@@ -1210,15 +1236,21 @@ def Moneyreceipt(UserID):
             VcID = i[4]
             slno ='SL'+ str(VcID)
             EmployeeId = i[5]
+            grandamt = round(totalamt)
+            print(grandamt)
+
+
 
             data ={'VehicleNo':VehicleNo,'OwnerName':OwnerName,'DateOfContract':DateOfContract,'Package':Package,'totalamt':totalamt,'slno':slno,'EmployeeId':EmployeeId
-                   ,'stategst':stategst,'centralgst':centralgst}
+                   ,'stategst':stategst,'centralgst':centralgst,'grandamt':grandamt}
             new.append(data)
         return render_template('moneyreceipt.php',result = new)
 
 
 
-#----------------------------------------------------------------------------------------money receipt end ----------------------------------------
+#---------------------------------------------------------------------------------------- End money receipt ----------------------------------------
+
+#-------------------------------------------------------------------------------------------start vehicle report-----------------------------------
 @app.route('/seadmin/Vehiclereport')
 def Vehiclereport():
     if not session.get('logged_in'):
@@ -1243,7 +1275,7 @@ def Vehiclereport():
                 data = {'count': count, 'car': car, 'motorcycle': motorcycle, 'date': date}
                 arraynew.append(data)
         return render_template('viewvehiclerpt.php', result=arraynew)
-
+#--------------------------------------------------------------------end vehicle report----------------------------------------------------------------------------------
 
 @app.route('/seadmin/index')
 def index():
