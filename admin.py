@@ -37,7 +37,7 @@ def createareamanager():
             Name = str(request.form.get('Name')).title()
             DOB = str(request.form.get('DOB'))
             Qualification = str(request.form.get('Qualification').capitalize())
-            AdharNo = str(request.form.get('AdharNo'))
+            AdharNo = request.form.get('AdharNo')
             Pancard = str(request.form.get('Pancard').upper())
             EmailId = str(request.form.get('Email').lower())
             MobileNo = str(request.form.get('Mobile'))
@@ -48,8 +48,8 @@ def createareamanager():
             PostOffice = str(request.form.get('PostOffice').title())
             PoliceStation = str(request.form.get('PoliceStation').title())
             District = str(request.form.get('District').title())
-            State = str(request.form.get('State').title())
-            Pincode = str(request.form.get('Pincode'))
+            State = request.form.get('State').title()
+            Pincode = request.form.get('Pincode')
             BankName = str(request.form.get('BankName').upper())
             BankAccountNo = str(request.form.get('BankAccountNo'))
             IFSC = str(request.form.get('IFSC').upper())
@@ -77,7 +77,6 @@ def createareamanager():
                 EmployeeId = totalval
             if pincode(Pincode) == True:
                 if pancard(Pancard) == True:
-                    print(Pancard)
                     if validNumber(MobileNo) == True:
                         if accountNo(BankAccountNo) == True:
                             if adharNo(AdharNo) == True:
@@ -111,13 +110,13 @@ def createareamanager():
                                             SMS_Integration(msg, MobileNo)
                                             flash('Area Manager Register Successfully')
                                         else:
-                                            flash('Something went wrong'+str(EmployeeId))
+                                            flash('Something went wrong')
                                     else:
                                         flash('IFSC code invalid')
                                 else:
                                     flash('Email is invalid')
                             else:
-                                flash('AadharNo should be 12 digit')
+                                flash('AadharNo is invalid digit')
                         else:
                             flash('AccountNo should be 14 to 16 digit')
                     else:
@@ -296,7 +295,7 @@ def viewambusiness(UserID):
         for i in row:
             EmployeeId= i[0]
             OnDate = i[1]
-            OnDate = OnDate.strftime(('%d/%m/%Y'))
+            OnDate = OnDate.strftime('%d/%m/%Y')
             contractid = i[2]
             VehicleCategory = i[3]
             package = i[4]
@@ -1238,9 +1237,6 @@ def Moneyreceipt(UserID):
             EmployeeId = i[5]
             grandamt = round(totalamt)
             print(grandamt)
-
-
-
             data ={'VehicleNo':VehicleNo,'OwnerName':OwnerName,'DateOfContract':DateOfContract,'Package':Package,'totalamt':totalamt,'slno':slno,'EmployeeId':EmployeeId
                    ,'stategst':stategst,'centralgst':centralgst,'grandamt':grandamt}
             new.append(data)
@@ -1276,6 +1272,25 @@ def Vehiclereport():
                 arraynew.append(data)
         return render_template('viewvehiclerpt.php', result=arraynew)
 #--------------------------------------------------------------------end vehicle report----------------------------------------------------------------------------------
+#--------------------------------------------------------------------Notification----------------------------------------------------------------------------------------
+@app.route('/notification')
+def notification():
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        message = 'Hello'
+        title = 'hii'
+        notification_sendfcm(message, title)
+        return 'hello'
+
+
+
+
+
+
+
+
+#--------------------------------------------------------------------end notification-------------------------------------------------------------------------------------
 
 @app.route('/seadmin/index')
 def index():

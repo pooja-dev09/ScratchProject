@@ -73,7 +73,7 @@
 
 								
 							<li class="nav-item">
-                                <a class="nav-link" href="" ><i class="fa fa-fw fa-bell"></i>Notifications</a>
+                                <a class="nav-link" href="/notification" ><i class="fa fa-fw fa-bell"></i>Notifications</a>
                                 <div id="submenu-5" class="collapse submenu" style="">
                                     
                                 </div>

@@ -83,7 +83,7 @@
 
                                                     <td><a style="color:#ff001a; text-decoration: underline;" href="/viewsm/{{r.UserID}}">View</a></td>
                                                     <td><a style="color:#ff001a;text-decoration: underline;"href="/viewambusiness/{{r.UserID}}">View</a></td>
-                                                    <td><h5 style="color:#ff001a; text-decoration: underline;"> Selected <input type="checkbox" name="report_myTextEditBox" value="checked"></h5></td>
+                                                    <td><h5 style="color:#ff001a; text-decoration: underline;" href=""> Selected <input type="checkbox" name="report_myTextEditBox" value="{{r.UserID}}  "></h5></td>
                                                 {% else %}
 													<td colspan="4">
 												    <input name="UserID" value="{{ r["UserID"] }}" type="hidden" >
@@ -109,15 +109,18 @@
                                             </tr>
 											
                                         </tfoot>
-									</form>
+
                                     </table>
                                     <div>
-									<button style="float:right;margin-top: 25px; margin-right: 80px;"type="button" onclick="alert('Hello world!')">Create</button>
+
+                                    <input style="float:right;margin-top: 25px; margin-right: 80px;" type="submit"  name="btn" style="margin-left: 18px;" value="Create">
+
 									</div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    </form>
                     <!-- ============================================================== -->
                     <!-- end basic table  -->
                     <!-- ============================================================== -->

@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
- 
+
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{url_for('static',filename='assets/vendor/datepicker/tempusdominus-bootstrap-4.css')}}" />
     <link rel="stylesheet" href="{{url_for('static',filename='assets/vendor/inputmask/css/inputmask.css')}}" />
 </head>
-<style> 
+<style>
 .fileUpload {
     position: relative;
     overflow: hidden;
@@ -50,8 +50,8 @@
             <div class="container-fluid dashboard-content">
                 <div class="row">
                     <div class="col-xl-10">
-                       
-                       
+
+
                         <!-- ============================================================== -->
                         <!-- basic form  -->
                         <!-- ============================================================== -->
@@ -62,129 +62,39 @@
 									{%if messages%}
 										<ul>
 											{%for category, message in messages%}
-											<div class="alert alert-success mb-3{{ category }}" role="alert"> 
+											<div class="alert alert-success mb-3{{ category }}" role="alert">
 											{{ message }}
 											</div>
-											
+
 											{%endfor%}
 										</ul>
 									{%endif%}
 								{%endwith%}
-								
-								
-								
-								
+
+
+
+
                                     <center><h3 class="section-title">Appoint Area Manager</h3></center>
-                                    
+
                                 </div>
                                 <div class="card">
-                                    
+
                                     <div class="card-body" style="width: 650px;">
                                         <form method="post" action="/seadmin/createareamanager" enctype=multipart/form-data>
 											<div class="form-group"  >
-												<label for="date">District Allocate</label>
-												<input type="text" name="Districtallocation" class="form-control" style = "text-transform:uppercase;"  required />
+												<label for="date">Message</label>
+												<input type="text" name="Message" class="form-control"  required />
 											</div>
-											<div class="form-group">
-												<label for="date">Date Of Joining</label>
-												<input type="date" name="DateOfJoining" class="form-control"  required  />
-
-											</div>
-
-											 <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Basic Details</h4>
-                                             
-										  <div class="form-group">
-												<label for="text"> Name of Candidate </label>
-												<input type="text" name="Name" class="form-control" style = "text-transform:capitalize;"  required />
-										  </div>
-										  <div class="form-group">
-												<label for="date">Date of Birth </label>
-												<input type="date" name="DOB" class="form-control"  required  />
-										  </div>
-										  <div class="form-group">
-												<label for> Qualification  </label>
-												<input type="text" name="Qualification" class="form-control" style = "text-transform:capitalize;" required />
-										  </div>
-										 
-										  <div class="form-group">
-												<label for> Aadhar Card No </label>
-												<input type="text"  Placeholder = "Please Enter 12 -digit numbers" class="form-control" name="AdharNo" required />
-
-
-										   </div>
-										   <div class="form-group">
-												<label for="centerid"> PAN Card No </label>
-												<input type="text"  class="form-control" name="Pancard" style = "text-transform:uppercase;" required />
-										   </div>
-										  <div class="form-group">
-												<label > Mobile Number </label>
-												<input type="text" class="form-control" Placeholder="Please Enter 10-digit numbers" name="Mobile"  required />
-										   </div>
-										   <div class="form-group">
-												<label for="centerid"> E-mail Id </label>
-												<input type="email" class="form-control" name="Email" style = "text-transform:lowercase;" required />
-										   </div>
-										   <h4 style="font-size:14px; color:#ff001a; text-align:left; text-decoration: underline; ">Experience</h4>
-										   <div class="form-group">
-												<label for="centerid">Year of experience</label>
-												<input type="text" class="form-control" name="Yearofexperience" style = "text-transform:capitalize;" required />
-										   </div>
-										   <div class="form-group">
-												<label> Experience Sector</label>
-												<input type="text" class="form-control" name="ExperienceSector" style = "text-transform:capitalize;" required />
-										   </div>
-										   <div class="form-group">
-												<label> Presently  working as </label>
-												<input type="text" class="form-control" name="PresentlyWorking" style = "text-transform:capitalize;" required />
-										   </div>
-										   <h4 style="font-size:14px; color:#ff001a; text-decoration: underline;  text-align:left;">Address(As per ID proof)</h4>
-										   <div class="form-group">
-												<label >Street/Village </label>
-												<input type="text" class="form-control" name="StreetVillage" style = "text-transform:capitalize;" required />
-										   </div>
-										   <div class="form-group">
-											<label > Post Office </label>
-											<input type="text" class="form-control" name="PostOffice" style = "text-transform:capitalize;" required />
-											
-										   </div>
-										  <div class="form-group">
-											<label > Police Station  </label>
-											<input type="text" class="form-control" name="PoliceStation" style = "text-transform:capitalize;" required />
-											
-										  </div> 
-										   <div class="form-group">
-											<label > District </label>
-											<input type="text" class="form-control" name="District" style = "text-transform:capitalize;" required  />
-										   </div>
-										   <div class="form-group">
-											<label > State </label>
-											<input type="text" class="form-control" name="State" style = "text-transform:capitalize;" required />
-										   </div>
-										   <div class="form-group">
-											<label > Pin code </label>
-											<input type="text" Placeholder="Please enter 6-digit numbers"class="form-control" name="Pincode" required />
-										   </div>
-										   <h4 style="font-size:14px;color:#ff001a; text-decoration: underline;  text-align:left;">Bank Details</h4>
-										    <div class="form-group">
-												<label> Bank Name </label>
-												<input type="text" class="form-control" name="BankName" style = "text-transform:uppercase;" required />
-											</div>
-										   <div class="form-group">
-												<label > A/C Number </label>
-												<input type="text" Placeholder="Please enter minimum 14 and maximum 16 digit number "class="form-control" name="BankAccountNo" required />
-										   </div>
-										   <div class="form-group">
-												<label> IFSC Code </label>
-												<input type="text" class="form-control" name="IFSC" placeholder="Please enter first 4-capital characters and rest 7-digits" style = "text-transform:uppercase;" required />
-										   </div>
-										   <div class="form-group">
+											<div class="form-group"  >
+												<label for="date">Title</label>
+												<input type="text" name="Title" class="form-control" required />
 											</div>
 												<div class="form-group">
 												<div class="input-group-btn">
 												<span class="fileUpload btn btn-success">
 												  <span class="upl" id="upload">Upload from gallery</span>
-												  <input type="file" class="upload up" id="inputfile" name="inputfile" 
-											
+												  <input type="file" class="upload up" id="inputfile" name="inputfile"
+
 													onchange="readURL(this);" required />
 												</span>
 											   </div>
@@ -195,29 +105,29 @@
                                             </div>
 										<div>
                                         </form>
-                                    
+
                                 </div>
-								
-								
+
+
 							<div class="card-body" >
 								<div style="width:170px; height:170px; border:1px; position:absolute; right:10px; top:60px;">
 								  <div id = "one"  >
 									<img id="user_photo" style="width:170px; height:170px;"/>
 								  </div>
 								</div>
-								</div> 
-								
-								
-								
-								
+								</div>
+
+
+
+
                             </div>
                         </div>
                         <!-- ============================================================== -->
                         <!-- end basic form  -->
                         <!-- ============================================================== -->
-                       
+
                     </div>
-                   
+
                 </div>
             </div>
             <!-- ============================================================== -->
@@ -286,7 +196,7 @@
                 }
             })
     });
-	
+
 
     </script>
 	<script type="text/javascript">
@@ -309,5 +219,5 @@
 	</script>
 
 </body>
- 
+
 </html>

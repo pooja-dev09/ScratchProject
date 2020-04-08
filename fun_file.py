@@ -43,7 +43,6 @@ def Upload_fun(file):
 	if file and allowed_file(file.filename):
 		filename = secure_filename(file.filename)
 		file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
 		return filename
 
 def save(Photo):
@@ -71,7 +70,6 @@ def ClaimNo(totalval):
 
 
 def SMS_Integration(msg,contactno):
-	print('msg',msg)
 	uname ='krititech'
 	pwd = 'kriti@2705'
 	senderid='SCREXP'
@@ -97,8 +95,8 @@ def request_form(Name,MobileNo,VehicleCategory,DateOfPurchase,PoliceStation,Dist
 		
 		
 def validNumber(phone_number):
-	if len(phone_number) == 10:
-		print(phone_number)
+	regex="^[0-9]{10}$"
+	if (re.search(regex,phone_number)):
 		return True
 
 		
@@ -116,7 +114,8 @@ def vehicleNo(vehicleno):
 		return True
 	
 def adharNo(adharNo):
-	if len(adharNo) == 12: 
+	regex="^\d{4}\s\d{4}\s\d{4}$"
+	if (re.search(regex,adharNo)):
 		return True
 		
 def GSTINo(GSTINo):
@@ -135,11 +134,29 @@ def pancard(Pancard):
 
 
 def pincode(Pincode):
-	if len(Pincode) == 6:
+	regex = "^\d{6}(,\d{6})*$"
+	if (re.search(regex, Pincode)):
 		return True
 
 		
 def fun_ifsc(IFSC):
 	if re.match("^[A-Z]{4}\d{7}$", IFSC):
 		return True
+
+def notification_sendfcm(message, title):
+	print('hello')
+	url = 'https://fcm.googleapis.com/fcm/send'
+	headers ={'Authorization':'key=AAAAUXIG2Uk:APA91bFHXqEp47ciqO6hOofEIydauphyLxbb9iW2194Expxqdo-6mibUOV-V2oP_xcgdG79M7KZGR4GAKr4lOaSFn4InpKzi_vTvwzdz_yg2DzCgPLbcS4mLy93ilxwNgwH3KBbC2ZXj','Content-Type':'application/json'}
+
+	params = {
+    "title":"New Text Message",
+    "message":"Hello how are you?",
+  	"to":"f8937086-f40e-438d-a2df-47358da0d780"
+		}
+	a=json.dumps(params)
+	print(type(a))
+	r = requests.post(url, a, headers=headers)
+	print(r)
+ 
+
 

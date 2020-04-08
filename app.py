@@ -98,12 +98,10 @@ class Login(Resource):
         parser.add_argument('RoleID', required=True, type=int, help='RoleID cannot be found')
         parser.add_argument('UserName', required=True, type=str, help='UserName cannot be found')
         parser.add_argument('Password', required=True, type=str, help='Password cannot be found')
-        parser.add_argument('token', required=False, type=str, help='token cannot be found')
         args = parser.parse_args()
         RoleID = args['RoleID']
         UserName = args['UserName']
         UserPassword = args['Password']
-        token = args['token']
         UserPassword = Password_encoded(UserPassword)
         if RoleID is not None and UserName is not None and UserPassword is not None:
             if RoleID == 2:
@@ -124,7 +122,7 @@ class Login(Resource):
                         msg = 'Dear Customer, Your One Time Password for Account Login is : ' + str(OTP)
                         SMS_Integration(msg, Mobile)
                         mycursor.execute(
-                            "UPDATE user SET OTP = '" + str(OTP) + "',token = '" + str(token) + "' WHERE UserID = '" + str(
+                            "UPDATE user SET OTP = '" + str(OTP) + "' WHERE UserID = '" + str(
                                 UserID) + "'")
                         mydb.commit()
                         mydb.close()
@@ -267,11 +265,12 @@ class RegisterProfile(Resource):
             args = parser.parse_args()
             UserID = args['UserID']
             RoleID = args['RoleID']
+            print(RoleID)
             if UserID is not None and RoleID is not None:
                 if RoleID == 2:
                     mydb = mycus()
                     mycursor = mydb.cursor()
-                    sql = mycursor.execute(
+                    mycursor.execute(
                         "SELECT EmployeeId,Name,VehicleNo,Mobile,DateOfRegd,DateOfExp from user WHERE UserID = '" + str(
                             UserID) + "'")
                     rowcursor = mycursor.fetchall()
@@ -283,7 +282,9 @@ class RegisterProfile(Resource):
                             VehicleNo = i[2]
                             Mobile = i[3]
                             DateOfRegd = i[4]
+                            DateOfRegd = DateOfRegd.strftime('%d/%m/%Y')
                             DateOfExp = i[5]
+                            DateOfExp = DateOfExp.strftime('%d/%m/%Y')
                             return jsonify({'Message': 'Result View Successfully',
                                             'RegdNo': EmployeeId,
                                             'RoleID': RoleID,
@@ -296,12 +297,13 @@ class RegisterProfile(Resource):
                                             'Status': 1})
                     else:
                         return jsonify({'Message': 'Sorry We dont have any data', 'Status': "0"})
-                elif RoleID == 3 or RoleID == 4 or RoleID == 5:
+                elif RoleID == 3 or RoleID == 4:
                     mydb = mycus()
                     mycursor = mydb.cursor()
-                    sql = mycursor.execute(
+                    mycursor.execute(
                         "SELECT EmployeeId,Name,Mobile,DateOfJoining from user WHERE UserID = '" + str(UserID) + "' and RoleID = '"+ str(RoleID) +"'")
                     rowcursor = mycursor.fetchall()
+                    print(rowcursor)
                     mydb.close()
                     if len(rowcursor) > 0:
                         for i in rowcursor:
@@ -309,6 +311,7 @@ class RegisterProfile(Resource):
                             Name = i[1]
                             Mobile = i[2]
                             DateOfJoining = i[3]
+                            DateOfJoining = DateOfJoining.strftime('%d/%m/%Y')
 
                             return jsonify({'Message': 'Result View Successfully',
                                             'EmployeeId': EmployeeId,
@@ -317,6 +320,29 @@ class RegisterProfile(Resource):
                                             'UserID': UserID,
                                             'Mobile': Mobile,
                                             'DateOfJoining': DateOfJoining,
+                                            'Status': 1})
+                    else:
+                        return jsonify({'Message': 'Sorry We dont have any data', 'Status': 0})
+                elif RoleID == 5:
+                    mydb = mycus()
+                    mycursor = mydb.cursor()
+                    mycursor.execute(
+                        "SELECT EmployeeId,Name,Mobile from user WHERE UserID = '" + str(
+                            UserID) + "' and RoleID = '" + str(RoleID) + "'")
+                    rowcursor = mycursor.fetchall()
+                    print(rowcursor)
+                    mydb.close()
+                    if len(rowcursor) > 0:
+                        for i in rowcursor:
+                            EmployeeId = i[0]
+                            Name = i[1]
+                            Mobile = i[2]
+                            return jsonify({'Message': 'Result View Successfully',
+                                            'EmployeeId': EmployeeId,
+                                            'RoleID': RoleID,
+                                            'Name': Name,
+                                            'UserID': UserID,
+                                            'Mobile': Mobile,
                                             'Status': 1})
                     else:
                         return jsonify({'Message': 'Sorry We dont have any data', 'Status': 0})
@@ -536,38 +562,38 @@ api.add_resource(claimAmount, "/claimAmount")
 ####when user want to check his/her status
 class claimStatus(Resource):
     def post(self):
-        try:
-            new = []
-            parser = reqparse.RequestParser()
-            parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
-            args = parser.parse_args()
-            UserID = args['UserID']
-            print('UserID',UserID)
-            mydb = mycus()
-            mycursor = mydb.cursor()
-            mycursor.execute(
-                "SELECT claim.DateOfClaim,claim.ClaimNo,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = " + str(
-                    UserID))
-            rowcursor = mycursor.fetchall()
-            if len(rowcursor) > 0:
-                for i in rowcursor:
-                    ClaimDate = i[0]
-                    ClaimNo = i[1]
-                    ClaimStatus = i[2]
-                    if ClaimStatus is None:
-                        ClaimStatus = 0
+        # try:
+        new = []
+        parser = reqparse.RequestParser()
+        parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
+        args = parser.parse_args()
+        UserID = args['UserID']
+        print('UserID',UserID)
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "SELECT claim.DateOfClaim,claim.ClaimNo,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID where claim.UserID = " + str(
+                UserID))
+        rowcursor = mycursor.fetchall()
+        print(rowcursor)
+        if len(rowcursor) > 0:
+            for i in rowcursor:
+                ClaimDate = i[0]
+                ClaimDate = ClaimDate.strftime("%d-%m-%Y")
+                ClaimNo = i[1]
+                ClaimStatus = i[2]
+                if ClaimStatus is None:
+                    ClaimStatus = 0
+                data = {'ClaimDate':ClaimDate,'ClaimStatus': ClaimStatus, 'ClaimNo': ClaimNo}
+                new.append(data)
 
-                        data = {'ClaimDate': ClaimDate, 'ClaimStatus': ClaimStatus, 'ClaimNo': ClaimNo
-                               }
-                        new.append(data)
-                return jsonify({'Message': " Claim Inspection Report Submitted Successfully.",
-                                        'new':new,
-                                        'Status': 1})
+                print(new)
+            return jsonify({"Message": " Claim Inspection Report Submitted Successfully.","new":new,"Status": 1})
 
-            else:
-                return jsonify({'Message': "You have no claim in your status.", 'Status': 0})
-        except Exception as e:
-            return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
+        else:
+            return jsonify({'Message': "You have no claim in your status.", 'Status': 0})
+        # except Exception as e:
+        #     return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
 
 api.add_resource(claimStatus, "/ClaimStatus")
@@ -591,7 +617,6 @@ class SalesReport(Resource):
                 for i in rowcursor:
                     Date = i[0]
                     VehicleCategory = i[1]
-
                     return jsonify({
                         'Date': Date,
                         'VehicleCategory': VehicleCategory,
@@ -634,27 +659,28 @@ api.add_resource(ClaimAction, "/ClaimAction")
 
 
 class ClaimViewSM(Resource):
-    def get(self):
+    def post(self):
         try:
+            parser = reqparse.RequestParser()
+            parser.add_argument('UserID', required=True, type=str, help='UserID Id cannot be found')
+            args = parser.parse_args()
+            UserID = args['UserID']
             new = []
             mydb = mycus()
             mycursor = mydb.cursor()
             mycursor.execute(
-                "SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claim.ClaimID,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID ")
+                "SELECT claim.DateOfClaim,claim.ClaimNo,claim.UserID,claim.ClaimID,claiminspection.ClaimStatus FROM claim LEFT JOIN claiminspection ON claim.ClaimID=claiminspection.ClaimID LEFT JOIN vehiclecontract on claim.VcID=vehiclecontract.VcID where vehiclecontract.AddedBy= '" + str(UserID) + "'")
             rowcursor = mycursor.fetchall()
             if len(rowcursor) > 0:
                 for i in rowcursor:
                     DateOfClaim = i[0]
+                    DateOfClaim = DateOfClaim.strftime("%d-%m-%Y")
                     ClaimNo = i[1]
                     UserID = i[2]
                     ClaimID = i[3]
                     ClaimStatus = i[4]
                     if ClaimStatus is None:
                         ClaimStatus = 0
-                    # mycursor.execute("SELECT Name from user WHERE UserID = '" + str(UserID) + "'")
-                    # rowcursor = mycursor.fetchall()
-                    # for i in rowcursor:
-                    #     name = i[0]
                     data = {'DateOfClaim': DateOfClaim, 'ClaimNo': ClaimNo,'ClaimID': ClaimID,
                             'ClaimStatus': ClaimStatus}
                     new.append(data)
@@ -714,8 +740,6 @@ class VehicleContract(Resource):
         State = args['State']
         file = args['Video']
         AddedBy = args['UserID']
-        print('added by:',AddedBy)
-        print(type(AddedBy))
         mydb = mycus()
         mycursor = mydb.cursor()
         mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 2 and EmployeeId LIKE 'SCAA%' ORDER BY UserID DESC LIMIT 1")
@@ -724,7 +748,7 @@ class VehicleContract(Resource):
             for i in rowcursor:
                 Employeeid_user = i[0]
                 Employeeid_user = Employeeid_user.split("A")
-                print('after split',Employeeid_user)
+
 
                 totalval = int(Employeeid_user[2])
                 print('totalval',totalval)
@@ -893,7 +917,7 @@ class ServiceCenterAuthorization(Resource):
             file = args['Video']
             Photo = args['imageData']
             CurrentTime = datetime.datetime.now()
-            CurrentTime = CurrentTime.strftime("%m-%d-%Y")
+            CurrentTime = CurrentTime.strftime("%d-%m-%Y")
             mydb = mycus()
             mycursor = mydb.cursor()
             mycursor.execute("SELECT EmployeeId FROM `user` WHERE RoleID = 5 and EmployeeId LIKE 'SEAU%' ORDER BY UserID DESC LIMIT 1")
@@ -1296,6 +1320,29 @@ class ContactUs(Resource):
             return jsonify({'Status': 0, 'Message': "invalid parameter, missing required parameter"})
 
 api.add_resource(ContactUs, "/ContactUs")
+
+class tokenstore(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('UserID', required=True, type=str, help='UserID cannot be found')
+        parser.add_argument('token', required=True, type=str, help='token cannot be found')
+        args = parser.parse_args()
+        UserID = args['UserID']
+        token = args['token']
+        mydb = mycus()
+        mycursor = mydb.cursor()
+        mycursor.execute(
+            "UPDATE user SET token = '" + str(token) + "' WHERE UserID = '" + str(
+                UserID) + "'")
+        mydb.commit()
+        mydb.close()
+        return jsonify({
+                        'UserID': UserID,
+                        'Status': 1
+
+                        })
+api.add_resource(tokenstore, "/tokenstore")
+
 
 if __name__ == '__main__':
     app.run(port='5000', host='0.0.0.0', debug=False)
